@@ -1,0 +1,12 @@
+Debug/
+ipch/
+x64/
+PunchingMeasSys.sdf
+PunchingMeasSys.VC.db
+PunchingMeasSys/Debug/
+PunchingMeasSys/Release/
+PunchingMeasSys/x64/
+.vs/
+PunchingMeasSys/PunchingMeasSys.aps
+
+
