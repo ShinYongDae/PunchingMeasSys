@@ -7,6 +7,8 @@
 // Vision.h : header file
 //
 
+#define USE_VISION
+
 
 // #define DEF_VIEW_IMG_NUMBER			6
 #define DEF_VIEW_IMG_NUMBER			12
@@ -26,15 +28,15 @@
 #define TIM_CLR_OVERLAY				500
 
 
-//#include "Vicdefs.h"
-#include "../Global/MyData.h"
-#include "../Global/GlobalDefine.h"
+//#include "../Global/MyData.h"
+//#include "../Global/GlobalDefine.h"
 
 
 #ifdef USE_VISION
 
+//#include "Vicdefs.h"
 #include "Vic7defs.h"
-#include "../Process/FreeImage.h"
+//#include "FreeImage.h"
 
 #ifdef USE_IDS
 #include "CamIds.h"
@@ -51,8 +53,9 @@
 
 #include "LibMil.h"
 
-#pragma comment (lib, "lib/vic64.lib") //#pragma comment (lib, "vic32ms.lib")
-#pragma comment(lib, "lib/FreeImage_x64")
+//#pragma comment (lib, "vic32ms.lib")
+#pragma comment (lib, "lib/vic64.lib")
+//#pragma comment(lib, "lib/FreeImage_x64")
 
 #define MAX_TRIG	1
 #define CAMERA_WIDTH	640
@@ -75,7 +78,7 @@ class CVision : public CWnd
 	MIL_ID m_MilSysId;
 
 	int m_nTest;
-	double m_dEnc[MAX_AXIS], m_dBufEnc, m_dFdEnc;
+	//double m_dEnc[MAX_AXIS], m_dBufEnc, m_dFdEnc;
 
 #ifdef USE_IRAYPLE
 	CCamIRayple *m_pIRayple;

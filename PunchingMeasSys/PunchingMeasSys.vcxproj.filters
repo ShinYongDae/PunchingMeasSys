@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Vision">
+      <UniqueIdentifier>{f91b8f53-42e2-4e35-a376-6a9b961b8bcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -33,6 +36,24 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="LibMil.h">
+      <Filter>Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="LibMilBuf.h">
+      <Filter>Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="LibMilDisp.h">
+      <Filter>Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="LibMilDraw.h">
+      <Filter>Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="Vision.h">
+      <Filter>Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="vic7defs.h">
+      <Filter>Vision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PunchingMeasSys.cpp">
@@ -43,6 +64,21 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="LibMil.cpp">
+      <Filter>Vision</Filter>
+    </ClCompile>
+    <ClCompile Include="LibMilBuf.cpp">
+      <Filter>Vision</Filter>
+    </ClCompile>
+    <ClCompile Include="LibMilDisp.cpp">
+      <Filter>Vision</Filter>
+    </ClCompile>
+    <ClCompile Include="LibMilDraw.cpp">
+      <Filter>Vision</Filter>
+    </ClCompile>
+    <ClCompile Include="Vision.cpp">
+      <Filter>Vision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

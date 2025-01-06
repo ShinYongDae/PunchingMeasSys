@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "../gvisr2r_punch.h"
+//#include "../gvisr2r_punch.h"
 #include "Vision.h"
 
 
@@ -14,11 +14,11 @@ static char THIS_FILE[] = __FILE__;
 
 #ifdef USE_VISION
 
-#include "../GvisR2R_PunchDoc.h"
-#include "../GvisR2R_PunchView.h"
-
-extern CGvisR2R_PunchDoc* pDoc;
-extern CGvisR2R_PunchView* pView;
+//#include "../GvisR2R_PunchDoc.h"
+//#include "../GvisR2R_PunchView.h"
+//
+//extern CGvisR2R_PunchDoc* pDoc;
+//extern CGvisR2R_PunchView* pView;
 
 unsigned char BitConvLUT2[256] = {0x00, 0x80, 0x40, 0xc0, 0x20, 0xa0, 0x60, 0xe0, 0x10, 0x90, 0x50, 0xd0, 0x30, 0xb0, 0x70, 0xf0, 0x8, 0x88, 0x48, 0xc8, 0x28, 0xa8, 0x68, 0xe8, 0x18, 0x98, 0x58, 0xd8, 0x38, 0xb8, 0x78, 0xf8, 0x4, 0x84, 0x44, 0xc4, 0x24, 0xa4, 0x64, 0xe4, 0x14, 0x94, 0x54, 0xd4, 0x34, 0xb4, 0x74, 0xf4, 0xc, 0x8c, 0x4c, 0xcc, 0x2c, 0xac, 0x6c, 0xec, 0x1c, 0x9c, 0x5c, 0xdc, 0x3c, 0xbc, 0x7c, 0xfc, 0x2, 0x82, 0x42, 0xc2, 0x22, 0xa2, 0x62, 0xe2, 0x12, 0x92, 0x52, 0xd2, 0x32, 0xb2, 0x72, 0xf2, 0xa, 0x8a, 0x4a, 0xca, 0x2a, 0xaa, 0x6a, 0xea, 0x1a, 0x9a, 0x5a, 0xda, 0x3a, 0xba, 0x7a, 0xfa, 0x6, 0x86, 0x46, 0xc6, 0x26, 0xa6, 0x66, 0xe6, 0x16, 0x96, 0x56, 0xd6, 0x36, 0xb6, 0x76, 0xf6, 0xe, 0x8e, 0x4e, 0xce, 0x2e, 0xae, 0x6e, 0xee, 0x1e, 0x9e, 0x5e, 0xde, 0x3e, 0xbe, 0x7e, 0xfe, 0x1, 0x81, 0x41, 0xc1, 0x21, 0xa1, 0x61, 0xe1, 0x11, 0x91, 0x51, 0xd1, 0x31, 0xb1, 0x71, 0xf1, 0x9, 0x89, 0x49, 0xc9, 0x29, 0xa9, 0x69, 0xe9, 0x19, 0x99, 0x59, 0xd9, 0x39, 0xb9, 0x79, 0xf9, 0x5, 0x85, 0x45, 0xc5, 0x25, 0xa5, 0x65, 0xe5, 0x15, 0x95, 0x55, 0xd5, 0x35, 0xb5, 0x75, 0xf5, 0xd, 0x8d, 0x4d, 0xcd, 0x2d, 0xad, 0x6d, 0xed, 0x1d, 0x9d, 0x5d, 0xdd, 0x3d, 0xbd, 0x7d, 0xfd, 0x3, 0x83, 0x43, 0xc3, 0x23, 0xa3, 0x63, 0xe3, 0x13, 0x93, 0x53, 0xd3, 0x33, 0xb3, 0x73, 0xf3, 0xb, 0x8b, 0x4b, 0xcb, 0x2b, 0xab, 0x6b, 0xeb, 0x1b, 0x9b, 0x5b, 0xdb, 0x3b, 0xbb, 0x7b, 0xfb, 0x7, 0x87, 0x47, 0xc7, 0x27, 0xa7, 0x67, 0xe7, 0x17, 0x97, 0x57, 0xd7, 0x37, 0xb7, 0x77, 0xf7, 0xf, 0x8f, 0x4f, 0xcf, 0x2f, 0xaf, 0x6f, 0xef, 0x1f, 0x9f, 0x5f, 0xdf, 0x3f, 0xbf, 0x7f, 0xff};
 
@@ -104,11 +104,11 @@ CVision::CVision(int nIdx, MIL_ID MilSysId, HWND *hCtrl, CWnd* pParent /*=NULL*/
 	m_nPinCrsLen = 0;
 
 
-	// init motion
-	for(int nAxis=0; nAxis<MAX_AXIS; nAxis++)
-		m_dEnc[nAxis] = 0.0;
-	m_dBufEnc = 0.0;
-	m_dFdEnc = 0.0;
+	//// init motion
+	//for(int nAxis=0; nAxis<MAX_AXIS; nAxis++)
+	//	m_dEnc[nAxis] = 0.0;
+	//m_dBufEnc = 0.0;
+	//m_dFdEnc = 0.0;
 
 
 	RECT rt={0,0,0,0};
@@ -605,17 +605,17 @@ void CVision::DisplaySelect(int nKind, HWND hDispCtrl, CRect rtDispCtrl, int nId
 	if(!m_pMil)
 		return;
 
-	if(nKind == CAD_IMG)
-	{
-		if(m_pMilDispCad[nIdx])
-			m_pMil->DisplaySelect(m_pMilDispCad[nIdx], m_pMilBufCad[nIdx], hDispCtrl, rtDispCtrl.Width(), rtDispCtrl.Height(), DISPLAY_FIT_MODE_CENTERVIEW);
-	}
+	//if(nKind == CAD_IMG)
+	//{
+	//	if(m_pMilDispCad[nIdx])
+	//		m_pMil->DisplaySelect(m_pMilDispCad[nIdx], m_pMilBufCad[nIdx], hDispCtrl, rtDispCtrl.Width(), rtDispCtrl.Height(), DISPLAY_FIT_MODE_CENTERVIEW);
+	//}
 
-	else if(nKind == DEF_IMG)
-	{
-		if(m_pMilDispDef[nIdx])
-			m_pMil->DisplaySelect(m_pMilDispDef[nIdx], m_pMilBufDef[nIdx], hDispCtrl, rtDispCtrl.Width(), rtDispCtrl.Height(), DISPLAY_FIT_MODE_CENTERVIEW);
-	}
+	//else if(nKind == DEF_IMG)
+	//{
+	//	if(m_pMilDispDef[nIdx])
+	//		m_pMil->DisplaySelect(m_pMilDispDef[nIdx], m_pMilBufDef[nIdx], hDispCtrl, rtDispCtrl.Width(), rtDispCtrl.Height(), DISPLAY_FIT_MODE_CENTERVIEW);
+	//}
 }
 
 void CVision::SelDispCad(HWND hDispCtrl, CRect rtDispCtrl, int nIdx, int nDisplayFitMode)
@@ -836,25 +836,25 @@ void CVision::FreeDispDef(HWND hDispCtrl, CRect rtDispCtrl, int nIdx, int nDispl
 
 void CVision::InitCADBuf(int nLayer)
 {
-	REGION_STRIP *pCellRgn[2];
-	if(m_nIdx == 0 || m_nIdx == 1)
-		pCellRgn[nLayer] = pDoc->m_Master[nLayer].m_pCellRgn;
-	else
-		pCellRgn[nLayer] = pDoc->m_MasterInner[nLayer].m_pCellRgn;
+	//REGION_STRIP *pCellRgn[2];
+	//if(m_nIdx == 0 || m_nIdx == 1)
+	//	pCellRgn[nLayer] = pDoc->m_Master[nLayer].m_pCellRgn;
+	//else
+	//	pCellRgn[nLayer] = pDoc->m_MasterInner[nLayer].m_pCellRgn;
 
-	if(MilCADImgBuf)
-		MbufFree(MilCADImgBuf);
-	if (pCellRgn[nLayer])
-	{
-		if (m_pMil)
-			MbufAlloc2d(m_pMil->GetSystemID(), pCellRgn[nLayer]->ProcSizeX, pCellRgn[nLayer]->ProcSizeY, 1L + M_UNSIGNED, M_IMAGE + M_PROC, &MilCADImgBuf);
-	}
+	//if(MilCADImgBuf)
+	//	MbufFree(MilCADImgBuf);
+	//if (pCellRgn[nLayer])
+	//{
+	//	if (m_pMil)
+	//		MbufAlloc2d(m_pMil->GetSystemID(), pCellRgn[nLayer]->ProcSizeX, pCellRgn[nLayer]->ProcSizeY, 1L + M_UNSIGNED, M_IMAGE + M_PROC, &MilCADImgBuf);
+	//}
 
 
-	if(MilBufCADTemp)
-		MbufFree(MilBufCADTemp);
-	if (m_pMil)
-		MbufAlloc2d(m_pMil->GetSystemID(), DEF_IMG_DISP_SIZEX, DEF_IMG_DISP_SIZEY, 1L + M_UNSIGNED, M_IMAGE+M_PROC, &MilBufCADTemp);
+	//if(MilBufCADTemp)
+	//	MbufFree(MilBufCADTemp);
+	//if (m_pMil)
+	//	MbufAlloc2d(m_pMil->GetSystemID(), DEF_IMG_DISP_SIZEX, DEF_IMG_DISP_SIZEY, 1L + M_UNSIGNED, M_IMAGE+M_PROC, &MilBufCADTemp);
 }
 
 void CVision::InitDispDef()
@@ -1010,26 +1010,26 @@ void CVision::SelDispAlign(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMode
 
 void CVision::ShiftDisp()
 {
-	BOOL bDualTest = pDoc->WorkingInfo.LastJob.bDualTest;
+	//BOOL bDualTest = pDoc->WorkingInfo.LastJob.bDualTest;
 
-	if(bDualTest)
-	{
-		for(int i=0; i<MENU01_STC_DEFINFO_HARF-1; i++)
-		{
-			MbufCopy(m_pMilBufCad[i+1]->m_MilImage, m_pMilBufCad[i]->m_MilImage);
-			MbufCopy(m_pMilOvrCad[i+1]->m_MilBuffer, m_pMilOvrCad[i]->m_MilBuffer);
-			MbufCopy(m_pMilBufDef[i+1]->m_MilImage, m_pMilBufDef[i]->m_MilImage);
-		}
-	}
-	else
-	{
-		for(int i=0; i<MENU01_STC_DEFINFO_HARF*2-1; i++)
-		{
-			MbufCopy(m_pMilBufCad[i+1]->m_MilImage, m_pMilBufCad[i]->m_MilImage);
-			MbufCopy(m_pMilOvrCad[i+1]->m_MilBuffer, m_pMilOvrCad[i]->m_MilBuffer);
-			MbufCopy(m_pMilBufDef[i+1]->m_MilImage, m_pMilBufDef[i]->m_MilImage);
-		}
-	}
+	//if(bDualTest)
+	//{
+	//	for(int i=0; i<MENU01_STC_DEFINFO_HARF-1; i++)
+	//	{
+	//		MbufCopy(m_pMilBufCad[i+1]->m_MilImage, m_pMilBufCad[i]->m_MilImage);
+	//		MbufCopy(m_pMilOvrCad[i+1]->m_MilBuffer, m_pMilOvrCad[i]->m_MilBuffer);
+	//		MbufCopy(m_pMilBufDef[i+1]->m_MilImage, m_pMilBufDef[i]->m_MilImage);
+	//	}
+	//}
+	//else
+	//{
+	//	for(int i=0; i<MENU01_STC_DEFINFO_HARF*2-1; i++)
+	//	{
+	//		MbufCopy(m_pMilBufCad[i+1]->m_MilImage, m_pMilBufCad[i]->m_MilImage);
+	//		MbufCopy(m_pMilOvrCad[i+1]->m_MilBuffer, m_pMilOvrCad[i]->m_MilBuffer);
+	//		MbufCopy(m_pMilBufDef[i+1]->m_MilImage, m_pMilBufDef[i]->m_MilImage);
+	//	}
+	//}
 }
 
 void CVision::ShowDispCad(int nIdxMkInfo, int nSerial, int nLayer, int nIdxDef) // From 0 To 12...for Screen display.
@@ -1042,1357 +1042,1358 @@ void CVision::ShowDispCad(int nIdxMkInfo, int nSerial, int nLayer, int nIdxDef) 
 
 void CVision::CropCadImg(int nIdxMkInfo, int nSerial, int nLayer, int nIdxDef)
 {
-	short cell, cx, cy;
-	int nIdx;
-
-	if (m_nIdx == 0 || m_nIdx == 1)
-	{
-		if (!pDoc->m_pPcr[nLayer])
-			return;
-#ifndef USE_MIL
-		cell = pDoc->m_pPcr[nLayer][TEST_SHOT - 1]->m_pCell[0];			// for Test - BufIdx[0], DefIdx[0]
-		cx = pDoc->m_pPcr[nLayer][TEST_SHOT - 1]->m_pDefPos[0].x;		// for Test - BufIdx[0], DefIdx[0]
-		cy = pDoc->m_pPcr[nLayer][TEST_SHOT - 1]->m_pDefPos[0].y;		// for Test - BufIdx[0], DefIdx[0]
-#else
-		nIdx = pDoc->GetPcrIdx1(nSerial);
-		if (!pDoc->m_pPcr[nLayer][nIdx])
-			return;
-		if (!pDoc->m_pPcr[nLayer][nIdx]->m_pCell || !pDoc->m_pPcr[nLayer][nIdx]->m_pDefPos ||
-			!pDoc->m_Master[nLayer].m_pCellRgn)
-			return;
-
-		cell = pDoc->m_pPcr[nLayer][nIdx]->m_pCell[nIdxDef];										// BufIdx[], DefIdx[]
-		cx = pDoc->m_pPcr[nLayer][nIdx]->m_pDefPos[nIdxDef].x - pDoc->m_Master[nLayer].m_pCellRgn->StPosX[cell];		// BufIdx[], DefIdx[]
-		cy = pDoc->m_pPcr[nLayer][nIdx]->m_pDefPos[nIdxDef].y - pDoc->m_Master[nLayer].m_pCellRgn->StPosY[cell];		// BufIdx[], DefIdx[]
-#endif
-	}
-	else
-	{
-		if (!pDoc->m_pPcrInner[nLayer])
-			return;
-#ifndef USE_MIL
-		cell = pDoc->m_pPcrInner[nLayer][TEST_SHOT - 1]->m_pCell[0];			// for Test - BufIdx[0], DefIdx[0]
-		cx = pDoc->m_pPcrInner[nLayer][TEST_SHOT - 1]->m_pDefPos[0].x;		// for Test - BufIdx[0], DefIdx[0]
-		cy = pDoc->m_pPcrInner[nLayer][TEST_SHOT - 1]->m_pDefPos[0].y;		// for Test - BufIdx[0], DefIdx[0]
-#else
-		nIdx = pDoc->GetPcrIdx1(nSerial);
-		if (!pDoc->m_pPcrInner[nLayer][nIdx])
-			return;
-		if (!pDoc->m_pPcrInner[nLayer][nIdx]->m_pCell || !pDoc->m_pPcrInner[nLayer][nIdx]->m_pDefPos ||
-			!pDoc->m_MasterInner[nLayer].m_pCellRgn)
-			return;
-
-		cell = pDoc->m_pPcrInner[nLayer][nIdx]->m_pCell[nIdxDef];										// BufIdx[], DefIdx[]
-		cx = pDoc->m_pPcrInner[nLayer][nIdx]->m_pDefPos[nIdxDef].x - pDoc->m_MasterInner[nLayer].m_pCellRgn->StPosX[cell];		// BufIdx[], DefIdx[]
-		cy = pDoc->m_pPcrInner[nLayer][nIdx]->m_pDefPos[nIdxDef].y - pDoc->m_MasterInner[nLayer].m_pCellRgn->StPosY[cell];		// BufIdx[], DefIdx[]
-#endif
-	}
-
-	CropCadImg(cell, cx, cy, nIdxMkInfo, nLayer);
+//	short cell, cx, cy;
+//	int nIdx;
+//
+//	if (m_nIdx == 0 || m_nIdx == 1)
+//	{
+//		if (!pDoc->m_pPcr[nLayer])
+//			return;
+//#ifndef USE_MIL
+//		cell = pDoc->m_pPcr[nLayer][TEST_SHOT - 1]->m_pCell[0];			// for Test - BufIdx[0], DefIdx[0]
+//		cx = pDoc->m_pPcr[nLayer][TEST_SHOT - 1]->m_pDefPos[0].x;		// for Test - BufIdx[0], DefIdx[0]
+//		cy = pDoc->m_pPcr[nLayer][TEST_SHOT - 1]->m_pDefPos[0].y;		// for Test - BufIdx[0], DefIdx[0]
+//#else
+//		nIdx = pDoc->GetPcrIdx1(nSerial);
+//		if (!pDoc->m_pPcr[nLayer][nIdx])
+//			return;
+//		if (!pDoc->m_pPcr[nLayer][nIdx]->m_pCell || !pDoc->m_pPcr[nLayer][nIdx]->m_pDefPos ||
+//			!pDoc->m_Master[nLayer].m_pCellRgn)
+//			return;
+//
+//		cell = pDoc->m_pPcr[nLayer][nIdx]->m_pCell[nIdxDef];										// BufIdx[], DefIdx[]
+//		cx = pDoc->m_pPcr[nLayer][nIdx]->m_pDefPos[nIdxDef].x - pDoc->m_Master[nLayer].m_pCellRgn->StPosX[cell];		// BufIdx[], DefIdx[]
+//		cy = pDoc->m_pPcr[nLayer][nIdx]->m_pDefPos[nIdxDef].y - pDoc->m_Master[nLayer].m_pCellRgn->StPosY[cell];		// BufIdx[], DefIdx[]
+//#endif
+//	}
+//	else
+//	{
+//		if (!pDoc->m_pPcrInner[nLayer])
+//			return;
+//#ifndef USE_MIL
+//		cell = pDoc->m_pPcrInner[nLayer][TEST_SHOT - 1]->m_pCell[0];			// for Test - BufIdx[0], DefIdx[0]
+//		cx = pDoc->m_pPcrInner[nLayer][TEST_SHOT - 1]->m_pDefPos[0].x;		// for Test - BufIdx[0], DefIdx[0]
+//		cy = pDoc->m_pPcrInner[nLayer][TEST_SHOT - 1]->m_pDefPos[0].y;		// for Test - BufIdx[0], DefIdx[0]
+//#else
+//		nIdx = pDoc->GetPcrIdx1(nSerial);
+//		if (!pDoc->m_pPcrInner[nLayer][nIdx])
+//			return;
+//		if (!pDoc->m_pPcrInner[nLayer][nIdx]->m_pCell || !pDoc->m_pPcrInner[nLayer][nIdx]->m_pDefPos ||
+//			!pDoc->m_MasterInner[nLayer].m_pCellRgn)
+//			return;
+//
+//		cell = pDoc->m_pPcrInner[nLayer][nIdx]->m_pCell[nIdxDef];										// BufIdx[], DefIdx[]
+//		cx = pDoc->m_pPcrInner[nLayer][nIdx]->m_pDefPos[nIdxDef].x - pDoc->m_MasterInner[nLayer].m_pCellRgn->StPosX[cell];		// BufIdx[], DefIdx[]
+//		cy = pDoc->m_pPcrInner[nLayer][nIdx]->m_pDefPos[nIdxDef].y - pDoc->m_MasterInner[nLayer].m_pCellRgn->StPosY[cell];		// BufIdx[], DefIdx[]
+//#endif
+//	}
+//
+//	CropCadImg(cell, cx, cy, nIdxMkInfo, nLayer);
 }
 
 void CVision::CropCadImg(short cell, short cx, short cy, int BufID, int nLayer)
 {
-	CString str;
-
-	int CellX, CellY;
-	BOOL IsLeftSwath, IsRightSwath, IsTopNode, IsBottomNode;	// 패널 이미지의 가장자리부분을 나타냄.
-	BOOL IsUpNode, IsDownNode;									// 스트립의 상하 가장자리부분을 나타냄.
-	int dx, dy;
-	int stx, sty, edx, edy;
-	int CelNum;
-
-	REGION_STRIP *pCellRgn[2];
-
-
-	if (m_nIdx == 0 || m_nIdx == 1)
-	{
-		pCellRgn[nLayer] = pDoc->m_Master[nLayer].m_pCellRgn;
-		CellX = cell / pDoc->m_Master[nLayer].m_pCellRgn->NodeNumY;
-		CellY = cell % pDoc->m_Master[nLayer].m_pCellRgn->NodeNumY;
-	}
-	else
-	{
-		pCellRgn[nLayer] = pDoc->m_MasterInner[nLayer].m_pCellRgn;
-		CellX = cell / pDoc->m_MasterInner[nLayer].m_pCellRgn->NodeNumY;
-		CellY = cell % pDoc->m_MasterInner[nLayer].m_pCellRgn->NodeNumY;
-	}
-
-
-	dx = DEF_IMG_DISP_SIZEX;
-	dy = DEF_IMG_DISP_SIZEY;
-
-	stx = cx - dx / 2;
-	sty = cy - dy / 2;
-	edx = cx + dx / 2;
-	edy = cy + dy / 2;
-
-	IsUpNode = 0;
-	IsDownNode = 0;
-
-	if (pCellRgn[nLayer]->NodeNumY > 0)
-	{
-		IsLeftSwath = (CellX == 0 ? 1 : 0);
-		IsRightSwath = ((CellX + 1) ==pCellRgn[nLayer]->NodeNumX ? 1 : 0);
-		IsTopNode  = (CellY == 0 ? 1 : 0);
-		IsBottomNode  = ((CellY + 1) == pCellRgn[nLayer]->NodeNumY ? 1 : 0);
-
-		IsUpNode = (CellY % pCellRgn[nLayer]->nCellDivideY == 0 ? 1 : 0);
-		IsDownNode = ((CellY % pCellRgn[nLayer]->nCellDivideY) == (pCellRgn[nLayer]->nCellDivideY-1) ? 1 : 0);
-	}
-	else
-	{
-		pView->MsgBox(_T("Invalid CAD Img Info"));
-// 		AfxMessageBox(_T("Invalid CAD Img Info"));
-		return;
-	}
-
-
-	if(stx < 0)
-	{
-		if(sty < 0)
-		{
-			if(IsLeftSwath && IsTopNode)
-			{
-				SetCADCoord(cell, stx, sty, 1, nLayer);
-				CelNum = 1;
-			}
-			else if(IsLeftSwath)
-			{
-				if(IsUpNode)
-				{
-					SetCADCoord(cell, stx, sty, 1, nLayer);
-					CelNum = 1;
-					if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
-					{
-						if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
-						{
-							SetCADCoord(cell, stx, sty, 31, nLayer);
-							CelNum = 2;
-						}					
-					}
-					else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
-					{
-							SetCADCoord(cell, stx, sty, 41, nLayer);
-							CelNum = 2;						
-					}
-				}
-				else
-				{
-					SetCADCoord(cell, stx, sty, 1, nLayer);
-					SetCADCoord(cell, stx, sty, 10, nLayer);
-					CelNum = 2;
-				}
-			}
-			else if(IsTopNode)
-			{
-				SetCADCoord(cell, stx, sty, 1, nLayer);
-				SetCADCoord(cell, stx, sty, 24, nLayer);
-				CelNum = 2;
-			}
-			else
-			{
-				if(IsUpNode)
-				{
-					SetCADCoord(cell, stx, sty, 1, nLayer);
-					SetCADCoord(cell, stx, sty, 24, nLayer);
-					CelNum = 2;
-					if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
-					{
-						if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
-						{
-							SetCADCoord(cell, stx, sty, 30, nLayer);
-							SetCADCoord(cell, stx, sty, 31, nLayer);
-							CelNum = 4;
-						}					
-					}
-					else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
-					{
-							SetCADCoord(cell, stx, sty, 40, nLayer);
-							SetCADCoord(cell, stx, sty, 41, nLayer);
-							CelNum = 4;						
-					}
-				}
-				else
-				{
-					SetCADCoord(cell, stx, sty, 1, nLayer);
-					SetCADCoord(cell, stx, sty, 9, nLayer);
-					SetCADCoord(cell, stx, sty, 10, nLayer);
-					SetCADCoord(cell, stx, sty, 24, nLayer);
-					CelNum = 4;
-				}
-			}
-		}
-		else if(edy > pCellRgn[nLayer]->ProcSizeY)
-		{
-			if(IsLeftSwath && IsBottomNode)
-			{
-				SetCADCoord(cell, stx, sty, 7, nLayer);
-				CelNum = 1;
-			}
-			else if(IsLeftSwath)
-			{
-				if(IsDownNode)
-				{
-					SetCADCoord(cell, stx, sty, 7, nLayer);
-					CelNum = 1;
-					if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
-					{
-						if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
-						{
-							SetCADCoord(cell, stx, sty, 26, nLayer);
-							CelNum = 2;
-						}					
-					}
-					else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
-					{
-							SetCADCoord(cell, stx, sty, 36, nLayer);
-							CelNum = 2;						
-					}
-				}
-				else
-				{
-					SetCADCoord(cell, stx, sty, 7, nLayer);
-					SetCADCoord(cell, stx, sty, 20, nLayer);
-					CelNum = 2;
-				}
-			}
-			else if(IsBottomNode)
-			{
-				SetCADCoord(cell, stx, sty, 7, nLayer);
-				SetCADCoord(cell, stx, sty, 22, nLayer);
-				CelNum = 2;
-			}
-			else
-			{
-				if(IsDownNode)
-				{
-					SetCADCoord(cell, stx, sty, 7, nLayer);
-					SetCADCoord(cell, stx, sty, 22, nLayer);
-					CelNum = 2;
-					if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
-					{
-						if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
-						{
-							SetCADCoord(cell, stx, sty, 25, nLayer);
-							SetCADCoord(cell, stx, sty, 26, nLayer);
-							CelNum = 4;
-						}			
-					}
-					else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
-					{
-							SetCADCoord(cell, stx, sty, 35, nLayer);
-							SetCADCoord(cell, stx, sty, 36, nLayer);
-							CelNum = 4;
-					}
-				}
-				else
-				{
-					SetCADCoord(cell, stx, sty, 7, nLayer);
-					SetCADCoord(cell, stx, sty, 20, nLayer);
-					SetCADCoord(cell, stx, sty, 21, nLayer);
-					SetCADCoord(cell, stx, sty, 22, nLayer);
-					CelNum = 4;
-				}
-			}
-		}
-		else
-		{
-			SetCADCoord(cell, stx, sty, 8, nLayer);
-			CelNum = 1;
-			if(!IsLeftSwath)
-			{
-				SetCADCoord(cell, stx, sty, 23, nLayer);
-				CelNum = 2;
-			}
-		}
-	}
-	else if(edx > pCellRgn[nLayer]->ProcSizeX)
-	{
-		if(sty < 0)
-		{
-			if(IsRightSwath && IsTopNode)
-			{
-				SetCADCoord(cell, stx, sty, 3, nLayer);
-				CelNum = 1;
-			}
-			else if(IsRightSwath)
-			{
-				if(IsUpNode)
-				{
-					SetCADCoord(cell, stx, sty, 3, nLayer);
-					CelNum = 1;
-					if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
-					{
-						if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
-						{
-							SetCADCoord(cell, stx, sty, 33, nLayer);
-							CelNum = 2;
-						}
-					}
-					else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
-					{
-							SetCADCoord(cell, stx, sty, 43, nLayer);
-							CelNum = 2;
-					}
-				}
-				else
-				{
-					SetCADCoord(cell, stx, sty, 3, nLayer);
-					SetCADCoord(cell, stx, sty, 12, nLayer);
-					CelNum = 2;
-				}
-			}
-			else if(IsTopNode)
-			{
-				SetCADCoord(cell, stx, sty, 3, nLayer);
-				SetCADCoord(cell, stx, sty, 14, nLayer);
-				CelNum = 2;
-			}
-			else
-			{
-				if(IsUpNode)
-				{
-					SetCADCoord(cell, stx, sty, 3, nLayer);
-					SetCADCoord(cell, stx, sty, 14, nLayer);
-					CelNum = 2;
-					if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
-					{
-						if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
-						{
-							SetCADCoord(cell, stx, sty, 33, nLayer);
-							SetCADCoord(cell, stx, sty, 34, nLayer);
-							CelNum = 4;
-						}
-					}
-					else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
-					{
-							SetCADCoord(cell, stx, sty, 43, nLayer);
-							SetCADCoord(cell, stx, sty, 44, nLayer);
-							CelNum = 4;				
-					}
-				}
-				else
-				{
-					SetCADCoord(cell, stx, sty, 3, nLayer);
-					SetCADCoord(cell, stx, sty, 12, nLayer);
-					SetCADCoord(cell, stx, sty, 13, nLayer);
-					SetCADCoord(cell, stx, sty, 14, nLayer);
-					CelNum = 4;
-				}
-			}
-		}
-		else if(edy > pCellRgn[nLayer]->ProcSizeY)
-		{
-			if(IsRightSwath && IsBottomNode)
-			{
-				SetCADCoord(cell, stx, sty, 5, nLayer);
-				CelNum = 1;
-			}
-			else if(IsRightSwath)
-			{
-				if(IsDownNode)
-				{
-					SetCADCoord(cell, stx, sty, 5, nLayer);
-					CelNum = 1;
-					if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
-					{
-						if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
-						{
-							SetCADCoord(cell, stx, sty, 28, nLayer);
-							CelNum = 2;
-						}
-					}
-					else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
-					{
-							SetCADCoord(cell, stx, sty, 38, nLayer);
-							CelNum = 2;
-					}
-				}
-				else
-				{
-					SetCADCoord(cell, stx, sty, 5, nLayer);
-					SetCADCoord(cell, stx, sty, 18, nLayer);
-					CelNum = 2;
-				}
-			}
-			else if(IsBottomNode)
-			{
-				SetCADCoord(cell, stx, sty, 5, nLayer);
-				SetCADCoord(cell, stx, sty, 16, nLayer);
-				CelNum = 2;
-			}
-			else
-			{
-				if(IsDownNode)
-				{
-					SetCADCoord(cell, stx, sty, 5, nLayer);
-					SetCADCoord(cell, stx, sty, 16, nLayer);
-					CelNum = 2;
-					if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
-					{
-						if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
-						{
-							SetCADCoord(cell, stx, sty, 28, nLayer);
-							SetCADCoord(cell, stx, sty, 29, nLayer);
-							CelNum = 4;
-						}
-
-					}
-					else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
-					{
-							SetCADCoord(cell, stx, sty, 38, nLayer);
-							SetCADCoord(cell, stx, sty, 39, nLayer);
-							CelNum = 4;
-					}
-				}
-				else
-				{
-					SetCADCoord(cell, stx, sty, 5, nLayer);
-					SetCADCoord(cell, stx, sty, 16, nLayer);
-					SetCADCoord(cell, stx, sty, 17, nLayer);
-					SetCADCoord(cell, stx, sty, 18, nLayer);
-					CelNum = 4;
-				}
-			}
-		}
-		else
-		{
-			SetCADCoord(cell, stx, sty, 4, nLayer);
-			CelNum = 1;
-			if(!IsRightSwath)
-			{
-				SetCADCoord(cell, stx, sty, 15, nLayer);
-				CelNum = 2;
-			}
-		}
-	}
-	else
-	{
-		if(sty < 0)
-		{
-			if(IsTopNode)
-			{
-				SetCADCoord(cell, stx, sty, 2, nLayer);
-				CelNum = 1;
-			}
-			else if(IsUpNode)
-			{
-				SetCADCoord(cell, stx, sty, 2, nLayer);
-				CelNum = 1;
-				if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
-				{
-					if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
-					{
-						SetCADCoord(cell, stx, sty, 32, nLayer);
-						CelNum = 2;
-					}
-				}
-				else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
-				{
-						SetCADCoord(cell, stx, sty, 42, nLayer);
-						CelNum = 2;
-				}
-			}
-			else
-			{
-				SetCADCoord(cell, stx, sty, 2, nLayer);
-				SetCADCoord(cell, stx, sty, 11, nLayer);
-				CelNum = 2;
-			}
-		}
-		else if(edy > pCellRgn[nLayer]->ProcSizeY)
-		{
-			if(IsBottomNode)
-			{
-				SetCADCoord(cell, stx, sty, 6, nLayer);
-				CelNum = 1;
-			}
-			else if(IsDownNode)
-			{
-				SetCADCoord(cell, stx, sty, 6, nLayer);
-				CelNum = 1;
-				if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
-				{
-					if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
-					{
-						SetCADCoord(cell, stx, sty, 27, nLayer);
-						CelNum = 2;
-					}
-				}
-				else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
-				{
-						SetCADCoord(cell, stx, sty, 37, nLayer);
-						CelNum = 2;
-				}
-			}
-			else
-			{
-				SetCADCoord(cell, stx, sty, 6, nLayer);
-				SetCADCoord(cell, stx, sty, 19, nLayer);
-				CelNum = 2;
-			}
-		}
-		else
-		{
-			SetCADCoord(cell, stx, sty, 0, nLayer);
-			CelNum = 1;
-		}
-	}
-
-//	m_pMilBufCad[BufID]->BufferCopy(MilBufCADTemp, m_pMilBufCad[BufID]->m_MilImage);
-//	MbufSave(_T("C:\\R2RSet\\Temp.tif"), MilBufCADTemp));
-
-	MbufCopy(MilBufCADTemp, m_pMilBufCad[BufID]->m_MilImage);
-//	MbufControl(m_pMilBufCad[BufID]->m_MilImage, M_MODIFIED, M_DEFAULT);
+//	CString str;
+//
+//	int CellX, CellY;
+//	BOOL IsLeftSwath, IsRightSwath, IsTopNode, IsBottomNode;	// 패널 이미지의 가장자리부분을 나타냄.
+//	BOOL IsUpNode, IsDownNode;									// 스트립의 상하 가장자리부분을 나타냄.
+//	int dx, dy;
+//	int stx, sty, edx, edy;
+//	int CelNum;
+//
+//	REGION_STRIP *pCellRgn[2];
+//
+//
+//	if (m_nIdx == 0 || m_nIdx == 1)
+//	{
+//		pCellRgn[nLayer] = pDoc->m_Master[nLayer].m_pCellRgn;
+//		CellX = cell / pDoc->m_Master[nLayer].m_pCellRgn->NodeNumY;
+//		CellY = cell % pDoc->m_Master[nLayer].m_pCellRgn->NodeNumY;
+//	}
+//	else
+//	{
+//		pCellRgn[nLayer] = pDoc->m_MasterInner[nLayer].m_pCellRgn;
+//		CellX = cell / pDoc->m_MasterInner[nLayer].m_pCellRgn->NodeNumY;
+//		CellY = cell % pDoc->m_MasterInner[nLayer].m_pCellRgn->NodeNumY;
+//	}
+//
+//
+//	dx = DEF_IMG_DISP_SIZEX;
+//	dy = DEF_IMG_DISP_SIZEY;
+//
+//	stx = cx - dx / 2;
+//	sty = cy - dy / 2;
+//	edx = cx + dx / 2;
+//	edy = cy + dy / 2;
+//
+//	IsUpNode = 0;
+//	IsDownNode = 0;
+//
+//	if (pCellRgn[nLayer]->NodeNumY > 0)
+//	{
+//		IsLeftSwath = (CellX == 0 ? 1 : 0);
+//		IsRightSwath = ((CellX + 1) ==pCellRgn[nLayer]->NodeNumX ? 1 : 0);
+//		IsTopNode  = (CellY == 0 ? 1 : 0);
+//		IsBottomNode  = ((CellY + 1) == pCellRgn[nLayer]->NodeNumY ? 1 : 0);
+//
+//		IsUpNode = (CellY % pCellRgn[nLayer]->nCellDivideY == 0 ? 1 : 0);
+//		IsDownNode = ((CellY % pCellRgn[nLayer]->nCellDivideY) == (pCellRgn[nLayer]->nCellDivideY-1) ? 1 : 0);
+//	}
+//	else
+//	{
+//		pView->MsgBox(_T("Invalid CAD Img Info"));
+//// 		AfxMessageBox(_T("Invalid CAD Img Info"));
+//		return;
+//	}
+//
+//
+//	if(stx < 0)
+//	{
+//		if(sty < 0)
+//		{
+//			if(IsLeftSwath && IsTopNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 1, nLayer);
+//				CelNum = 1;
+//			}
+//			else if(IsLeftSwath)
+//			{
+//				if(IsUpNode)
+//				{
+//					SetCADCoord(cell, stx, sty, 1, nLayer);
+//					CelNum = 1;
+//					if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
+//					{
+//						if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
+//						{
+//							SetCADCoord(cell, stx, sty, 31, nLayer);
+//							CelNum = 2;
+//						}					
+//					}
+//					else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
+//					{
+//							SetCADCoord(cell, stx, sty, 41, nLayer);
+//							CelNum = 2;						
+//					}
+//				}
+//				else
+//				{
+//					SetCADCoord(cell, stx, sty, 1, nLayer);
+//					SetCADCoord(cell, stx, sty, 10, nLayer);
+//					CelNum = 2;
+//				}
+//			}
+//			else if(IsTopNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 1, nLayer);
+//				SetCADCoord(cell, stx, sty, 24, nLayer);
+//				CelNum = 2;
+//			}
+//			else
+//			{
+//				if(IsUpNode)
+//				{
+//					SetCADCoord(cell, stx, sty, 1, nLayer);
+//					SetCADCoord(cell, stx, sty, 24, nLayer);
+//					CelNum = 2;
+//					if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
+//					{
+//						if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
+//						{
+//							SetCADCoord(cell, stx, sty, 30, nLayer);
+//							SetCADCoord(cell, stx, sty, 31, nLayer);
+//							CelNum = 4;
+//						}					
+//					}
+//					else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
+//					{
+//							SetCADCoord(cell, stx, sty, 40, nLayer);
+//							SetCADCoord(cell, stx, sty, 41, nLayer);
+//							CelNum = 4;						
+//					}
+//				}
+//				else
+//				{
+//					SetCADCoord(cell, stx, sty, 1, nLayer);
+//					SetCADCoord(cell, stx, sty, 9, nLayer);
+//					SetCADCoord(cell, stx, sty, 10, nLayer);
+//					SetCADCoord(cell, stx, sty, 24, nLayer);
+//					CelNum = 4;
+//				}
+//			}
+//		}
+//		else if(edy > pCellRgn[nLayer]->ProcSizeY)
+//		{
+//			if(IsLeftSwath && IsBottomNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 7, nLayer);
+//				CelNum = 1;
+//			}
+//			else if(IsLeftSwath)
+//			{
+//				if(IsDownNode)
+//				{
+//					SetCADCoord(cell, stx, sty, 7, nLayer);
+//					CelNum = 1;
+//					if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
+//					{
+//						if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
+//						{
+//							SetCADCoord(cell, stx, sty, 26, nLayer);
+//							CelNum = 2;
+//						}					
+//					}
+//					else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
+//					{
+//							SetCADCoord(cell, stx, sty, 36, nLayer);
+//							CelNum = 2;						
+//					}
+//				}
+//				else
+//				{
+//					SetCADCoord(cell, stx, sty, 7, nLayer);
+//					SetCADCoord(cell, stx, sty, 20, nLayer);
+//					CelNum = 2;
+//				}
+//			}
+//			else if(IsBottomNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 7, nLayer);
+//				SetCADCoord(cell, stx, sty, 22, nLayer);
+//				CelNum = 2;
+//			}
+//			else
+//			{
+//				if(IsDownNode)
+//				{
+//					SetCADCoord(cell, stx, sty, 7, nLayer);
+//					SetCADCoord(cell, stx, sty, 22, nLayer);
+//					CelNum = 2;
+//					if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
+//					{
+//						if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
+//						{
+//							SetCADCoord(cell, stx, sty, 25, nLayer);
+//							SetCADCoord(cell, stx, sty, 26, nLayer);
+//							CelNum = 4;
+//						}			
+//					}
+//					else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
+//					{
+//							SetCADCoord(cell, stx, sty, 35, nLayer);
+//							SetCADCoord(cell, stx, sty, 36, nLayer);
+//							CelNum = 4;
+//					}
+//				}
+//				else
+//				{
+//					SetCADCoord(cell, stx, sty, 7, nLayer);
+//					SetCADCoord(cell, stx, sty, 20, nLayer);
+//					SetCADCoord(cell, stx, sty, 21, nLayer);
+//					SetCADCoord(cell, stx, sty, 22, nLayer);
+//					CelNum = 4;
+//				}
+//			}
+//		}
+//		else
+//		{
+//			SetCADCoord(cell, stx, sty, 8, nLayer);
+//			CelNum = 1;
+//			if(!IsLeftSwath)
+//			{
+//				SetCADCoord(cell, stx, sty, 23, nLayer);
+//				CelNum = 2;
+//			}
+//		}
+//	}
+//	else if(edx > pCellRgn[nLayer]->ProcSizeX)
+//	{
+//		if(sty < 0)
+//		{
+//			if(IsRightSwath && IsTopNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 3, nLayer);
+//				CelNum = 1;
+//			}
+//			else if(IsRightSwath)
+//			{
+//				if(IsUpNode)
+//				{
+//					SetCADCoord(cell, stx, sty, 3, nLayer);
+//					CelNum = 1;
+//					if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
+//					{
+//						if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
+//						{
+//							SetCADCoord(cell, stx, sty, 33, nLayer);
+//							CelNum = 2;
+//						}
+//					}
+//					else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
+//					{
+//							SetCADCoord(cell, stx, sty, 43, nLayer);
+//							CelNum = 2;
+//					}
+//				}
+//				else
+//				{
+//					SetCADCoord(cell, stx, sty, 3, nLayer);
+//					SetCADCoord(cell, stx, sty, 12, nLayer);
+//					CelNum = 2;
+//				}
+//			}
+//			else if(IsTopNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 3, nLayer);
+//				SetCADCoord(cell, stx, sty, 14, nLayer);
+//				CelNum = 2;
+//			}
+//			else
+//			{
+//				if(IsUpNode)
+//				{
+//					SetCADCoord(cell, stx, sty, 3, nLayer);
+//					SetCADCoord(cell, stx, sty, 14, nLayer);
+//					CelNum = 2;
+//					if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
+//					{
+//						if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
+//						{
+//							SetCADCoord(cell, stx, sty, 33, nLayer);
+//							SetCADCoord(cell, stx, sty, 34, nLayer);
+//							CelNum = 4;
+//						}
+//					}
+//					else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
+//					{
+//							SetCADCoord(cell, stx, sty, 43, nLayer);
+//							SetCADCoord(cell, stx, sty, 44, nLayer);
+//							CelNum = 4;				
+//					}
+//				}
+//				else
+//				{
+//					SetCADCoord(cell, stx, sty, 3, nLayer);
+//					SetCADCoord(cell, stx, sty, 12, nLayer);
+//					SetCADCoord(cell, stx, sty, 13, nLayer);
+//					SetCADCoord(cell, stx, sty, 14, nLayer);
+//					CelNum = 4;
+//				}
+//			}
+//		}
+//		else if(edy > pCellRgn[nLayer]->ProcSizeY)
+//		{
+//			if(IsRightSwath && IsBottomNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 5, nLayer);
+//				CelNum = 1;
+//			}
+//			else if(IsRightSwath)
+//			{
+//				if(IsDownNode)
+//				{
+//					SetCADCoord(cell, stx, sty, 5, nLayer);
+//					CelNum = 1;
+//					if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
+//					{
+//						if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
+//						{
+//							SetCADCoord(cell, stx, sty, 28, nLayer);
+//							CelNum = 2;
+//						}
+//					}
+//					else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
+//					{
+//							SetCADCoord(cell, stx, sty, 38, nLayer);
+//							CelNum = 2;
+//					}
+//				}
+//				else
+//				{
+//					SetCADCoord(cell, stx, sty, 5, nLayer);
+//					SetCADCoord(cell, stx, sty, 18, nLayer);
+//					CelNum = 2;
+//				}
+//			}
+//			else if(IsBottomNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 5, nLayer);
+//				SetCADCoord(cell, stx, sty, 16, nLayer);
+//				CelNum = 2;
+//			}
+//			else
+//			{
+//				if(IsDownNode)
+//				{
+//					SetCADCoord(cell, stx, sty, 5, nLayer);
+//					SetCADCoord(cell, stx, sty, 16, nLayer);
+//					CelNum = 2;
+//					if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
+//					{
+//						if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
+//						{
+//							SetCADCoord(cell, stx, sty, 28, nLayer);
+//							SetCADCoord(cell, stx, sty, 29, nLayer);
+//							CelNum = 4;
+//						}
+//
+//					}
+//					else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
+//					{
+//							SetCADCoord(cell, stx, sty, 38, nLayer);
+//							SetCADCoord(cell, stx, sty, 39, nLayer);
+//							CelNum = 4;
+//					}
+//				}
+//				else
+//				{
+//					SetCADCoord(cell, stx, sty, 5, nLayer);
+//					SetCADCoord(cell, stx, sty, 16, nLayer);
+//					SetCADCoord(cell, stx, sty, 17, nLayer);
+//					SetCADCoord(cell, stx, sty, 18, nLayer);
+//					CelNum = 4;
+//				}
+//			}
+//		}
+//		else
+//		{
+//			SetCADCoord(cell, stx, sty, 4, nLayer);
+//			CelNum = 1;
+//			if(!IsRightSwath)
+//			{
+//				SetCADCoord(cell, stx, sty, 15, nLayer);
+//				CelNum = 2;
+//			}
+//		}
+//	}
+//	else
+//	{
+//		if(sty < 0)
+//		{
+//			if(IsTopNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 2, nLayer);
+//				CelNum = 1;
+//			}
+//			else if(IsUpNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 2, nLayer);
+//				CelNum = 1;
+//				if(0 <= (pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]))
+//				{
+//					if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < -sty)
+//					{
+//						SetCADCoord(cell, stx, sty, 32, nLayer);
+//						CelNum = 2;
+//					}
+//				}
+//				else if((pCellRgn[nLayer]->StPosY[cell] - pCellRgn[nLayer]->EdPosY[cell-1]) < 0)
+//				{
+//						SetCADCoord(cell, stx, sty, 42, nLayer);
+//						CelNum = 2;
+//				}
+//			}
+//			else
+//			{
+//				SetCADCoord(cell, stx, sty, 2, nLayer);
+//				SetCADCoord(cell, stx, sty, 11, nLayer);
+//				CelNum = 2;
+//			}
+//		}
+//		else if(edy > pCellRgn[nLayer]->ProcSizeY)
+//		{
+//			if(IsBottomNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 6, nLayer);
+//				CelNum = 1;
+//			}
+//			else if(IsDownNode)
+//			{
+//				SetCADCoord(cell, stx, sty, 6, nLayer);
+//				CelNum = 1;
+//				if(0 <= (pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]))
+//				{
+//					if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < (DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - sty)))
+//					{
+//						SetCADCoord(cell, stx, sty, 27, nLayer);
+//						CelNum = 2;
+//					}
+//				}
+//				else if((pCellRgn[nLayer]->StPosY[cell+1] - pCellRgn[nLayer]->EdPosY[cell]) < 0)
+//				{
+//						SetCADCoord(cell, stx, sty, 37, nLayer);
+//						CelNum = 2;
+//				}
+//			}
+//			else
+//			{
+//				SetCADCoord(cell, stx, sty, 6, nLayer);
+//				SetCADCoord(cell, stx, sty, 19, nLayer);
+//				CelNum = 2;
+//			}
+//		}
+//		else
+//		{
+//			SetCADCoord(cell, stx, sty, 0, nLayer);
+//			CelNum = 1;
+//		}
+//	}
+//
+////	m_pMilBufCad[BufID]->BufferCopy(MilBufCADTemp, m_pMilBufCad[BufID]->m_MilImage);
+////	MbufSave(_T("C:\\R2RSet\\Temp.tif"), MilBufCADTemp));
+//
+//	MbufCopy(MilBufCADTemp, m_pMilBufCad[BufID]->m_MilImage);
+////	MbufControl(m_pMilBufCad[BufID]->m_MilImage, M_MODIFIED, M_DEFAULT);
 }
 
 BOOL CVision::SetCADCoord(int CellNum, int StX, int StY, int Coord, int nLayer)
 {
-	BOOL RValue;
-	long OrginalX, OrginalY;
-	long DestX, DestY;
-	long SizeX, SizeY;
-	long EmpStripThick;
+	return TRUE;
+	//BOOL RValue;
+	//long OrginalX, OrginalY;
+	//long DestX, DestY;
+	//long SizeX, SizeY;
+	//long EmpStripThick;
 
-	REGION_STRIP *pCellRgn[2];
-	if (m_nIdx == 0 || m_nIdx == 1)
-		pCellRgn[nLayer] = pDoc->m_Master[nLayer].m_pCellRgn;
-	else
-		pCellRgn[nLayer] = pDoc->m_MasterInner[nLayer].m_pCellRgn;
+	//REGION_STRIP *pCellRgn[2];
+	//if (m_nIdx == 0 || m_nIdx == 1)
+	//	pCellRgn[nLayer] = pDoc->m_Master[nLayer].m_pCellRgn;
+	//else
+	//	pCellRgn[nLayer] = pDoc->m_MasterInner[nLayer].m_pCellRgn;
 
-	switch(Coord) 
-	{
-	case 0:		// In Current Cell
-		if(StX < 0 || StY < 0)
-		{
-			RValue = FALSE;
-			break;
-		}
-		OrginalX = StX;
-		OrginalY = StY;
-		SizeX = DEF_IMG_DISP_SIZEX;
-		SizeY = DEF_IMG_DISP_SIZEY;
-		DestX = 0;
-		DestY = 0;
-		LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-		RValue = TRUE;
-		break;
-	case 1:		// Left Top Corner Inside
-		if(StX >= 0 || StY >= 0)
-		{
-		   RValue = FALSE;
-		   break;
-		}
-		OrginalX = 0;
-		OrginalY = 0;
-		SizeX = DEF_IMG_DISP_SIZEX+StX;
-		SizeY = DEF_IMG_DISP_SIZEY+StY;
-		DestX = -StX;
-		DestY = -StY;
-		LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-		RValue = TRUE;
-		break;
-	case 2:		// Top Inside
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = 0;
-	   SizeX = DEF_IMG_DISP_SIZEX;
-	   SizeY = DEF_IMG_DISP_SIZEY+StY;
-	   DestX = 0;
-	   DestY = -StY;
-	   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 3:		// Right Top Corner Inside
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = 0;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = DEF_IMG_DISP_SIZEY+StY;
-	   DestX = 0;
-	   DestY = -StY;
-	   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 4:		// Right Inside
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = StY;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = DEF_IMG_DISP_SIZEY;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 5:		// Right Bottom Corner Inside
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = StY;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 6:		// Bottom Inside
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = StY;
-	   SizeX = DEF_IMG_DISP_SIZEX;
-	   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 7:		// Left Bottom Corner Inside
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = 0;
-	   OrginalY = StY;
-	   SizeX = DEF_IMG_DISP_SIZEX + StX;
-	   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   DestX = -StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 8:		// Left Inside
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = 0;
-	   OrginalY = StY;
-	   SizeX = DEF_IMG_DISP_SIZEX + StX;
-	   SizeY = DEF_IMG_DISP_SIZEY;
-	   DestX = -StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 9:		// Left Top Corner Outside
-	   if(StX >= 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
-	   SizeX = -StX;
-	   SizeY = -StY;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 10:	// Top of Left Top Corner Outside
-	   if(StX >= 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = 0;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
-	   SizeX = DEF_IMG_DISP_SIZEX + StX;
-	   SizeY = -StY;
-	   DestX = -StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 11:		// Top Outside
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
-	   SizeX = DEF_IMG_DISP_SIZEX;
-	   SizeY = -StY;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 12: 		// Top of Right Top Corner Outside
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = -StY;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 13:  	// Right Top Corner Outside
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
-	   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   SizeY = -StY;
-	   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 14: 		// Right of Right Top Corner Outside
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = 0;
-	   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   SizeY = DEF_IMG_DISP_SIZEY + StY;
-	   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   DestY = -StY;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 15: 		// Right Outside
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = StY;
-	   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   SizeY = DEF_IMG_DISP_SIZEY;
-	   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 16: 		// Right of Right Bottom Corner Outside
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = StY;
-	   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 17: 		// Right of Right Bottom Corner Outside
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = pCellRgn[nLayer]->OvrYPix;
-	   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 18: 		// Bottom of Right Bottom Corner Outside
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = pCellRgn[nLayer]->OvrYPix;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 19: 		// Bottom Outside
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = pCellRgn[nLayer]->OvrYPix;
-	   SizeX = DEF_IMG_DISP_SIZEX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 20: 		// Bottom of Left Bottom Corner Outside
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = 0;
-	   OrginalY = pCellRgn[nLayer]->OvrYPix;
-	   SizeX = DEF_IMG_DISP_SIZEX + StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = -StX;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 21: 		// Left Bottom of Left Bottom Corner Outside
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = pCellRgn[nLayer]->OvrYPix;
-	   SizeX = -StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 22: 		// Left Bottom of Left Bottom Corner Outside
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = StY;
-	   SizeX = -StX;
-	   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 23: 		// Left Bottom of Left Bottom Corner Outside
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = StY;
-	   SizeX = -StX;
-	   SizeY = DEF_IMG_DISP_SIZEY;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 24: 		// Left Bottom of Left Bottom Corner Outside
-	   if(StX >= 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = 0;
-	   SizeX = -StX;
-	   SizeY = DEF_IMG_DISP_SIZEY + StY;
-	   DestX = 0;
-	   DestY = -StY;
-	   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 25: 		// Left Bottom of Left Bottom Corner Outside for Strip Mode
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = 0;
-	   SizeX = -StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
-	   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 26: 		// Bottom of Left Bottom Corner Outside for Strip Mode
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
-	   OrginalX = 0;
-	   OrginalY = 0;
-	   SizeX = DEF_IMG_DISP_SIZEX + StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = -StX;
-	   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 27: 		// Bottom Outside for Strip Mode
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
-	   OrginalX = StX;
-	   OrginalY = 0;
-	   SizeX = DEF_IMG_DISP_SIZEX;
-	   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 28: 		// Bottom of Right Bottom Corner Outside for Strip Mode
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
-	   OrginalX = StX;
-	   OrginalY = 0;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 29: 		// Right Bottom of Right Bottom Corner Outside for Strip Mode
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = 0;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 30: 		// Left Top of Left Top Corner Outside for Strip Mode
-	   if(StX >= 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY + EmpStripThick;
-	   SizeX = -StX;
-	   SizeY = -StY - EmpStripThick;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 31: 		// Top of Left Top Corner Outside for Strip Mode
-	   if(StX >= 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
-	   OrginalX = 0;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY + EmpStripThick;
-	   SizeX = DEF_IMG_DISP_SIZEX + StX;
-	   SizeY = -StY - EmpStripThick;
-	   DestX = -StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 32: 		// Top Outside for Strip Mode
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
-	   OrginalX = StX;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - EmpStripThick;
-	   SizeX = DEF_IMG_DISP_SIZEX;
-	   SizeY = -StY - EmpStripThick;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 33: 		// Top of Right Top Corner Outside for Strip Mode
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
-	   OrginalX = StX;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - EmpStripThick;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = -StY - EmpStripThick;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 34: 		// Right Top of Right Top Corner Outside for Strip Mode
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - EmpStripThick;
-	   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   SizeY = -StY - EmpStripThick;
-	   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 35: 		// Left Bottom of Left Bottom Corner Outside for Strip Mode
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = EmpStripThick;
-	   SizeX = -StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 36: 		// Bottom of Left Bottom Corner Outside for Strip Mode
-	   if(StX >= 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   OrginalX = 0;
-	   OrginalY = EmpStripThick;
-	   SizeX = DEF_IMG_DISP_SIZEX + StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = -StX;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 37: 		// Bottom Outside for Strip Mode
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   OrginalX = StX;
-	   OrginalY = EmpStripThick;
-	   SizeX = DEF_IMG_DISP_SIZEX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 38: 		// Bottom of Right Bottom Corner Outside for Strip Mode
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   OrginalX = StX;
-	   OrginalY = EmpStripThick;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = 0;
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 39: 		// Right Bottom of Right Bottom Corner Outside for Strip Mode
-	   if(StX < 0 || StY < 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = EmpStripThick;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
-	   DestX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 40: 		// Left Top of Left Top Corner Outside for Strip Mode
-	   if(StX >= 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   if(abs(StY) <= abs(EmpStripThick))
-	   {
-		   RValue = TRUE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
-	   SizeX = -StX;
-	   SizeY = -StY - EmpStripThick;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 41: 		// Top of Left Top Corner Outside for Strip Mode
-	   if(StX >= 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   if(abs(StY) <= abs(EmpStripThick))
-	   {
-		   RValue = TRUE;
-		   break;
-	   }
-	   OrginalX = 0;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
-	   SizeX = DEF_IMG_DISP_SIZEX + StX;
-	   SizeY = -StY - EmpStripThick;
-	   DestX = -StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 42: 		// Top Outside for Strip Mode
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   if(abs(StY) <= abs(EmpStripThick))
-	   {
-		   RValue = TRUE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
-	   SizeX = DEF_IMG_DISP_SIZEX;
-	   SizeY = -StY - EmpStripThick;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 43: 		// Top of Right Top Corner Outside for Strip Mode
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   if(abs(StY) <= abs(EmpStripThick))
-	   {
-		   RValue = TRUE;
-		   break;
-	   }
-	   OrginalX = StX;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
-	   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   SizeY = -StY - EmpStripThick;
-	   DestX = 0;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	case 44: 		// Right Top of Right Top Corner Outside for Strip Mode
-	   if(StX < 0 || StY >= 0)
-	   {
-		   RValue = FALSE;
-		   break;
-	   }
-	   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
-	   if(abs(StY) <= abs(EmpStripThick))
-	   {
-		   RValue = TRUE;
-		   break;
-	   }
-	   OrginalX = pCellRgn[nLayer]->OvrXPix;
-	   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
-	   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
-	   SizeY = -StY - EmpStripThick;
-	   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
-	   DestY = 0;
-	   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
-	   RValue = TRUE;
-	   break;
-	default:
-		break;
-	}
+	//switch(Coord) 
+	//{
+	//case 0:		// In Current Cell
+	//	if(StX < 0 || StY < 0)
+	//	{
+	//		RValue = FALSE;
+	//		break;
+	//	}
+	//	OrginalX = StX;
+	//	OrginalY = StY;
+	//	SizeX = DEF_IMG_DISP_SIZEX;
+	//	SizeY = DEF_IMG_DISP_SIZEY;
+	//	DestX = 0;
+	//	DestY = 0;
+	//	LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//	RValue = TRUE;
+	//	break;
+	//case 1:		// Left Top Corner Inside
+	//	if(StX >= 0 || StY >= 0)
+	//	{
+	//	   RValue = FALSE;
+	//	   break;
+	//	}
+	//	OrginalX = 0;
+	//	OrginalY = 0;
+	//	SizeX = DEF_IMG_DISP_SIZEX+StX;
+	//	SizeY = DEF_IMG_DISP_SIZEY+StY;
+	//	DestX = -StX;
+	//	DestY = -StY;
+	//	LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//	RValue = TRUE;
+	//	break;
+	//case 2:		// Top Inside
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = 0;
+	//   SizeX = DEF_IMG_DISP_SIZEX;
+	//   SizeY = DEF_IMG_DISP_SIZEY+StY;
+	//   DestX = 0;
+	//   DestY = -StY;
+	//   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 3:		// Right Top Corner Inside
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = 0;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY+StY;
+	//   DestX = 0;
+	//   DestY = -StY;
+	//   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 4:		// Right Inside
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = StY;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 5:		// Right Bottom Corner Inside
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = StY;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 6:		// Bottom Inside
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = StY;
+	//   SizeX = DEF_IMG_DISP_SIZEX;
+	//   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 7:		// Left Bottom Corner Inside
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = 0;
+	//   OrginalY = StY;
+	//   SizeX = DEF_IMG_DISP_SIZEX + StX;
+	//   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   DestX = -StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 8:		// Left Inside
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = 0;
+	//   OrginalY = StY;
+	//   SizeX = DEF_IMG_DISP_SIZEX + StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY;
+	//   DestX = -StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 9:		// Left Top Corner Outside
+	//   if(StX >= 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = -StX;
+	//   SizeY = -StY;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 10:	// Top of Left Top Corner Outside
+	//   if(StX >= 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = 0;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = DEF_IMG_DISP_SIZEX + StX;
+	//   SizeY = -StY;
+	//   DestX = -StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 11:		// Top Outside
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = DEF_IMG_DISP_SIZEX;
+	//   SizeY = -StY;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 12: 		// Top of Right Top Corner Outside
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = -StY;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 13:  	// Right Top Corner Outside
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   SizeY = -StY;
+	//   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 14: 		// Right of Right Top Corner Outside
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = 0;
+	//   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   SizeY = DEF_IMG_DISP_SIZEY + StY;
+	//   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   DestY = -StY;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 15: 		// Right Outside
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = StY;
+	//   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   SizeY = DEF_IMG_DISP_SIZEY;
+	//   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 16: 		// Right of Right Bottom Corner Outside
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = StY;
+	//   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 17: 		// Right of Right Bottom Corner Outside
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 18: 		// Bottom of Right Bottom Corner Outside
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 19: 		// Bottom Outside
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = DEF_IMG_DISP_SIZEX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 20: 		// Bottom of Left Bottom Corner Outside
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = 0;
+	//   OrginalY = pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = DEF_IMG_DISP_SIZEX + StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = -StX;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 21: 		// Left Bottom of Left Bottom Corner Outside
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = pCellRgn[nLayer]->OvrYPix;
+	//   SizeX = -StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 22: 		// Left Bottom of Left Bottom Corner Outside
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = StY;
+	//   SizeX = -StX;
+	//   SizeY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 23: 		// Left Bottom of Left Bottom Corner Outside
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = StY;
+	//   SizeX = -StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 24: 		// Left Bottom of Left Bottom Corner Outside
+	//   if(StX >= 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = 0;
+	//   SizeX = -StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY + StY;
+	//   DestX = 0;
+	//   DestY = -StY;
+	//   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 25: 		// Left Bottom of Left Bottom Corner Outside for Strip Mode
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = 0;
+	//   SizeX = -StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 26: 		// Bottom of Left Bottom Corner Outside for Strip Mode
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
+	//   OrginalX = 0;
+	//   OrginalY = 0;
+	//   SizeX = DEF_IMG_DISP_SIZEX + StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = -StX;
+	//   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 27: 		// Bottom Outside for Strip Mode
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
+	//   OrginalX = StX;
+	//   OrginalY = 0;
+	//   SizeX = DEF_IMG_DISP_SIZEX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 28: 		// Bottom of Right Bottom Corner Outside for Strip Mode
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
+	//   OrginalX = StX;
+	//   OrginalY = 0;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 29: 		// Right Bottom of Right Bottom Corner Outside for Strip Mode
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum + 1] - pCellRgn[nLayer]->EdPosY[CellNum]; 
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = 0;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - EmpStripThick - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   DestY = EmpStripThick + (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 30: 		// Left Top of Left Top Corner Outside for Strip Mode
+	//   if(StX >= 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY + EmpStripThick;
+	//   SizeX = -StX;
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 31: 		// Top of Left Top Corner Outside for Strip Mode
+	//   if(StX >= 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
+	//   OrginalX = 0;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY + EmpStripThick;
+	//   SizeX = DEF_IMG_DISP_SIZEX + StX;
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = -StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 32: 		// Top Outside for Strip Mode
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
+	//   OrginalX = StX;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - EmpStripThick;
+	//   SizeX = DEF_IMG_DISP_SIZEX;
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 33: 		// Top of Right Top Corner Outside for Strip Mode
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
+	//   OrginalX = StX;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - EmpStripThick;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 34: 		// Right Top of Right Top Corner Outside for Strip Mode
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->StPosY[CellNum] - pCellRgn[nLayer]->EdPosY[CellNum-1]; 
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY - EmpStripThick;
+	//   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 35: 		// Left Bottom of Left Bottom Corner Outside for Strip Mode
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = EmpStripThick;
+	//   SizeX = -StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum - pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 36: 		// Bottom of Left Bottom Corner Outside for Strip Mode
+	//   if(StX >= 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   OrginalX = 0;
+	//   OrginalY = EmpStripThick;
+	//   SizeX = DEF_IMG_DISP_SIZEX + StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = -StX;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 37: 		// Bottom Outside for Strip Mode
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   OrginalX = StX;
+	//   OrginalY = EmpStripThick;
+	//   SizeX = DEF_IMG_DISP_SIZEX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 38: 		// Bottom of Right Bottom Corner Outside for Strip Mode
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   OrginalX = StX;
+	//   OrginalY = EmpStripThick;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = 0;
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 39: 		// Right Bottom of Right Bottom Corner Outside for Strip Mode
+	//   if(StX < 0 || StY < 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = EmpStripThick;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = DEF_IMG_DISP_SIZEY - (pCellRgn[nLayer]->ProcSizeY - StY);
+	//   DestX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   DestY = pCellRgn[nLayer]->ProcSizeY - StY;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY + 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 40: 		// Left Top of Left Top Corner Outside for Strip Mode
+	//   if(StX >= 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   if(abs(StY) <= abs(EmpStripThick))
+	//   {
+	//	   RValue = TRUE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->ProcSizeX + StX - pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
+	//   SizeX = -StX;
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 41: 		// Top of Left Top Corner Outside for Strip Mode
+	//   if(StX >= 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   if(abs(StY) <= abs(EmpStripThick))
+	//   {
+	//	   RValue = TRUE;
+	//	   break;
+	//   }
+	//   OrginalX = 0;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
+	//   SizeX = DEF_IMG_DISP_SIZEX + StX;
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = -StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 42: 		// Top Outside for Strip Mode
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   if(abs(StY) <= abs(EmpStripThick))
+	//   {
+	//	   RValue = TRUE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
+	//   SizeX = DEF_IMG_DISP_SIZEX;
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 43: 		// Top of Right Top Corner Outside for Strip Mode
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   if(abs(StY) <= abs(EmpStripThick))
+	//   {
+	//	   RValue = TRUE;
+	//	   break;
+	//   }
+	//   OrginalX = StX;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
+	//   SizeX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = 0;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//case 44: 		// Right Top of Right Top Corner Outside for Strip Mode
+	//   if(StX < 0 || StY >= 0)
+	//   {
+	//	   RValue = FALSE;
+	//	   break;
+	//   }
+	//   EmpStripThick = pCellRgn[nLayer]->EdPosY[CellNum] - pCellRgn[nLayer]->StPosY[CellNum + 1];
+	//   if(abs(StY) <= abs(EmpStripThick))
+	//   {
+	//	   RValue = TRUE;
+	//	   break;
+	//   }
+	//   OrginalX = pCellRgn[nLayer]->OvrXPix;
+	//   OrginalY = pCellRgn[nLayer]->ProcSizeY + StY;
+	//   SizeX = DEF_IMG_DISP_SIZEX - (pCellRgn[nLayer]->ProcSizeX - StX);
+	//   SizeY = -StY - EmpStripThick;
+	//   DestX = pCellRgn[nLayer]->ProcSizeX - StX;
+	//   DestY = 0;
+	//   LoadCADBuf(CellNum + pCellRgn[nLayer]->NodeNumY - 1, OrginalX, OrginalY, DestX, DestY, SizeX, SizeY, nLayer);
+	//   RValue = TRUE;
+	//   break;
+	//default:
+	//	break;
+	//}
 
-	return(RValue);
+	//return(RValue);
 }
 
 void CVision::LoadCADBuf(int CurrCell, long OrgStX, long OrgStY, long DesStX, long DesStY, long SizeX, long SizeY, int nLayer)
 {
-// 	InitCADBuf();
-	MIL_ID MilBufCADCld = M_NULL, MilBufCADTempCld = M_NULL;
-	long OrgX, OrgY, DstX, DstY, SzX, SzY;
-	TiffData tdat;
-
-#ifdef USE_CAM_MASTER
-	REGION_STRIP *pCellRgn[2];
-	UCHAR *pCADCellImg;
-
-	if (m_nIdx == 0 || m_nIdx == 1)
-	{
-		pCellRgn[nLayer] = pDoc->m_Master[nLayer].m_pCellRgn;
-		pCADCellImg = pDoc->m_Master[nLayer].m_pCADCellImg[pDoc->m_Master[nLayer].CellInspID[CurrCell]];
-	}
-	else
-	{
-		pCellRgn[nLayer] = pDoc->m_MasterInner[nLayer].m_pCellRgn;
-		pCADCellImg = pDoc->m_MasterInner[nLayer].m_pCADCellImg[pDoc->m_MasterInner[nLayer].CellInspID[CurrCell]];
-	}
-
-	if (!MilCADImgBuf)
-		return;
-
-	//if(VicFileLoadFromMem(MilCADImgBuf, pDoc->m_Master[nLayer].m_pCADCellImg[pDoc->m_Master[nLayer].CellInspID[CurrCell]], tdat))
-	if(VicFileLoadFromMem(MilCADImgBuf, pCADCellImg, tdat))
-	{
-		if((OrgStX + SizeX) <= pCellRgn[nLayer]->ProcSizeX && (OrgStY + SizeY) <= pCellRgn[nLayer]->ProcSizeY)
-		{
-			if(SizeX < 0)
-			{
-				OrgX = OrgStX + SizeX;
-				SzX = -SizeX;
-			}
-			else
-			{
-				OrgX = OrgStX;
-				SzX = SizeX;
-			}
-			if(SizeY < 0)
-			{
-				OrgY = OrgStY + SizeY;
-				SzY = -SizeY;
-			}
-			else
-			{
-				OrgY = OrgStY;
-				SzY = SizeY;
-			}
-			MbufChild2d(MilCADImgBuf, OrgX, OrgY, SzX, SzY, &MilBufCADCld);
-		}
-
-		if((DesStX + SizeX) <= DEF_IMG_DISP_SIZEX && (DesStY + SizeY) <= DEF_IMG_DISP_SIZEY)
-		{
-			if(SizeX < 0)
-			{
-				DstX = DesStX + SizeX;
-				SzX = -SizeX;
-			}
-			else
-			{
-				DstX = DesStX;
-				SzX = SizeX;
-			}
-			if(SizeY < 0)
-			{
-				DstY = DesStY + SizeY;
-				SzY = -SizeY;
-			}
-			else
-			{
-				DstY = DesStY;
-				SzY = SizeY;
-			}
-			MbufChild2d(MilBufCADTemp, DstX, DstY, SzX, SzY, &MilBufCADTempCld);
-		}
-	}
-#else
-	if (!MilCADImgBuf)
-		return;
-	if(VicFileLoadFromMem(MilCADImgBuf, pDoc->m_Master[nLayer].m_pCADCellImg[pDoc->m_Master[nLayer].CellInspID[0]], tdat))
-	{
-		MbufChild2d(MilCADImgBuf, 0, 0, DEF_IMG_DISP_SIZEX, DEF_IMG_DISP_SIZEY, &MilBufCADCld);
-		MbufChild2d(MilBufCADTemp, 0, 0, DEF_IMG_DISP_SIZEX, DEF_IMG_DISP_SIZEY, &MilBufCADTempCld);
-	}
-#endif
-
-
-	if(MilBufCADCld != M_NULL && MilBufCADTempCld != M_NULL)
-		MbufCopy(MilBufCADCld, MilBufCADTempCld);
-
-	if (MilBufCADTempCld)
-	{
-		MbufFree(MilBufCADTempCld);
-		MilBufCADTempCld = M_NULL;
-	}
-	
-	if (MilBufCADCld)
-	{
-		MbufFree(MilBufCADCld);
-		MilBufCADCld = M_NULL;
-	}
+//// 	InitCADBuf();
+//	MIL_ID MilBufCADCld = M_NULL, MilBufCADTempCld = M_NULL;
+//	long OrgX, OrgY, DstX, DstY, SzX, SzY;
+//	TiffData tdat;
+//
+//#ifdef USE_CAM_MASTER
+//	REGION_STRIP *pCellRgn[2];
+//	UCHAR *pCADCellImg;
+//
+//	if (m_nIdx == 0 || m_nIdx == 1)
+//	{
+//		pCellRgn[nLayer] = pDoc->m_Master[nLayer].m_pCellRgn;
+//		pCADCellImg = pDoc->m_Master[nLayer].m_pCADCellImg[pDoc->m_Master[nLayer].CellInspID[CurrCell]];
+//	}
+//	else
+//	{
+//		pCellRgn[nLayer] = pDoc->m_MasterInner[nLayer].m_pCellRgn;
+//		pCADCellImg = pDoc->m_MasterInner[nLayer].m_pCADCellImg[pDoc->m_MasterInner[nLayer].CellInspID[CurrCell]];
+//	}
+//
+//	if (!MilCADImgBuf)
+//		return;
+//
+//	//if(VicFileLoadFromMem(MilCADImgBuf, pDoc->m_Master[nLayer].m_pCADCellImg[pDoc->m_Master[nLayer].CellInspID[CurrCell]], tdat))
+//	if(VicFileLoadFromMem(MilCADImgBuf, pCADCellImg, tdat))
+//	{
+//		if((OrgStX + SizeX) <= pCellRgn[nLayer]->ProcSizeX && (OrgStY + SizeY) <= pCellRgn[nLayer]->ProcSizeY)
+//		{
+//			if(SizeX < 0)
+//			{
+//				OrgX = OrgStX + SizeX;
+//				SzX = -SizeX;
+//			}
+//			else
+//			{
+//				OrgX = OrgStX;
+//				SzX = SizeX;
+//			}
+//			if(SizeY < 0)
+//			{
+//				OrgY = OrgStY + SizeY;
+//				SzY = -SizeY;
+//			}
+//			else
+//			{
+//				OrgY = OrgStY;
+//				SzY = SizeY;
+//			}
+//			MbufChild2d(MilCADImgBuf, OrgX, OrgY, SzX, SzY, &MilBufCADCld);
+//		}
+//
+//		if((DesStX + SizeX) <= DEF_IMG_DISP_SIZEX && (DesStY + SizeY) <= DEF_IMG_DISP_SIZEY)
+//		{
+//			if(SizeX < 0)
+//			{
+//				DstX = DesStX + SizeX;
+//				SzX = -SizeX;
+//			}
+//			else
+//			{
+//				DstX = DesStX;
+//				SzX = SizeX;
+//			}
+//			if(SizeY < 0)
+//			{
+//				DstY = DesStY + SizeY;
+//				SzY = -SizeY;
+//			}
+//			else
+//			{
+//				DstY = DesStY;
+//				SzY = SizeY;
+//			}
+//			MbufChild2d(MilBufCADTemp, DstX, DstY, SzX, SzY, &MilBufCADTempCld);
+//		}
+//	}
+//#else
+//	if (!MilCADImgBuf)
+//		return;
+//	if(VicFileLoadFromMem(MilCADImgBuf, pDoc->m_Master[nLayer].m_pCADCellImg[pDoc->m_Master[nLayer].CellInspID[0]], tdat))
+//	{
+//		MbufChild2d(MilCADImgBuf, 0, 0, DEF_IMG_DISP_SIZEX, DEF_IMG_DISP_SIZEY, &MilBufCADCld);
+//		MbufChild2d(MilBufCADTemp, 0, 0, DEF_IMG_DISP_SIZEX, DEF_IMG_DISP_SIZEY, &MilBufCADTempCld);
+//	}
+//#endif
+//
+//
+//	if(MilBufCADCld != M_NULL && MilBufCADTempCld != M_NULL)
+//		MbufCopy(MilBufCADCld, MilBufCADTempCld);
+//
+//	if (MilBufCADTempCld)
+//	{
+//		MbufFree(MilBufCADTempCld);
+//		MilBufCADTempCld = M_NULL;
+//	}
+//	
+//	if (MilBufCADCld)
+//	{
+//		MbufFree(MilBufCADCld);
+//		MilBufCADCld = M_NULL;
+//	}
 }
 
 BOOL CVision::VicGetImgInfo(UCHAR *pCADImg, TiffData &tdat)
@@ -2456,70 +2457,70 @@ BOOL CVision::VicFileLoadFromMem(MIL_ID MilImage, UCHAR *pCADImg, TiffData &tdat
 
 void CVision::ShowDispDef(int nIdxMkInfo, int nSerial, int nLayer, int nDefPcs) // From 0 To 12...for Screen display.
 {
-	//char cPath[MAX_PATH];
-	TCHAR cPath[MAX_PATH];
-	if(m_pMilBufDef[nIdxMkInfo])
-	{
-		CString sPath;
-#ifdef	TEST_MODE
-		m_nTest++;
-		sPath.Format(_T("%s%05d.tif"),PATH_DEF_IMG, m_nTest);
-#else
-		if (m_nIdx == 0 || m_nIdx == 1)
-		{
-			if (nLayer == 0) // Up
-			{
-				sPath.Format(_T("%s%s\\%s\\%s\\DefImage\\%d\\%05d.tif"), pDoc->WorkingInfo.System.sPathOldFile,
-					pDoc->WorkingInfo.LastJob.sModel,
-					pDoc->WorkingInfo.LastJob.sLot,
-					pDoc->WorkingInfo.LastJob.sLayerUp,
-					nSerial,
-					nDefPcs);
-			}
-			else if (nLayer == 1) // Dn
-			{
-				sPath.Format(_T("%s%s\\%s\\%s\\DefImage\\%d\\%05d.tif"), pDoc->WorkingInfo.System.sPathOldFile,
-					pDoc->WorkingInfo.LastJob.sModel,
-					pDoc->WorkingInfo.LastJob.sLot,
-					pDoc->WorkingInfo.LastJob.sLayerDn,
-					nSerial,
-					nDefPcs);
-			}
-		}
-		else
-		{
-			CString sMsg, sUpPath, sDnPath;
-			if (!pDoc->GetInnerFolderPath(nSerial, sUpPath, sDnPath))
-			{
-				sMsg.Format(_T("GetInnerFolderPath가 설정되지 않았습니다."));
-				pView->MsgBox(sMsg);
-				return;
-			}
-
-			if (nLayer == 0) // Up
-			{
-				sPath.Format(_T("%sDefImage\\%d\\%05d.tif"), 
-					sUpPath,
-					nSerial,
-					nDefPcs);
-			}
-			else if (nLayer == 1) // Dn
-			{
-				sPath.Format(_T("%sDefImage\\%d\\%05d.tif"), 
-					sDnPath,
-					nSerial,
-					nDefPcs);
-			}
-		}
-#endif
-		CFileFind findfile;
-		if(findfile.FindFile(sPath))
-		{
-			//strcpy(cPath, sPath);
-			_stprintf(cPath, _T("%s"), sPath);
-			m_pMilBufDef[nIdxMkInfo]->BufferLoad(cPath);
-		}
-	}
+//	//char cPath[MAX_PATH];
+//	TCHAR cPath[MAX_PATH];
+//	if(m_pMilBufDef[nIdxMkInfo])
+//	{
+//		CString sPath;
+//#ifdef	TEST_MODE
+//		m_nTest++;
+//		sPath.Format(_T("%s%05d.tif"),PATH_DEF_IMG, m_nTest);
+//#else
+//		if (m_nIdx == 0 || m_nIdx == 1)
+//		{
+//			if (nLayer == 0) // Up
+//			{
+//				sPath.Format(_T("%s%s\\%s\\%s\\DefImage\\%d\\%05d.tif"), pDoc->WorkingInfo.System.sPathOldFile,
+//					pDoc->WorkingInfo.LastJob.sModel,
+//					pDoc->WorkingInfo.LastJob.sLot,
+//					pDoc->WorkingInfo.LastJob.sLayerUp,
+//					nSerial,
+//					nDefPcs);
+//			}
+//			else if (nLayer == 1) // Dn
+//			{
+//				sPath.Format(_T("%s%s\\%s\\%s\\DefImage\\%d\\%05d.tif"), pDoc->WorkingInfo.System.sPathOldFile,
+//					pDoc->WorkingInfo.LastJob.sModel,
+//					pDoc->WorkingInfo.LastJob.sLot,
+//					pDoc->WorkingInfo.LastJob.sLayerDn,
+//					nSerial,
+//					nDefPcs);
+//			}
+//		}
+//		else
+//		{
+//			CString sMsg, sUpPath, sDnPath;
+//			if (!pDoc->GetInnerFolderPath(nSerial, sUpPath, sDnPath))
+//			{
+//				sMsg.Format(_T("GetInnerFolderPath가 설정되지 않았습니다."));
+//				pView->MsgBox(sMsg);
+//				return;
+//			}
+//
+//			if (nLayer == 0) // Up
+//			{
+//				sPath.Format(_T("%sDefImage\\%d\\%05d.tif"), 
+//					sUpPath,
+//					nSerial,
+//					nDefPcs);
+//			}
+//			else if (nLayer == 1) // Dn
+//			{
+//				sPath.Format(_T("%sDefImage\\%d\\%05d.tif"), 
+//					sDnPath,
+//					nSerial,
+//					nDefPcs);
+//			}
+//		}
+//#endif
+//		CFileFind findfile;
+//		if(findfile.FindFile(sPath))
+//		{
+//			//strcpy(cPath, sPath);
+//			_stprintf(cPath, _T("%s"), sPath);
+//			m_pMilBufDef[nIdxMkInfo]->BufferLoad(cPath);
+//		}
+//	}
 }
 
 void CVision::ClrOvrCad(int nIdxMkInfo)
@@ -2614,80 +2615,80 @@ void CVision::InitPinBuf()
 
 void CVision::LoadPinBuf(int nLayer)
 {
-	InitPinBuf();
-
-	if (!MilPinImgBuf)
-		return;
-
-	TiffData tdat;
-	UCHAR *pPinImg;
-	if (m_nIdx == 0 || m_nIdx == 1)
-		pPinImg = pDoc->m_Master[nLayer].m_pPinImg;
-	else
-		pPinImg = pDoc->m_MasterInner[nLayer].m_pPinImg;
-
-	//if(VicFileLoadFromMem(MilPinImgBuf, pDoc->m_Master[nLayer].m_pPinImg, tdat))
-	if (VicFileLoadFromMem(MilPinImgBuf, pPinImg, tdat))
-	{
-		MIL_ID MilBufPinCld = M_NULL, MilBufPinTempCld = M_NULL;
-// 		MIL_ID  MilOriginDisp = M_NULL;
-// 		CGvisMilBuffer *MilPatRtImg=NULL;
-// 		CGvisMilBuffer *MilOriginDisp=NULL;
-		CLibMilBuf *MilPatRtImg = NULL;
-		CLibMilBuf *MilOriginDisp = NULL;
-
-		//MilPatRtImg = new CGvisMilBuffer(m_pMil, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L+M_UNSIGNED, M_IMAGE+M_PROC);
-		if (m_pMil)
-			MilPatRtImg = m_pMil->AllocBuf(PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L + M_UNSIGNED, M_IMAGE + M_PROC);
-/*
-		if(m_nIdx==0)
-		{
-			MilOriginDisp = new CGvisMilBuffer(m_pMil, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L+M_UNSIGNED, M_IMAGE+M_DISP+M_PROC);
-// 			MbufAlloc2d(m_pMil->MilSystem, 1024, 1024, 1L + M_UNSIGNED, M_IMAGE+M_DISP+M_PROC, MilOriginDisp);
-//			MbufAlloc2d(m_pMil->MilSystem, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L + M_UNSIGNED, M_IMAGE+M_DISP+M_PROC, &MilBufPinCld);
-			MimResize(MilPinImgBuf, MilOriginDisp->m_MilImage, (double)PIN_IMG_DISP_SIZEX/1024.0, (double)PIN_IMG_DISP_SIZEY/1024.0, M_DEFAULT);
-			MbufChild2d(MilOriginDisp->m_MilImage, 0, 0, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, &MilBufPinCld);
-		}
-		else
-			MbufChild2d(MilPinImgBuf, (1024-PIN_IMG_DISP_SIZEX)/2, (1024-PIN_IMG_DISP_SIZEY)/2, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, &MilBufPinCld);
-*/
-		//MilOriginDisp = new CGvisMilBuffer(m_pMil, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L+M_UNSIGNED, M_IMAGE+M_DISP+M_PROC);
-		if (m_pMil)
-			MilOriginDisp = m_pMil->AllocBuf(PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
-		MimResize(MilPinImgBuf, MilOriginDisp->m_MilImage, (double)PIN_IMG_DISP_SIZEX/1024.0, (double)PIN_IMG_DISP_SIZEY/1024.0, M_DEFAULT);
-		MbufChild2d(MilOriginDisp->m_MilImage, 0, 0, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, &MilBufPinCld);
-
-		MbufChild2d(MilBufPinTemp, 0, 0, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, &MilBufPinTempCld);
-
-// 		MimRotate(MilBufPinCld, MilPatRtImg->m_MilImage, 90.0, M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT);
-		MimRotate(MilBufPinCld, MilPatRtImg->m_MilImage, 0.0, M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT);
-		if(MilPatRtImg->m_MilImage != M_NULL && MilBufPinTempCld != M_NULL)
-			MbufCopy(MilPatRtImg->m_MilImage, MilBufPinTempCld);
-
-		if(MilPatRtImg != NULL)
-		{
-			delete (MilPatRtImg);
-			MilPatRtImg = NULL;
-		}
-
-		if (MilBufPinTempCld)
-		{
-			MbufFree(MilBufPinTempCld);
-			MilBufPinTempCld = M_NULL;
-		}
-		
-		if (MilBufPinCld)
-		{
-			MbufFree(MilBufPinCld);
-			MilBufPinCld = M_NULL;
-		}
-
-		if(MilOriginDisp != M_NULL)
-		{
-			delete (MilOriginDisp);
-			MilOriginDisp = M_NULL;
-		}
-	}
+//	InitPinBuf();
+//
+//	if (!MilPinImgBuf)
+//		return;
+//
+//	TiffData tdat;
+//	UCHAR *pPinImg;
+//	if (m_nIdx == 0 || m_nIdx == 1)
+//		pPinImg = pDoc->m_Master[nLayer].m_pPinImg;
+//	else
+//		pPinImg = pDoc->m_MasterInner[nLayer].m_pPinImg;
+//
+//	//if(VicFileLoadFromMem(MilPinImgBuf, pDoc->m_Master[nLayer].m_pPinImg, tdat))
+//	if (VicFileLoadFromMem(MilPinImgBuf, pPinImg, tdat))
+//	{
+//		MIL_ID MilBufPinCld = M_NULL, MilBufPinTempCld = M_NULL;
+//// 		MIL_ID  MilOriginDisp = M_NULL;
+//// 		CGvisMilBuffer *MilPatRtImg=NULL;
+//// 		CGvisMilBuffer *MilOriginDisp=NULL;
+//		CLibMilBuf *MilPatRtImg = NULL;
+//		CLibMilBuf *MilOriginDisp = NULL;
+//
+//		//MilPatRtImg = new CGvisMilBuffer(m_pMil, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L+M_UNSIGNED, M_IMAGE+M_PROC);
+//		if (m_pMil)
+//			MilPatRtImg = m_pMil->AllocBuf(PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L + M_UNSIGNED, M_IMAGE + M_PROC);
+///*
+//		if(m_nIdx==0)
+//		{
+//			MilOriginDisp = new CGvisMilBuffer(m_pMil, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L+M_UNSIGNED, M_IMAGE+M_DISP+M_PROC);
+//// 			MbufAlloc2d(m_pMil->MilSystem, 1024, 1024, 1L + M_UNSIGNED, M_IMAGE+M_DISP+M_PROC, MilOriginDisp);
+////			MbufAlloc2d(m_pMil->MilSystem, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L + M_UNSIGNED, M_IMAGE+M_DISP+M_PROC, &MilBufPinCld);
+//			MimResize(MilPinImgBuf, MilOriginDisp->m_MilImage, (double)PIN_IMG_DISP_SIZEX/1024.0, (double)PIN_IMG_DISP_SIZEY/1024.0, M_DEFAULT);
+//			MbufChild2d(MilOriginDisp->m_MilImage, 0, 0, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, &MilBufPinCld);
+//		}
+//		else
+//			MbufChild2d(MilPinImgBuf, (1024-PIN_IMG_DISP_SIZEX)/2, (1024-PIN_IMG_DISP_SIZEY)/2, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, &MilBufPinCld);
+//*/
+//		//MilOriginDisp = new CGvisMilBuffer(m_pMil, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L+M_UNSIGNED, M_IMAGE+M_DISP+M_PROC);
+//		if (m_pMil)
+//			MilOriginDisp = m_pMil->AllocBuf(PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, 1L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
+//		MimResize(MilPinImgBuf, MilOriginDisp->m_MilImage, (double)PIN_IMG_DISP_SIZEX/1024.0, (double)PIN_IMG_DISP_SIZEY/1024.0, M_DEFAULT);
+//		MbufChild2d(MilOriginDisp->m_MilImage, 0, 0, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, &MilBufPinCld);
+//
+//		MbufChild2d(MilBufPinTemp, 0, 0, PIN_IMG_DISP_SIZEX, PIN_IMG_DISP_SIZEY, &MilBufPinTempCld);
+//
+//// 		MimRotate(MilBufPinCld, MilPatRtImg->m_MilImage, 90.0, M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT);
+//		MimRotate(MilBufPinCld, MilPatRtImg->m_MilImage, 0.0, M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT);
+//		if(MilPatRtImg->m_MilImage != M_NULL && MilBufPinTempCld != M_NULL)
+//			MbufCopy(MilPatRtImg->m_MilImage, MilBufPinTempCld);
+//
+//		if(MilPatRtImg != NULL)
+//		{
+//			delete (MilPatRtImg);
+//			MilPatRtImg = NULL;
+//		}
+//
+//		if (MilBufPinTempCld)
+//		{
+//			MbufFree(MilBufPinTempCld);
+//			MilBufPinTempCld = M_NULL;
+//		}
+//		
+//		if (MilBufPinCld)
+//		{
+//			MbufFree(MilBufPinCld);
+//			MilBufPinCld = M_NULL;
+//		}
+//
+//		if(MilOriginDisp != M_NULL)
+//		{
+//			delete (MilOriginDisp);
+//			MilOriginDisp = M_NULL;
+//		}
+//	}
 }
 
 void CVision::ShowDispAlign()
@@ -2699,146 +2700,146 @@ void CVision::ShowDispAlign()
 
 void CVision::LoadAlignBuf()
 {
-	InitAlignBuf();
+	//InitAlignBuf();
 
-	TiffData tdat;
-	MIL_ID MilBufAlignCld = M_NULL, MilBufAlignTempCld = M_NULL;
+	//TiffData tdat;
+	//MIL_ID MilBufAlignCld = M_NULL, MilBufAlignTempCld = M_NULL;
 
-	if (!MilAlignImgBuf[0])
-		return;
+	//if (!MilAlignImgBuf[0])
+	//	return;
 
-	UCHAR *pAlignImg[4];
-	if (m_nIdx == 0 || m_nIdx == 1)
-	{
-		pAlignImg[0] = pDoc->m_Master[0].m_pAlignImg[0];
-		pAlignImg[1] = pDoc->m_Master[0].m_pAlignImg[1];
-		pAlignImg[2] = pDoc->m_Master[0].m_pAlignImg[2];
-		pAlignImg[3] = pDoc->m_Master[0].m_pAlignImg[3];
-	}
-	else
-	{
-		pAlignImg[0] = pDoc->m_MasterInner[0].m_pAlignImg[0];
-		pAlignImg[1] = pDoc->m_MasterInner[0].m_pAlignImg[1];
-		pAlignImg[2] = pDoc->m_MasterInner[0].m_pAlignImg[2];
-		pAlignImg[3] = pDoc->m_MasterInner[0].m_pAlignImg[3];
-	}
+	//UCHAR *pAlignImg[4];
+	//if (m_nIdx == 0 || m_nIdx == 1)
+	//{
+	//	pAlignImg[0] = pDoc->m_Master[0].m_pAlignImg[0];
+	//	pAlignImg[1] = pDoc->m_Master[0].m_pAlignImg[1];
+	//	pAlignImg[2] = pDoc->m_Master[0].m_pAlignImg[2];
+	//	pAlignImg[3] = pDoc->m_Master[0].m_pAlignImg[3];
+	//}
+	//else
+	//{
+	//	pAlignImg[0] = pDoc->m_MasterInner[0].m_pAlignImg[0];
+	//	pAlignImg[1] = pDoc->m_MasterInner[0].m_pAlignImg[1];
+	//	pAlignImg[2] = pDoc->m_MasterInner[0].m_pAlignImg[2];
+	//	pAlignImg[3] = pDoc->m_MasterInner[0].m_pAlignImg[3];
+	//}
 
-	//if (pDoc->m_Master[0].m_pAlignImg[0])
-	if (pAlignImg[0])
-	{
-		//if (VicFileLoadFromMem(MilAlignImgBuf[0], pDoc->m_Master[0].m_pAlignImg[0], tdat))
-		if (VicFileLoadFromMem(MilAlignImgBuf[0], pAlignImg[0], tdat))
-		{
+	////if (pDoc->m_Master[0].m_pAlignImg[0])
+	//if (pAlignImg[0])
+	//{
+	//	//if (VicFileLoadFromMem(MilAlignImgBuf[0], pDoc->m_Master[0].m_pAlignImg[0], tdat))
+	//	if (VicFileLoadFromMem(MilAlignImgBuf[0], pAlignImg[0], tdat))
+	//	{
 
-			MbufChild2d(MilAlignImgBuf[0], (1024 - ALIGN_IMG_DISP_SIZEX) / 2, (1024 - ALIGN_IMG_DISP_SIZEY) / 2, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignCld);
-			MbufChild2d(MilBufAlignTemp[0], 0, 0, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignTempCld);
+	//		MbufChild2d(MilAlignImgBuf[0], (1024 - ALIGN_IMG_DISP_SIZEX) / 2, (1024 - ALIGN_IMG_DISP_SIZEY) / 2, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignCld);
+	//		MbufChild2d(MilBufAlignTemp[0], 0, 0, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignTempCld);
 
-			if (MilBufAlignCld != M_NULL && MilBufAlignTempCld != M_NULL)
-				MbufCopy(MilBufAlignCld, MilBufAlignTempCld);
+	//		if (MilBufAlignCld != M_NULL && MilBufAlignTempCld != M_NULL)
+	//			MbufCopy(MilBufAlignCld, MilBufAlignTempCld);
 
-			if (MilBufAlignTempCld)
-			{
-				MbufFree(MilBufAlignTempCld);
-				MilBufAlignTempCld = M_NULL;
-			}
+	//		if (MilBufAlignTempCld)
+	//		{
+	//			MbufFree(MilBufAlignTempCld);
+	//			MilBufAlignTempCld = M_NULL;
+	//		}
 
-			if (MilBufAlignCld)
-			{
-				MbufFree(MilBufAlignCld);
-				MilBufAlignCld = M_NULL;
-			}
-		}
-	}
+	//		if (MilBufAlignCld)
+	//		{
+	//			MbufFree(MilBufAlignCld);
+	//			MilBufAlignCld = M_NULL;
+	//		}
+	//	}
+	//}
 
-	if (!MilAlignImgBuf[1])
-		return;
+	//if (!MilAlignImgBuf[1])
+	//	return;
 
-	//if (pDoc->m_Master[0].m_pAlignImg[1])
-	if (pAlignImg[1])
-	{
-		//if (VicFileLoadFromMem(MilAlignImgBuf[1], pDoc->m_Master[0].m_pAlignImg[1], tdat))
-		if (VicFileLoadFromMem(MilAlignImgBuf[1], pAlignImg[1], tdat))
-		{
+	////if (pDoc->m_Master[0].m_pAlignImg[1])
+	//if (pAlignImg[1])
+	//{
+	//	//if (VicFileLoadFromMem(MilAlignImgBuf[1], pDoc->m_Master[0].m_pAlignImg[1], tdat))
+	//	if (VicFileLoadFromMem(MilAlignImgBuf[1], pAlignImg[1], tdat))
+	//	{
 
-			MbufChild2d(MilAlignImgBuf[1], (1024 - ALIGN_IMG_DISP_SIZEX) / 2, (1024 - ALIGN_IMG_DISP_SIZEY) / 2, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignCld);
-			MbufChild2d(MilBufAlignTemp[1], 0, 0, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignTempCld);
+	//		MbufChild2d(MilAlignImgBuf[1], (1024 - ALIGN_IMG_DISP_SIZEX) / 2, (1024 - ALIGN_IMG_DISP_SIZEY) / 2, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignCld);
+	//		MbufChild2d(MilBufAlignTemp[1], 0, 0, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignTempCld);
 
-			if (MilBufAlignCld != M_NULL && MilBufAlignTempCld != M_NULL)
-				MbufCopy(MilBufAlignCld, MilBufAlignTempCld);
+	//		if (MilBufAlignCld != M_NULL && MilBufAlignTempCld != M_NULL)
+	//			MbufCopy(MilBufAlignCld, MilBufAlignTempCld);
 
-			if (MilBufAlignTempCld)
-			{
-				MbufFree(MilBufAlignTempCld);
-				MilBufAlignTempCld = M_NULL;
-			}
+	//		if (MilBufAlignTempCld)
+	//		{
+	//			MbufFree(MilBufAlignTempCld);
+	//			MilBufAlignTempCld = M_NULL;
+	//		}
 
-			if (MilBufAlignCld)
-			{
-				MbufFree(MilBufAlignCld);
-				MilBufAlignCld = M_NULL;
-			}
-		}
-	}
+	//		if (MilBufAlignCld)
+	//		{
+	//			MbufFree(MilBufAlignCld);
+	//			MilBufAlignCld = M_NULL;
+	//		}
+	//	}
+	//}
 
-	if (!MilAlignImgBuf[2])
-		return;
+	//if (!MilAlignImgBuf[2])
+	//	return;
 
-	//if (pDoc->m_Master[0].m_pAlignImg[2])
-	if (pAlignImg[2])
-	{
-		//if (VicFileLoadFromMem(MilAlignImgBuf[2], pDoc->m_Master[0].m_pAlignImg[2], tdat))
-		if (VicFileLoadFromMem(MilAlignImgBuf[2], pAlignImg[2], tdat))
-		{
+	////if (pDoc->m_Master[0].m_pAlignImg[2])
+	//if (pAlignImg[2])
+	//{
+	//	//if (VicFileLoadFromMem(MilAlignImgBuf[2], pDoc->m_Master[0].m_pAlignImg[2], tdat))
+	//	if (VicFileLoadFromMem(MilAlignImgBuf[2], pAlignImg[2], tdat))
+	//	{
 
-			MbufChild2d(MilAlignImgBuf[2], (1024 - ALIGN_IMG_DISP_SIZEX) / 2, (1024 - ALIGN_IMG_DISP_SIZEY) / 2, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignCld);
-			MbufChild2d(MilBufAlignTemp[2], 0, 0, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignTempCld);
+	//		MbufChild2d(MilAlignImgBuf[2], (1024 - ALIGN_IMG_DISP_SIZEX) / 2, (1024 - ALIGN_IMG_DISP_SIZEY) / 2, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignCld);
+	//		MbufChild2d(MilBufAlignTemp[2], 0, 0, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignTempCld);
 
-			if (MilBufAlignCld != M_NULL && MilBufAlignTempCld != M_NULL)
-				MbufCopy(MilBufAlignCld, MilBufAlignTempCld);
+	//		if (MilBufAlignCld != M_NULL && MilBufAlignTempCld != M_NULL)
+	//			MbufCopy(MilBufAlignCld, MilBufAlignTempCld);
 
-			if (MilBufAlignTempCld)
-			{
-				MbufFree(MilBufAlignTempCld);
-				MilBufAlignTempCld = M_NULL;
-			}
+	//		if (MilBufAlignTempCld)
+	//		{
+	//			MbufFree(MilBufAlignTempCld);
+	//			MilBufAlignTempCld = M_NULL;
+	//		}
 
-			if (MilBufAlignCld)
-			{
-				MbufFree(MilBufAlignCld);
-				MilBufAlignCld = M_NULL;
-			}
-		}
-	}
+	//		if (MilBufAlignCld)
+	//		{
+	//			MbufFree(MilBufAlignCld);
+	//			MilBufAlignCld = M_NULL;
+	//		}
+	//	}
+	//}
 
-	if (!MilAlignImgBuf[3])
-		return;
+	//if (!MilAlignImgBuf[3])
+	//	return;
 
-	//if (pDoc->m_Master[0].m_pAlignImg[3])
-	if (pAlignImg[3])
-	{
-		//if (VicFileLoadFromMem(MilAlignImgBuf[3], pDoc->m_Master[0].m_pAlignImg[3], tdat))
-		if (VicFileLoadFromMem(MilAlignImgBuf[3], pAlignImg[3], tdat))
-		{
+	////if (pDoc->m_Master[0].m_pAlignImg[3])
+	//if (pAlignImg[3])
+	//{
+	//	//if (VicFileLoadFromMem(MilAlignImgBuf[3], pDoc->m_Master[0].m_pAlignImg[3], tdat))
+	//	if (VicFileLoadFromMem(MilAlignImgBuf[3], pAlignImg[3], tdat))
+	//	{
 
-			MbufChild2d(MilAlignImgBuf[3], (1024 - ALIGN_IMG_DISP_SIZEX) / 2, (1024 - ALIGN_IMG_DISP_SIZEY) / 2, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignCld);
-			MbufChild2d(MilBufAlignTemp[3], 0, 0, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignTempCld);
+	//		MbufChild2d(MilAlignImgBuf[3], (1024 - ALIGN_IMG_DISP_SIZEX) / 2, (1024 - ALIGN_IMG_DISP_SIZEY) / 2, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignCld);
+	//		MbufChild2d(MilBufAlignTemp[3], 0, 0, ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, &MilBufAlignTempCld);
 
-			if (MilBufAlignCld != M_NULL && MilBufAlignTempCld != M_NULL)
-				MbufCopy(MilBufAlignCld, MilBufAlignTempCld);
+	//		if (MilBufAlignCld != M_NULL && MilBufAlignTempCld != M_NULL)
+	//			MbufCopy(MilBufAlignCld, MilBufAlignTempCld);
 
-			if (MilBufAlignTempCld)
-			{
-				MbufFree(MilBufAlignTempCld);
-				MilBufAlignTempCld = M_NULL;
-			}
+	//		if (MilBufAlignTempCld)
+	//		{
+	//			MbufFree(MilBufAlignTempCld);
+	//			MilBufAlignTempCld = M_NULL;
+	//		}
 
-			if (MilBufAlignCld)
-			{
-				MbufFree(MilBufAlignCld);
-				MilBufAlignCld = M_NULL;
-			}
-		}
-	}
+	//		if (MilBufAlignCld)
+	//		{
+	//			MbufFree(MilBufAlignCld);
+	//			MilBufAlignCld = M_NULL;
+	//		}
+	//	}
+	//}
 }
 
 
@@ -2957,598 +2958,599 @@ void CVision::SetDispAxisPos()
 
 void CVision::DispAxisPos(BOOL bForceWrite)
 {
-	double dFdEnc = 0.0;
-
-// 	if(!m_bDrawOverlayModeEnable)
-// 		return;
-
-	if(!m_pMil)
-		return;
-
-// 	if(!m_pMilDisplay || !m_pMilDrawOverlay)
-// 		return;
-
-// 	m_pMilDrawOverlay->SetDrawColor(M_COLOR_GREEN);
-// 	m_pMilDrawOverlay->SetTextFont(M_FONT_DEFAULT_SMALL);
-	m_pMil->SetDrawColor(M_COLOR_GREEN);
-	m_pMil->SetTextFont(M_FONT_DEFAULT_SMALL);
-
-	//char szText[30];
-	TCHAR szText[30];
-
-	if(m_nIdx==0)
-	{
-		if(fabs(m_dEnc[AXIS_X0]-pView->m_dEnc[AXIS_X0])>0.005 || bForceWrite)
-		{
-			m_dEnc[AXIS_X0] = pView->m_dEnc[AXIS_X0];
-			//sprintf(szText, "X0:%3.3f", m_dEnc[AXIS_X0]);
-			_stprintf(szText, TEXT("X0:%3.3f"), m_dEnc[AXIS_X0]);
-	 		//m_pMilDrawOverlay->DrawClear();
-			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*0, szText);
-			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*0, M_COLOR_GREEN);
-		}
-		if(fabs(m_dEnc[AXIS_Y0]-pView->m_dEnc[AXIS_Y0])>0.005 || bForceWrite)
-		{
-			m_dEnc[AXIS_Y0] = pView->m_dEnc[AXIS_Y0];
-			//sprintf(szText, "Y0:%3.3f", m_dEnc[AXIS_Y0]);
-			_stprintf(szText, TEXT("Y0:%3.3f"), m_dEnc[AXIS_Y0]);
-			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*1, szText);
-			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*1, M_COLOR_GREEN);
-		}
-		if(pDoc->m_pMpeData)
-			dFdEnc = (double)pDoc->m_pMpeData[2][2];	// 마킹부 Feeding 엔코더 값(단위 mm )
-		if(fabs(m_dFdEnc-dFdEnc)>0.05 || bForceWrite)
-		{
-			m_dFdEnc = dFdEnc;
-			//sprintf(szText, "R:%3.2f", dFdEnc/1000.0); // [M]
-			_stprintf(szText, TEXT("Rp:%3.2f"), dFdEnc/1000.0); // [M]
-			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+(m_nDisplayAxisPosLineHeight*2), szText);
-			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*2, M_COLOR_GREEN);
-		}
-		if (pDoc->m_pMpeData)
-			dFdEnc = (double)pDoc->m_pMpeData[1][14];	// 각인부 Feeding 엔코더 값(단위 mm)
-		if (fabs(m_dFdEnc - dFdEnc) > 0.05 || bForceWrite)
-		{
-			m_dFdEnc = dFdEnc;
-			//sprintf(szText, "R:%3.2f", dFdEnc/1000.0); // [M]
-			_stprintf(szText, TEXT("Re:%3.2f"), dFdEnc / 1000.0); // [M]
-			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+(m_nDisplayAxisPosLineHeight*2), szText);
-			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y + m_nDisplayAxisPosLineHeight * 3, M_COLOR_GREEN);
-		}
-	}
-	else if(m_nIdx==1)
-	{
-		if(fabs(m_dEnc[AXIS_X1]-pView->m_dEnc[AXIS_X1])>0.005 || bForceWrite)
-		{
-			m_dEnc[AXIS_X1] = pView->m_dEnc[AXIS_X1];
-			//sprintf(szText, "X1:%3.3f", m_dEnc[AXIS_X1]);
-			_stprintf(szText, TEXT("X1:%3.3f"), m_dEnc[AXIS_X1]);
- 			//m_pMilDrawOverlay->DrawClear();
-			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*0, szText);
-			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*0, M_COLOR_GREEN);
-		}
-		if(fabs(m_dEnc[AXIS_Y1]-pView->m_dEnc[AXIS_Y1])>0.005 || bForceWrite)
-		{
-			m_dEnc[AXIS_Y1] = pView->m_dEnc[AXIS_Y1];
-			//sprintf(szText, "Y1:%3.3f", m_dEnc[AXIS_Y1]);
-			_stprintf(szText, TEXT("Y1:%3.3f"), m_dEnc[AXIS_Y1]);
-			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*1, szText);
-			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*1, M_COLOR_GREEN);
-		}
-#ifdef USE_MPE
-		double dBufEnc = (double)pDoc->m_pMpeData[2][1]	/ 1000.0;	// 마킹부 버퍼 엔코더 값(단위 mm * 1000)
-		if(fabs(m_dBufEnc-dBufEnc)>0.05 || bForceWrite)
-		{
-			m_dBufEnc = dBufEnc;
-			//sprintf(szText, "B:%3.1f", dBufEnc);
-			_stprintf(szText, TEXT("B:%3.1f"), dBufEnc);
-			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+(m_nDisplayAxisPosLineHeight*2), szText);
-			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*2, M_COLOR_GREEN);
-		}
-		dFdEnc = (double)pDoc->m_pMpeData[1][14];	// 각인부 Feeding 엔코더 값(단위 mm)
-		if (fabs(m_dFdEnc - dFdEnc) > 0.05 || bForceWrite)
-		{
-			m_dFdEnc = dFdEnc;
-			//sprintf(szText, "R:%3.2f", dFdEnc/1000.0); // [M]
-			_stprintf(szText, TEXT("Re:%3.2f"), dFdEnc / 1000.0); // [M]
-			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+(m_nDisplayAxisPosLineHeight*2), szText);
-			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y + m_nDisplayAxisPosLineHeight * 3, M_COLOR_GREEN);
-		}
-#endif
-	}
+//	double dFdEnc = 0.0;
+//
+//// 	if(!m_bDrawOverlayModeEnable)
+//// 		return;
+//
+//	if(!m_pMil)
+//		return;
+//
+//// 	if(!m_pMilDisplay || !m_pMilDrawOverlay)
+//// 		return;
+//
+//// 	m_pMilDrawOverlay->SetDrawColor(M_COLOR_GREEN);
+//// 	m_pMilDrawOverlay->SetTextFont(M_FONT_DEFAULT_SMALL);
+//	m_pMil->SetDrawColor(M_COLOR_GREEN);
+//	m_pMil->SetTextFont(M_FONT_DEFAULT_SMALL);
+//
+//	//char szText[30];
+//	TCHAR szText[30];
+//
+//	if(m_nIdx==0)
+//	{
+//		if(fabs(m_dEnc[AXIS_X0]-pView->m_dEnc[AXIS_X0])>0.005 || bForceWrite)
+//		{
+//			m_dEnc[AXIS_X0] = pView->m_dEnc[AXIS_X0];
+//			//sprintf(szText, "X0:%3.3f", m_dEnc[AXIS_X0]);
+//			_stprintf(szText, TEXT("X0:%3.3f"), m_dEnc[AXIS_X0]);
+//	 		//m_pMilDrawOverlay->DrawClear();
+//			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*0, szText);
+//			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*0, M_COLOR_GREEN);
+//		}
+//		if(fabs(m_dEnc[AXIS_Y0]-pView->m_dEnc[AXIS_Y0])>0.005 || bForceWrite)
+//		{
+//			m_dEnc[AXIS_Y0] = pView->m_dEnc[AXIS_Y0];
+//			//sprintf(szText, "Y0:%3.3f", m_dEnc[AXIS_Y0]);
+//			_stprintf(szText, TEXT("Y0:%3.3f"), m_dEnc[AXIS_Y0]);
+//			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*1, szText);
+//			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*1, M_COLOR_GREEN);
+//		}
+//		if(pDoc->m_pMpeData)
+//			dFdEnc = (double)pDoc->m_pMpeData[2][2];	// 마킹부 Feeding 엔코더 값(단위 mm )
+//		if(fabs(m_dFdEnc-dFdEnc)>0.05 || bForceWrite)
+//		{
+//			m_dFdEnc = dFdEnc;
+//			//sprintf(szText, "R:%3.2f", dFdEnc/1000.0); // [M]
+//			_stprintf(szText, TEXT("Rp:%3.2f"), dFdEnc/1000.0); // [M]
+//			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+(m_nDisplayAxisPosLineHeight*2), szText);
+//			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*2, M_COLOR_GREEN);
+//		}
+//		if (pDoc->m_pMpeData)
+//			dFdEnc = (double)pDoc->m_pMpeData[1][14];	// 각인부 Feeding 엔코더 값(단위 mm)
+//		if (fabs(m_dFdEnc - dFdEnc) > 0.05 || bForceWrite)
+//		{
+//			m_dFdEnc = dFdEnc;
+//			//sprintf(szText, "R:%3.2f", dFdEnc/1000.0); // [M]
+//			_stprintf(szText, TEXT("Re:%3.2f"), dFdEnc / 1000.0); // [M]
+//			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+(m_nDisplayAxisPosLineHeight*2), szText);
+//			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y + m_nDisplayAxisPosLineHeight * 3, M_COLOR_GREEN);
+//		}
+//	}
+//	else if(m_nIdx==1)
+//	{
+//		if(fabs(m_dEnc[AXIS_X1]-pView->m_dEnc[AXIS_X1])>0.005 || bForceWrite)
+//		{
+//			m_dEnc[AXIS_X1] = pView->m_dEnc[AXIS_X1];
+//			//sprintf(szText, "X1:%3.3f", m_dEnc[AXIS_X1]);
+//			_stprintf(szText, TEXT("X1:%3.3f"), m_dEnc[AXIS_X1]);
+// 			//m_pMilDrawOverlay->DrawClear();
+//			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*0, szText);
+//			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*0, M_COLOR_GREEN);
+//		}
+//		if(fabs(m_dEnc[AXIS_Y1]-pView->m_dEnc[AXIS_Y1])>0.005 || bForceWrite)
+//		{
+//			m_dEnc[AXIS_Y1] = pView->m_dEnc[AXIS_Y1];
+//			//sprintf(szText, "Y1:%3.3f", m_dEnc[AXIS_Y1]);
+//			_stprintf(szText, TEXT("Y1:%3.3f"), m_dEnc[AXIS_Y1]);
+//			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*1, szText);
+//			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*1, M_COLOR_GREEN);
+//		}
+//#ifdef USE_MPE
+//		double dBufEnc = (double)pDoc->m_pMpeData[2][1]	/ 1000.0;	// 마킹부 버퍼 엔코더 값(단위 mm * 1000)
+//		if(fabs(m_dBufEnc-dBufEnc)>0.05 || bForceWrite)
+//		{
+//			m_dBufEnc = dBufEnc;
+//			//sprintf(szText, "B:%3.1f", dBufEnc);
+//			_stprintf(szText, TEXT("B:%3.1f"), dBufEnc);
+//			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+(m_nDisplayAxisPosLineHeight*2), szText);
+//			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+m_nDisplayAxisPosLineHeight*2, M_COLOR_GREEN);
+//		}
+//		dFdEnc = (double)pDoc->m_pMpeData[1][14];	// 각인부 Feeding 엔코더 값(단위 mm)
+//		if (fabs(m_dFdEnc - dFdEnc) > 0.05 || bForceWrite)
+//		{
+//			m_dFdEnc = dFdEnc;
+//			//sprintf(szText, "R:%3.2f", dFdEnc/1000.0); // [M]
+//			_stprintf(szText, TEXT("Re:%3.2f"), dFdEnc / 1000.0); // [M]
+//			//m_pMilDrawOverlay->DrawText(m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y+(m_nDisplayAxisPosLineHeight*2), szText);
+//			m_pMil->DrawText(szText, m_ptDisplayAxisPosOffset.x, m_ptDisplayAxisPosOffset.y + m_nDisplayAxisPosLineHeight * 3, M_COLOR_GREEN);
+//		}
+//#endif
+//	}
 }
 
 double CVision::CalcCameraPixelSize()
 {
-	double dVal = 1.0;
-
-	if(!m_pMil)
-		return dVal;
-
-	int nRepeatMeasureNum = 10, nEffectiveMeasureNum = 6;
-	int nRealMeasureNum = 0;
-	CfPoint fptMoveDistance;
-	fptMoveDistance.x = 1.0; fptMoveDistance.y = 1.0;
-	CfPoint fptCameraPos[2];
-	fptCameraPos[0].x = 0.0;
-	fptCameraPos[0].y = 0.0;
-	fptCameraPos[1].x = 0.0;
-	fptCameraPos[1].y = 0.0;
-	int i = 0;
-
-	// 1. Move
-#ifdef USE_IDS
-	if(!pView->m_pMotion || !m_pIds)
-	{
-		dVal = 0.0;
-		return dVal;
-	}
-#endif
-
-#ifdef USE_CREVIS
-	if(!pView->m_pMotion || !m_pCrevis)
-	{
-		dVal = 0.0;
-		return dVal;
-	}
-#endif
-
-#ifdef USE_IRAYPLE
-	if (!pView->m_pMotion || !m_pIRayple)
-	{
-		dVal = 0.0;
-		return dVal;
-	}
-#endif
-
-	double pTgtPos[2], dCurrX, dCurrY;
-	pTgtPos[1] = pView->m_pMotion->m_dPinPosY[m_nIdx];
-	pTgtPos[0] = pView->m_pMotion->m_dPinPosX[m_nIdx];
-
-	if(m_nIdx==0)
-	{
-		dCurrX = pView->m_dEnc[AXIS_X0];
-		dCurrY = pView->m_dEnc[AXIS_Y0];
-		if(dCurrX < -1000.0 || dCurrY < -1000.0)
-		{
-			//if(!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, 0.3, ABS, WAIT))
-			if (!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, 0.3, ABS, WAIT))
-			{
-				pView->ClrDispMsg();
-				AfxMessageBox(_T("Move XY Error..."));
-			}
-		}
-		else
-		{
-			double fLen, fVel, fAcc, fJerk;
-			fLen = sqrt( ((pTgtPos[0] - dCurrX) * (pTgtPos[0] - dCurrX)) + ((pTgtPos[1] - dCurrY) * (pTgtPos[1] - dCurrY)) );
-			if(fLen > 0.001)
-			{
-				pView->m_pMotion->GetSpeedProfile(TRAPEZOIDAL, AXIS_X0, fLen, fVel, fAcc, fJerk);
-				//if(!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, fVel, fAcc, fAcc))
-				if (!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, fVel, fAcc, fAcc))
-				{
-					pView->ClrDispMsg();
-					AfxMessageBox(_T("Move XY Error..."));
-				}
-			}
-		}
-	}
-	else if(m_nIdx==1)
-	{
-		dCurrX = pView->m_dEnc[AXIS_X1];
-		dCurrY = pView->m_dEnc[AXIS_Y1];
-		if(dCurrX < -1000.0 || dCurrY < -1000.0)
-		{
-			//if(!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, 0.3, ABS, WAIT))
-			if (!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, 0.3, ABS, WAIT))
-			{
-				pView->ClrDispMsg();
-				AfxMessageBox(_T("Move XY Error..."));
-			}
-		}
-		else
-		{
-			double fLen, fVel, fAcc, fJerk;
-			fLen = sqrt( ((pTgtPos[0] - dCurrX) * (pTgtPos[0] - dCurrX)) + ((pTgtPos[1] - dCurrY) * (pTgtPos[1] - dCurrY)) );
-			if(fLen > 0.001)
-			{
-				pView->m_pMotion->GetSpeedProfile(TRAPEZOIDAL, AXIS_X1, fLen, fVel, fAcc, fJerk);
-				//if(!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, fVel, fAcc, fAcc))
-				if (!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, fVel, fAcc, fAcc))
-				{
-					pView->ClrDispMsg();
-					AfxMessageBox(_T("Move XY Error..."));
-			}
-		}
-	}
-	}
-
-	Sleep(500);
-
-	// 2-1. Measure set
-	CLibMilBuf *MilGrabImg = NULL;
-#ifdef USE_IDS
-	MilGrabImg = m_pMil->AllocBuf(m_pIds->m_nSizeX, m_pIds->m_nSizeY, 8L+M_UNSIGNED, M_IMAGE+M_DISP+M_PROC);
-#endif
-
-#ifdef USE_CREVIS
-	MilGrabImg = m_pMil->AllocBuf((long)m_pCrevis[0]->GetImgWidth(), (long)m_pCrevis[0]->GetImgHeight(), 8L+M_UNSIGNED, M_IMAGE+M_DISP+M_PROC);
-#endif
-
-#ifdef USE_IRAYPLE
-	MilGrabImg = m_pMil->AllocBuf((long)m_pIRayple->GetImgWidth(), (long)m_pIRayple->GetImgHeight(), 8L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
-#endif
-
-
-	// 2-2. Create Model
-#ifdef USE_IDS
-// 	if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
-	if(m_pIds->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-	{
-		if(MilGrabImg)
-			delete MilGrabImg;
-
-		pView->MsgBox(_T("Image Grab Fail !!"));
-// 		AfxMessageBox(_T("Image Grab Fail !!"));
-		dVal = 0.0;
-		return dVal;
-	}
-
-	MilGrabImg->ChildBuffer2d(m_pIds->m_nSizeX*3/8, m_pIds->m_nSizeY*3/8, m_pIds->m_nSizeX*2/8, m_pIds->m_nSizeY*2/8);
-#endif
-
-#ifdef USE_CREVIS
-	StopLive();
-	Sleep(100);
-
-	if(m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-	{
-		if(MilGrabImg)
-			delete MilGrabImg;
-
-		pView->MsgBox(_T("Image Grab Fail !!"));
-// 		AfxMessageBox(_T("Image Grab Fail !!"));
-		dVal = 0.0;
-		return dVal;
-	}
-
-	StartLive();
-	Sleep(100);
-
-	int nSizeX = m_pCrevis[0]->GetImgWidth();
-	int nSizeY = m_pCrevis[0]->GetImgHeight();
-	MilGrabImg->ChildBuffer2d(nSizeX*3/8, nSizeY*3/8, nSizeX*2/8, nSizeY*2/8);
-
-#endif
-
-#ifdef USE_IRAYPLE
-	// 	if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
-	if (m_pIRayple->OneshotGrab() == FALSE || m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-	{
-		if (MilGrabImg)
-			delete MilGrabImg;
-
-		pView->MsgBox(_T("Image Grab Fail !!"));
-		//AfxMessageBox(_T("Image Grab Fail !!"));
-		dVal = 0.0;
-		return dVal;
-	}
-
-	MilGrabImg->ChildBuffer2d(m_pIRayple->GetImgWidth() * 3 / 8, m_pIRayple->GetImgHeight() * 3 / 8, m_pIRayple->GetImgWidth() * 2 / 8, m_pIRayple->GetImgHeight() * 2 / 8);
-#endif
-
+	return 0.0;
+//	double dVal = 1.0;
+//
+//	if(!m_pMil)
+//		return dVal;
+//
+//	int nRepeatMeasureNum = 10, nEffectiveMeasureNum = 6;
+//	int nRealMeasureNum = 0;
+//	CfPoint fptMoveDistance;
+//	fptMoveDistance.x = 1.0; fptMoveDistance.y = 1.0;
+//	CfPoint fptCameraPos[2];
+//	fptCameraPos[0].x = 0.0;
+//	fptCameraPos[0].y = 0.0;
+//	fptCameraPos[1].x = 0.0;
+//	fptCameraPos[1].y = 0.0;
+//	int i = 0;
+//
+//	// 1. Move
+//#ifdef USE_IDS
+//	if(!pView->m_pMotion || !m_pIds)
+//	{
+//		dVal = 0.0;
+//		return dVal;
+//	}
+//#endif
+//
+//#ifdef USE_CREVIS
+//	if(!pView->m_pMotion || !m_pCrevis)
+//	{
+//		dVal = 0.0;
+//		return dVal;
+//	}
+//#endif
+//
+//#ifdef USE_IRAYPLE
+//	if (!pView->m_pMotion || !m_pIRayple)
+//	{
+//		dVal = 0.0;
+//		return dVal;
+//	}
+//#endif
+//
+//	double pTgtPos[2], dCurrX, dCurrY;
+//	pTgtPos[1] = pView->m_pMotion->m_dPinPosY[m_nIdx];
+//	pTgtPos[0] = pView->m_pMotion->m_dPinPosX[m_nIdx];
+//
+//	if(m_nIdx==0)
+//	{
+//		dCurrX = pView->m_dEnc[AXIS_X0];
+//		dCurrY = pView->m_dEnc[AXIS_Y0];
+//		if(dCurrX < -1000.0 || dCurrY < -1000.0)
+//		{
+//			//if(!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, 0.3, ABS, WAIT))
+//			if (!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, 0.3, ABS, WAIT))
+//			{
+//				pView->ClrDispMsg();
+//				AfxMessageBox(_T("Move XY Error..."));
+//			}
+//		}
+//		else
+//		{
+//			double fLen, fVel, fAcc, fJerk;
+//			fLen = sqrt( ((pTgtPos[0] - dCurrX) * (pTgtPos[0] - dCurrX)) + ((pTgtPos[1] - dCurrY) * (pTgtPos[1] - dCurrY)) );
+//			if(fLen > 0.001)
+//			{
+//				pView->m_pMotion->GetSpeedProfile(TRAPEZOIDAL, AXIS_X0, fLen, fVel, fAcc, fJerk);
+//				//if(!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, fVel, fAcc, fAcc))
+//				if (!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, fVel, fAcc, fAcc))
+//				{
+//					pView->ClrDispMsg();
+//					AfxMessageBox(_T("Move XY Error..."));
+//				}
+//			}
+//		}
+//	}
+//	else if(m_nIdx==1)
+//	{
+//		dCurrX = pView->m_dEnc[AXIS_X1];
+//		dCurrY = pView->m_dEnc[AXIS_Y1];
+//		if(dCurrX < -1000.0 || dCurrY < -1000.0)
+//		{
+//			//if(!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, 0.3, ABS, WAIT))
+//			if (!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, 0.3, ABS, WAIT))
+//			{
+//				pView->ClrDispMsg();
+//				AfxMessageBox(_T("Move XY Error..."));
+//			}
+//		}
+//		else
+//		{
+//			double fLen, fVel, fAcc, fJerk;
+//			fLen = sqrt( ((pTgtPos[0] - dCurrX) * (pTgtPos[0] - dCurrX)) + ((pTgtPos[1] - dCurrY) * (pTgtPos[1] - dCurrY)) );
+//			if(fLen > 0.001)
+//			{
+//				pView->m_pMotion->GetSpeedProfile(TRAPEZOIDAL, AXIS_X1, fLen, fVel, fAcc, fJerk);
+//				//if(!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, fVel, fAcc, fAcc))
+//				if (!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, fVel, fAcc, fAcc))
+//				{
+//					pView->ClrDispMsg();
+//					AfxMessageBox(_T("Move XY Error..."));
+//			}
+//		}
+//	}
+//	}
+//
+//	Sleep(500);
+//
+//	// 2-1. Measure set
+//	CLibMilBuf *MilGrabImg = NULL;
+//#ifdef USE_IDS
+//	MilGrabImg = m_pMil->AllocBuf(m_pIds->m_nSizeX, m_pIds->m_nSizeY, 8L+M_UNSIGNED, M_IMAGE+M_DISP+M_PROC);
+//#endif
+//
+//#ifdef USE_CREVIS
+//	MilGrabImg = m_pMil->AllocBuf((long)m_pCrevis[0]->GetImgWidth(), (long)m_pCrevis[0]->GetImgHeight(), 8L+M_UNSIGNED, M_IMAGE+M_DISP+M_PROC);
+//#endif
+//
+//#ifdef USE_IRAYPLE
+//	MilGrabImg = m_pMil->AllocBuf((long)m_pIRayple->GetImgWidth(), (long)m_pIRayple->GetImgHeight(), 8L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
+//#endif
+//
+//
+//	// 2-2. Create Model
+//#ifdef USE_IDS
+//// 	if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
+//	if(m_pIds->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//	{
+//		if(MilGrabImg)
+//			delete MilGrabImg;
+//
+//		pView->MsgBox(_T("Image Grab Fail !!"));
+//// 		AfxMessageBox(_T("Image Grab Fail !!"));
+//		dVal = 0.0;
+//		return dVal;
+//	}
+//
+//	MilGrabImg->ChildBuffer2d(m_pIds->m_nSizeX*3/8, m_pIds->m_nSizeY*3/8, m_pIds->m_nSizeX*2/8, m_pIds->m_nSizeY*2/8);
+//#endif
+//
+//#ifdef USE_CREVIS
+//	StopLive();
+//	Sleep(100);
+//
+//	if(m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//	{
+//		if(MilGrabImg)
+//			delete MilGrabImg;
+//
+//		pView->MsgBox(_T("Image Grab Fail !!"));
+//// 		AfxMessageBox(_T("Image Grab Fail !!"));
+//		dVal = 0.0;
+//		return dVal;
+//	}
+//
+//	StartLive();
+//	Sleep(100);
+//
+//	int nSizeX = m_pCrevis[0]->GetImgWidth();
+//	int nSizeY = m_pCrevis[0]->GetImgHeight();
+//	MilGrabImg->ChildBuffer2d(nSizeX*3/8, nSizeY*3/8, nSizeX*2/8, nSizeY*2/8);
+//
+//#endif
+//
+//#ifdef USE_IRAYPLE
+//	// 	if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
+//	if (m_pIRayple->OneshotGrab() == FALSE || m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//	{
+//		if (MilGrabImg)
+//			delete MilGrabImg;
+//
+//		pView->MsgBox(_T("Image Grab Fail !!"));
+//		//AfxMessageBox(_T("Image Grab Fail !!"));
+//		dVal = 0.0;
+//		return dVal;
+//	}
+//
+//	MilGrabImg->ChildBuffer2d(m_pIRayple->GetImgWidth() * 3 / 8, m_pIRayple->GetImgHeight() * 3 / 8, m_pIRayple->GetImgWidth() * 2 / 8, m_pIRayple->GetImgHeight() * 2 / 8);
+//#endif
+//
+////	m_pMil->PatternMatchingAlloc(MilGrabImg->m_MilImageChild);
 //	m_pMil->PatternMatchingAlloc(MilGrabImg->m_MilImageChild);
-	m_pMil->PatternMatchingAlloc(MilGrabImg->m_MilImageChild);
-	
-
-	// 2. Measure Position
-	nRealMeasureNum = 0;
-	for(i=0; i<nRepeatMeasureNum; i++)
-	{
-		Sleep(100);
-#ifdef USE_IDS
-//		if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
-		if(m_pIds->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-		{
-			if(MilGrabImg)
-				delete MilGrabImg;
-// 			m_pMil->GmfFree();
-			m_pMil->PatternMatchingFree();
-
-			pView->MsgBox(_T("Image Grab Fail !!"));
-// 			AfxMessageBox(_T("Image Grab Fail !!"));
-			dVal = 0.0;
-			return dVal;
-		}
-#endif
-
-#ifdef USE_CREVIS
-		StopLive();
-		Sleep(100);
-
-		if(m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-		{
-			if(MilGrabImg)
-				delete MilGrabImg;
-// 			m_pMil->GmfFree();
-			m_pMil->PatternMatchingFree();
-
-			pView->MsgBox(_T("Image Grab Fail !!"));
-// 			AfxMessageBox(_T("Image Grab Fail !!"));
-			dVal = 0.0;
-			return dVal;
-		}
-
-		StartLive();
-		Sleep(100);
-#endif
-
-#ifdef USE_IRAYPLE
-		//if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
-		if (m_pIRayple->OneshotGrab() == FALSE || m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-		{
-			if (MilGrabImg)
-				delete MilGrabImg;
-			//m_pMil->GmfFree();
-			m_pMil->PatternMatchingFree();
-
-			pView->MsgBox(_T("Image Grab Fail !!"));
-			//AfxMessageBox(_T("Image Grab Fail !!"));
-			dVal = 0.0;
-			return dVal;
-		}
-#endif
-
-#ifdef _DEBUG
- 		// Grab Image Save
-		//char szFileName[100];
- 		//sprintf(szFileName, "C:\\CalcCameraPixelSize-target0.tif");
- 		//MilGrabImg->BufferSave(szFileName);
-		if(pDoc->m_bDebugGrabAlign)
-			MbufSave(_T("C:\\CalcCameraPixelSize-target0.tif"), MilGrabImg->m_MilImage);
-#endif
-
-		//m_pMil->GmfFind(MilGrabImg->m_MilImage);
-		//m_pMil->PatternMatchingAction(MilGrabImg->m_MilImageChild, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID);
- 		if(m_pMil->PatternMatchingAction(MilGrabImg->m_MilImage))//, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID))
-		{
-			if(i > (nRepeatMeasureNum-nEffectiveMeasureNum-1))
-			{
-				fptCameraPos[0].x += m_pMil->m_dPatternMatchingResultSelectPosX;
-				fptCameraPos[0].y += m_pMil->m_dPatternMatchingResultSelectPosY;
- 				//fptCameraPos[0].x += m_pMil->m_dGmfResultPositionX[m_pMil->m_nGmfResultSelectNum];
- 				//fptCameraPos[0].y += m_pMil->m_dGmfResultPositionY[m_pMil->m_nGmfResultSelectNum];
-
-				nRealMeasureNum++;
-			}
-		}
-	}
-	if(nRealMeasureNum > 0)
-	{
-		fptCameraPos[0].x = fptCameraPos[0].x / (double)nRealMeasureNum;
-		fptCameraPos[0].y = fptCameraPos[0].y / (double)nRealMeasureNum;
-	}
-	else
-	{
-		dVal = 0.0;
-		return dVal;
-	}
-
-
-	// 3. Move X,Y 1mm
-	if(m_nIdx==0)
-	{
-		pTgtPos[1] = pView->m_pMotion->m_dPinPosY[m_nIdx] + fptMoveDistance.y;
-		pTgtPos[0] = pView->m_pMotion->m_dPinPosX[m_nIdx] + fptMoveDistance.x;
-		dCurrX = pView->m_dEnc[AXIS_X0];	// pView->m_pMotion->GetActualPosition(AXIS_X);
-		dCurrY = pView->m_dEnc[AXIS_Y0];	// pView->m_pMotion->GetActualPosition(AXIS_Y);
-		if(dCurrX < -1000.0 || dCurrY < -1000.0)
-		{
-			//if(!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, 0.3, ABS, WAIT))
-			if (!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, 0.3, ABS, WAIT))
-			{
-				pView->ClrDispMsg();
-				AfxMessageBox(_T("Move XY Error..."));
-			}
-		}
-		else
-		{
-			double fLen, fVel, fAcc, fJerk;
-			fLen = sqrt( ((pTgtPos[0] - dCurrX) * (pTgtPos[0] - dCurrX)) + ((pTgtPos[1] - dCurrY) * (pTgtPos[1] - dCurrY)) );
-			if(fLen > 0.001)
-			{
-				pView->m_pMotion->GetSpeedProfile(TRAPEZOIDAL, AXIS_X0, fLen, fVel, fAcc, fJerk);
-				//if(!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, fVel/10.0, fAcc/10.0, fAcc/10.0))
-				if (!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, fVel / 10.0, fAcc / 10.0, fAcc / 10.0))
-				{
-					pView->ClrDispMsg();
-					AfxMessageBox(_T("Move XY Error..."));
-				}
-			}
-		}
-	}
-	else if(m_nIdx==1)
-	{
-		pTgtPos[1] = pView->m_pMotion->m_dPinPosY[m_nIdx] + fptMoveDistance.y;
-		pTgtPos[0] = pView->m_pMotion->m_dPinPosX[m_nIdx] + fptMoveDistance.x;
-		dCurrX = pView->m_dEnc[AXIS_X1];	// pView->m_pMotion->GetActualPosition(AXIS_X);
-		dCurrY = pView->m_dEnc[AXIS_Y1];	// pView->m_pMotion->GetActualPosition(AXIS_Y);
-		if(dCurrX < -1000.0 || dCurrY < -1000.0)
-		{
-			//if(!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, 0.3, ABS, WAIT))
-			if (!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, 0.3, ABS, WAIT))
-			{
-				pView->ClrDispMsg();
-				AfxMessageBox(_T("Move XY Error..."));
-			}
-		}
-		else
-		{
-			double fLen, fVel, fAcc, fJerk;
-			fLen = sqrt( ((pTgtPos[0] - dCurrX) * (pTgtPos[0] - dCurrX)) + ((pTgtPos[1] - dCurrY) * (pTgtPos[1] - dCurrY)) );
-			if(fLen > 0.001)
-			{
-				pView->m_pMotion->GetSpeedProfile(TRAPEZOIDAL, AXIS_X1, fLen, fVel, fAcc, fJerk);
-				//if(!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, fVel/10.0, fAcc/10.0, fAcc/10.0))
-				if (!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, fVel / 10.0, fAcc / 10.0, fAcc / 10.0))
-				{
-					pView->ClrDispMsg();
-					AfxMessageBox(_T("Move XY Error..."));
-				}
-			}
-		}
-	}
-	Sleep(500);
-
-
-	// 4. Measure Position
-	nRealMeasureNum = 0;
-	for(i=0; i<nRepeatMeasureNum; i++)
-	{
-		Sleep(100);
-#ifdef USE_IDS
-//		if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
-		if(m_pIds->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-		{
-			if(MilGrabImg)
-				delete MilGrabImg;
-			m_pMil->PatternMatchingFree();
-
-			pView->MsgBox(_T("Image Grab Fail !!"));
-// 			AfxMessageBox(_T("Image Grab Fail !!"));
-			dVal = 0.0;
-			return dVal;
-		}
-#endif
-
-#ifdef USE_CREVIS
-		StopLive();
-		Sleep(100);
-
-		if(m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-		{
-			if(MilGrabImg)
-				delete MilGrabImg;
-			m_pMil->PatternMatchingFree();
-
-			pView->MsgBox(_T("Image Grab Fail !!"));
-// 			AfxMessageBox(_T("Image Grab Fail !!"));
-			dVal = 0.0;
-			return dVal;
-		}
-
-		StartLive();
-		Sleep(100);
-#endif
-
-#ifdef USE_IRAYPLE
-		//if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
-		if (m_pIRayple->OneshotGrab() == FALSE || m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
-		{
-			if (MilGrabImg)
-				delete MilGrabImg;
-			m_pMil->PatternMatchingFree();
-
-			pView->MsgBox(_T("Image Grab Fail !!"));
-			//AfxMessageBox(_T("Image Grab Fail !!"));
-			dVal = 0.0;
-			return dVal;
-		}
-#endif
-
-
-#ifdef _DEBUG
+//	
+//
+//	// 2. Measure Position
+//	nRealMeasureNum = 0;
+//	for(i=0; i<nRepeatMeasureNum; i++)
+//	{
+//		Sleep(100);
+//#ifdef USE_IDS
+////		if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
+//		if(m_pIds->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//		{
+//			if(MilGrabImg)
+//				delete MilGrabImg;
+//// 			m_pMil->GmfFree();
+//			m_pMil->PatternMatchingFree();
+//
+//			pView->MsgBox(_T("Image Grab Fail !!"));
+//// 			AfxMessageBox(_T("Image Grab Fail !!"));
+//			dVal = 0.0;
+//			return dVal;
+//		}
+//#endif
+//
+//#ifdef USE_CREVIS
+//		StopLive();
+//		Sleep(100);
+//
+//		if(m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//		{
+//			if(MilGrabImg)
+//				delete MilGrabImg;
+//// 			m_pMil->GmfFree();
+//			m_pMil->PatternMatchingFree();
+//
+//			pView->MsgBox(_T("Image Grab Fail !!"));
+//// 			AfxMessageBox(_T("Image Grab Fail !!"));
+//			dVal = 0.0;
+//			return dVal;
+//		}
+//
+//		StartLive();
+//		Sleep(100);
+//#endif
+//
+//#ifdef USE_IRAYPLE
+//		//if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
+//		if (m_pIRayple->OneshotGrab() == FALSE || m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//		{
+//			if (MilGrabImg)
+//				delete MilGrabImg;
+//			//m_pMil->GmfFree();
+//			m_pMil->PatternMatchingFree();
+//
+//			pView->MsgBox(_T("Image Grab Fail !!"));
+//			//AfxMessageBox(_T("Image Grab Fail !!"));
+//			dVal = 0.0;
+//			return dVal;
+//		}
+//#endif
+//
+//#ifdef _DEBUG
 // 		// Grab Image Save
-// 		sprintf(szFileName, "C:\\CalcCameraPixelSize-target1.tif");
-// 		MilGrabImg->BufferSave(szFileName);
-		if (pDoc->m_bDebugGrabAlign)
-			MbufSave(_T("C:\\CalcCameraPixelSize-target1.tif"), MilGrabImg->m_MilImage);
-#endif
-
-		//m_pMil->GmfFind(MilGrabImg->m_MilImage);
-		//m_pMil->PatternMatchingAction(MilGrabImg->m_MilImageChild, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID);
- 		if(m_pMil->PatternMatchingAction(MilGrabImg->m_MilImage))//, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID))
-		{
-			if(i > (nRepeatMeasureNum-nEffectiveMeasureNum-1))
-			{
-				fptCameraPos[1].x += m_pMil->m_dPatternMatchingResultSelectPosX;
-				fptCameraPos[1].y += m_pMil->m_dPatternMatchingResultSelectPosY;
- 				//fptCameraPos[1].x += m_pMil->m_dGmfResultPositionX[m_pMil->m_nGmfResultSelectNum];
- 				//fptCameraPos[1].y += m_pMil->m_dGmfResultPositionY[m_pMil->m_nGmfResultSelectNum];
-				nRealMeasureNum++;
-			}
-		}
-	}
-	if(nRealMeasureNum > 0)
-	{
-		fptCameraPos[1].x = fptCameraPos[1].x / (double)nRealMeasureNum;
-		fptCameraPos[1].y = fptCameraPos[1].y / (double)nRealMeasureNum;
-	}
-	else
-	{
-		dVal = 0.0;
-		return dVal;
-	}
-
-	// 4-2. Measure End
-	if(MilGrabImg)
-		delete MilGrabImg;
-// 	m_pMil->GmfFree();
-	m_pMil->PatternMatchingFree();
-
-	// 5. Calc Pixel Size
-	double dPixelSizeX = 0.0, dPixelSizeY = 0.0;
-#ifdef USE_IDS
-	dPixelSizeX = m_pIds->CalcPixelSize(fabs(fptCameraPos[1].x-fptCameraPos[0].x), fptMoveDistance.x);
-	dPixelSizeY = m_pIds->CalcPixelSize(fabs(fptCameraPos[1].y-fptCameraPos[0].y), fptMoveDistance.y);
-	m_pIds->CalcPixelSize(fabs(fptCameraPos[1].x-fptCameraPos[0].x), fabs(fptCameraPos[1].y-fptCameraPos[0].y), fptMoveDistance.x, fptMoveDistance.y);
-#endif
-
-#ifdef USE_CREVIS
-	dPixelSizeX = fptMoveDistance.x / fabs(fptCameraPos[1].x-fptCameraPos[0].x);
-	dPixelSizeY = fptMoveDistance.y / fabs(fptCameraPos[1].y-fptCameraPos[0].y);
-	//m_pIds->CalcPixelSize(fabs(fptCameraPos[1].x-fptCameraPos[0].x), fabs(fptCameraPos[1].y-fptCameraPos[0].y), fptMoveDistance.x, fptMoveDistance.y);
-#endif
-
-#ifdef USE_IRAYPLE
-	dPixelSizeX = fptMoveDistance.x / fabs(fptCameraPos[1].x-fptCameraPos[0].x);
-	dPixelSizeY = fptMoveDistance.y / fabs(fptCameraPos[1].y-fptCameraPos[0].y);
-	//m_pIds->CalcPixelSize(fabs(fptCameraPos[1].x-fptCameraPos[0].x), fabs(fptCameraPos[1].y-fptCameraPos[0].y), fptMoveDistance.x, fptMoveDistance.y);
-#endif
-
-	if (IDYES == pView->MsgBox(_T("카메라 해상도를 변경하시겠습니까?"), 0, MB_YESNO))
-	{
-		// 6. Save Cam Resolution
-		CString sItem, sData, sPath = PATH_WORKING_INFO;
-
-		sItem.Format(_T("Vision%d"), m_nIdx);
-		sData.Format(_T("%f"), dPixelSizeX);
-		pDoc->WorkingInfo.Vision[m_nIdx].sResX = sData;
-		::WritePrivateProfileString(sItem, _T("RESOLUTION_X"), sData, sPath);
-		sData.Format(_T("%f"), dPixelSizeY);
-		pDoc->WorkingInfo.Vision[m_nIdx].sResY = sData;
-		::WritePrivateProfileString(sItem, _T("RESOLUTION_Y"), sData, sPath);
-		dVal = (dPixelSizeX+dPixelSizeY)/2.0;
-	}
-	else
-	{
-		dVal = (_tstof(pDoc->WorkingInfo.Vision[m_nIdx].sResX) + _tstof(pDoc->WorkingInfo.Vision[m_nIdx].sResY)) / 2.0;
-	}
-// #ifdef USE_IDS
-// 	if(m_pMeasure)
-// 		m_pMeasure->SetPixelSize(m_pIds->m_dPixelSizeX, m_pIds->m_dPixelSizeY);
-// #ifdef _DEBUG
-// 	TRACE(_T("\n Pixel Size: %.6f,  X: %.6f, Y: %.6f"),m_pIds->m_dPixelSize, dPixelSizeX, dPixelSizeY);
-// #endif
-// 
-// #endif
-
-	pView->ClrDispMsg();
-
-	SetClrOverlay();
-
-	return dVal;
+//		//char szFileName[100];
+// 		//sprintf(szFileName, "C:\\CalcCameraPixelSize-target0.tif");
+// 		//MilGrabImg->BufferSave(szFileName);
+//		if(pDoc->m_bDebugGrabAlign)
+//			MbufSave(_T("C:\\CalcCameraPixelSize-target0.tif"), MilGrabImg->m_MilImage);
+//#endif
+//
+//		//m_pMil->GmfFind(MilGrabImg->m_MilImage);
+//		//m_pMil->PatternMatchingAction(MilGrabImg->m_MilImageChild, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID);
+// 		if(m_pMil->PatternMatchingAction(MilGrabImg->m_MilImage))//, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID))
+//		{
+//			if(i > (nRepeatMeasureNum-nEffectiveMeasureNum-1))
+//			{
+//				fptCameraPos[0].x += m_pMil->m_dPatternMatchingResultSelectPosX;
+//				fptCameraPos[0].y += m_pMil->m_dPatternMatchingResultSelectPosY;
+// 				//fptCameraPos[0].x += m_pMil->m_dGmfResultPositionX[m_pMil->m_nGmfResultSelectNum];
+// 				//fptCameraPos[0].y += m_pMil->m_dGmfResultPositionY[m_pMil->m_nGmfResultSelectNum];
+//
+//				nRealMeasureNum++;
+//			}
+//		}
+//	}
+//	if(nRealMeasureNum > 0)
+//	{
+//		fptCameraPos[0].x = fptCameraPos[0].x / (double)nRealMeasureNum;
+//		fptCameraPos[0].y = fptCameraPos[0].y / (double)nRealMeasureNum;
+//	}
+//	else
+//	{
+//		dVal = 0.0;
+//		return dVal;
+//	}
+//
+//
+//	// 3. Move X,Y 1mm
+//	if(m_nIdx==0)
+//	{
+//		pTgtPos[1] = pView->m_pMotion->m_dPinPosY[m_nIdx] + fptMoveDistance.y;
+//		pTgtPos[0] = pView->m_pMotion->m_dPinPosX[m_nIdx] + fptMoveDistance.x;
+//		dCurrX = pView->m_dEnc[AXIS_X0];	// pView->m_pMotion->GetActualPosition(AXIS_X);
+//		dCurrY = pView->m_dEnc[AXIS_Y0];	// pView->m_pMotion->GetActualPosition(AXIS_Y);
+//		if(dCurrX < -1000.0 || dCurrY < -1000.0)
+//		{
+//			//if(!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, 0.3, ABS, WAIT))
+//			if (!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, 0.3, ABS, WAIT))
+//			{
+//				pView->ClrDispMsg();
+//				AfxMessageBox(_T("Move XY Error..."));
+//			}
+//		}
+//		else
+//		{
+//			double fLen, fVel, fAcc, fJerk;
+//			fLen = sqrt( ((pTgtPos[0] - dCurrX) * (pTgtPos[0] - dCurrX)) + ((pTgtPos[1] - dCurrY) * (pTgtPos[1] - dCurrY)) );
+//			if(fLen > 0.001)
+//			{
+//				pView->m_pMotion->GetSpeedProfile(TRAPEZOIDAL, AXIS_X0, fLen, fVel, fAcc, fJerk);
+//				//if(!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, fVel/10.0, fAcc/10.0, fAcc/10.0))
+//				if (!pView->m_pMotion->Move(MS_X0Y0, pTgtPos, fVel / 10.0, fAcc / 10.0, fAcc / 10.0))
+//				{
+//					pView->ClrDispMsg();
+//					AfxMessageBox(_T("Move XY Error..."));
+//				}
+//			}
+//		}
+//	}
+//	else if(m_nIdx==1)
+//	{
+//		pTgtPos[1] = pView->m_pMotion->m_dPinPosY[m_nIdx] + fptMoveDistance.y;
+//		pTgtPos[0] = pView->m_pMotion->m_dPinPosX[m_nIdx] + fptMoveDistance.x;
+//		dCurrX = pView->m_dEnc[AXIS_X1];	// pView->m_pMotion->GetActualPosition(AXIS_X);
+//		dCurrY = pView->m_dEnc[AXIS_Y1];	// pView->m_pMotion->GetActualPosition(AXIS_Y);
+//		if(dCurrX < -1000.0 || dCurrY < -1000.0)
+//		{
+//			//if(!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, 0.3, ABS, WAIT))
+//			if (!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, 0.3, ABS, WAIT))
+//			{
+//				pView->ClrDispMsg();
+//				AfxMessageBox(_T("Move XY Error..."));
+//			}
+//		}
+//		else
+//		{
+//			double fLen, fVel, fAcc, fJerk;
+//			fLen = sqrt( ((pTgtPos[0] - dCurrX) * (pTgtPos[0] - dCurrX)) + ((pTgtPos[1] - dCurrY) * (pTgtPos[1] - dCurrY)) );
+//			if(fLen > 0.001)
+//			{
+//				pView->m_pMotion->GetSpeedProfile(TRAPEZOIDAL, AXIS_X1, fLen, fVel, fAcc, fJerk);
+//				//if(!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, fVel/10.0, fAcc/10.0, fAcc/10.0))
+//				if (!pView->m_pMotion->Move(MS_X1Y1, pTgtPos, fVel / 10.0, fAcc / 10.0, fAcc / 10.0))
+//				{
+//					pView->ClrDispMsg();
+//					AfxMessageBox(_T("Move XY Error..."));
+//				}
+//			}
+//		}
+//	}
+//	Sleep(500);
+//
+//
+//	// 4. Measure Position
+//	nRealMeasureNum = 0;
+//	for(i=0; i<nRepeatMeasureNum; i++)
+//	{
+//		Sleep(100);
+//#ifdef USE_IDS
+////		if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
+//		if(m_pIds->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//		{
+//			if(MilGrabImg)
+//				delete MilGrabImg;
+//			m_pMil->PatternMatchingFree();
+//
+//			pView->MsgBox(_T("Image Grab Fail !!"));
+//// 			AfxMessageBox(_T("Image Grab Fail !!"));
+//			dVal = 0.0;
+//			return dVal;
+//		}
+//#endif
+//
+//#ifdef USE_CREVIS
+//		StopLive();
+//		Sleep(100);
+//
+//		if(m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//		{
+//			if(MilGrabImg)
+//				delete MilGrabImg;
+//			m_pMil->PatternMatchingFree();
+//
+//			pView->MsgBox(_T("Image Grab Fail !!"));
+//// 			AfxMessageBox(_T("Image Grab Fail !!"));
+//			dVal = 0.0;
+//			return dVal;
+//		}
+//
+//		StartLive();
+//		Sleep(100);
+//#endif
+//
+//#ifdef USE_IRAYPLE
+//		//if(m_pIds->OneshotGrab(MilGrabImg, GRAB_COLOR_GREEN) == FALSE)
+//		if (m_pIRayple->OneshotGrab() == FALSE || m_pMil->OneshotGrab(MilGrabImg->m_MilImage, GRAB_COLOR_COLOR) == FALSE)
+//		{
+//			if (MilGrabImg)
+//				delete MilGrabImg;
+//			m_pMil->PatternMatchingFree();
+//
+//			pView->MsgBox(_T("Image Grab Fail !!"));
+//			//AfxMessageBox(_T("Image Grab Fail !!"));
+//			dVal = 0.0;
+//			return dVal;
+//		}
+//#endif
+//
+//
+//#ifdef _DEBUG
+//// 		// Grab Image Save
+//// 		sprintf(szFileName, "C:\\CalcCameraPixelSize-target1.tif");
+//// 		MilGrabImg->BufferSave(szFileName);
+//		if (pDoc->m_bDebugGrabAlign)
+//			MbufSave(_T("C:\\CalcCameraPixelSize-target1.tif"), MilGrabImg->m_MilImage);
+//#endif
+//
+//		//m_pMil->GmfFind(MilGrabImg->m_MilImage);
+//		//m_pMil->PatternMatchingAction(MilGrabImg->m_MilImageChild, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID);
+// 		if(m_pMil->PatternMatchingAction(MilGrabImg->m_MilImage))//, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID))
+//		{
+//			if(i > (nRepeatMeasureNum-nEffectiveMeasureNum-1))
+//			{
+//				fptCameraPos[1].x += m_pMil->m_dPatternMatchingResultSelectPosX;
+//				fptCameraPos[1].y += m_pMil->m_dPatternMatchingResultSelectPosY;
+// 				//fptCameraPos[1].x += m_pMil->m_dGmfResultPositionX[m_pMil->m_nGmfResultSelectNum];
+// 				//fptCameraPos[1].y += m_pMil->m_dGmfResultPositionY[m_pMil->m_nGmfResultSelectNum];
+//				nRealMeasureNum++;
+//			}
+//		}
+//	}
+//	if(nRealMeasureNum > 0)
+//	{
+//		fptCameraPos[1].x = fptCameraPos[1].x / (double)nRealMeasureNum;
+//		fptCameraPos[1].y = fptCameraPos[1].y / (double)nRealMeasureNum;
+//	}
+//	else
+//	{
+//		dVal = 0.0;
+//		return dVal;
+//	}
+//
+//	// 4-2. Measure End
+//	if(MilGrabImg)
+//		delete MilGrabImg;
+//// 	m_pMil->GmfFree();
+//	m_pMil->PatternMatchingFree();
+//
+//	// 5. Calc Pixel Size
+//	double dPixelSizeX = 0.0, dPixelSizeY = 0.0;
+//#ifdef USE_IDS
+//	dPixelSizeX = m_pIds->CalcPixelSize(fabs(fptCameraPos[1].x-fptCameraPos[0].x), fptMoveDistance.x);
+//	dPixelSizeY = m_pIds->CalcPixelSize(fabs(fptCameraPos[1].y-fptCameraPos[0].y), fptMoveDistance.y);
+//	m_pIds->CalcPixelSize(fabs(fptCameraPos[1].x-fptCameraPos[0].x), fabs(fptCameraPos[1].y-fptCameraPos[0].y), fptMoveDistance.x, fptMoveDistance.y);
+//#endif
+//
+//#ifdef USE_CREVIS
+//	dPixelSizeX = fptMoveDistance.x / fabs(fptCameraPos[1].x-fptCameraPos[0].x);
+//	dPixelSizeY = fptMoveDistance.y / fabs(fptCameraPos[1].y-fptCameraPos[0].y);
+//	//m_pIds->CalcPixelSize(fabs(fptCameraPos[1].x-fptCameraPos[0].x), fabs(fptCameraPos[1].y-fptCameraPos[0].y), fptMoveDistance.x, fptMoveDistance.y);
+//#endif
+//
+//#ifdef USE_IRAYPLE
+//	dPixelSizeX = fptMoveDistance.x / fabs(fptCameraPos[1].x-fptCameraPos[0].x);
+//	dPixelSizeY = fptMoveDistance.y / fabs(fptCameraPos[1].y-fptCameraPos[0].y);
+//	//m_pIds->CalcPixelSize(fabs(fptCameraPos[1].x-fptCameraPos[0].x), fabs(fptCameraPos[1].y-fptCameraPos[0].y), fptMoveDistance.x, fptMoveDistance.y);
+//#endif
+//
+//	if (IDYES == pView->MsgBox(_T("카메라 해상도를 변경하시겠습니까?"), 0, MB_YESNO))
+//	{
+//		// 6. Save Cam Resolution
+//		CString sItem, sData, sPath = PATH_WORKING_INFO;
+//
+//		sItem.Format(_T("Vision%d"), m_nIdx);
+//		sData.Format(_T("%f"), dPixelSizeX);
+//		pDoc->WorkingInfo.Vision[m_nIdx].sResX = sData;
+//		::WritePrivateProfileString(sItem, _T("RESOLUTION_X"), sData, sPath);
+//		sData.Format(_T("%f"), dPixelSizeY);
+//		pDoc->WorkingInfo.Vision[m_nIdx].sResY = sData;
+//		::WritePrivateProfileString(sItem, _T("RESOLUTION_Y"), sData, sPath);
+//		dVal = (dPixelSizeX+dPixelSizeY)/2.0;
+//	}
+//	else
+//	{
+//		dVal = (_tstof(pDoc->WorkingInfo.Vision[m_nIdx].sResX) + _tstof(pDoc->WorkingInfo.Vision[m_nIdx].sResY)) / 2.0;
+//	}
+//// #ifdef USE_IDS
+//// 	if(m_pMeasure)
+//// 		m_pMeasure->SetPixelSize(m_pIds->m_dPixelSizeX, m_pIds->m_dPixelSizeY);
+//// #ifdef _DEBUG
+//// 	TRACE(_T("\n Pixel Size: %.6f,  X: %.6f, Y: %.6f"),m_pIds->m_dPixelSize, dPixelSizeX, dPixelSizeY);
+//// #endif
+//// 
+//// #endif
+//
+//	pView->ClrDispMsg();
+//
+//	SetClrOverlay();
+//
+//	return dVal;
 }
 
 BOOL CVision::GrabIRayple(int nPos, BOOL bDraw)
@@ -4396,15 +4398,15 @@ BOOL CVision::SaveMkImg(CString sPath)
 
 void CVision::SaveCadImg(int nIdxMkInfo, CString sPath)
 {
-	if (m_pMilBufCad[nIdxMkInfo])
-	{
-		MbufSave(sPath, m_pMilBufCad[nIdxMkInfo]->m_MilImage);
-	}
-	else
-	{
-		pView->ClrDispMsg();
-		AfxMessageBox(_T("SaveCadImg() Fail !!"));
-	}
+	//if (m_pMilBufCad[nIdxMkInfo])
+	//{
+	//	MbufSave(sPath, m_pMilBufCad[nIdxMkInfo]->m_MilImage);
+	//}
+	//else
+	//{
+	//	pView->ClrDispMsg();
+	//	AfxMessageBox(_T("SaveCadImg() Fail !!"));
+	//}
 }
 
 #endif

@@ -5,6 +5,8 @@
 #pragma once
 
 
+#include "Vision.h"
+
 // CPunchingMeasSysDlg 대화 상자
 class CPunchingMeasSysDlg : public CDialog
 {

@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "LibMil.h"
-#include "../Global/GlobalDefine.h"
+//#include "../Global/GlobalDefine.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -11,11 +11,11 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#include "../GvisR2R_PunchDoc.h"
-#include "../GvisR2R_PunchView.h"
+//#include "../GvisR2R_PunchDoc.h"
+//#include "../GvisR2R_PunchView.h"
 
-extern CGvisR2R_PunchDoc* pDoc;
-extern CGvisR2R_PunchView* pView;
+//extern CGvisR2R_PunchDoc* pDoc;
+//extern CGvisR2R_PunchView* pView;
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibMil

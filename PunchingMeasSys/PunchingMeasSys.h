@@ -10,7 +10,6 @@
 
 #include "resource.h"		// 주 기호입니다.
 
-
 // CPunchingMeasSysApp:
 // 이 클래스의 구현에 대해서는 PunchingMeasSys.cpp을 참조하십시오.
 //

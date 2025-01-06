@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-//#include "gvisr2r.h"
 #include "LibMilDisp.h"
 
 #ifdef _DEBUG
