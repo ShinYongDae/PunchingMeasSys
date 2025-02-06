@@ -57,14 +57,34 @@
 #pragma comment (lib, "lib/vic64.lib")
 //#pragma comment(lib, "lib/FreeImage_x64")
 
+#define USE_MIL		1
+
 #define MAX_TRIG	1
 #define CAMERA_WIDTH	640
 #define CAMERA_HEIGHT	480
+
+/* Minimum and maximum area of blobs. */
+// Grab Image Size 100 x 100
+#define BLOB_AREA_MIN			100L			// 10 x 10
+#define BLOB_AREA_MAX			8100L			// 90 x 90
+#define BLOB_CENTER_OFFSET		20L			
+
+#define MIN_BLOB_SIZE_X       2L			
+#define MIN_BLOB_SIZE_Y       2L			
+
 
 typedef struct stPtMtRst
 {
 	double dX, dY, dAngle, dScore;
 } PT_MT_RST;
+
+typedef struct stBlobRst
+{
+	int nBlobTotal;
+	int nBoxArea;
+	double dCenterX, dCenterY;
+	int nBoxLeft, nBoxRight, nBoxTop, nBoxBottom;
+} BLOB_RST;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,6 +99,15 @@ class CVision : public CWnd
 
 	int m_nTest;
 	//double m_dEnc[MAX_AXIS], m_dBufEnc, m_dFdEnc;
+
+	CLibMilBuf *m_pMilBufModel, *m_pMilBufTarget;
+	CLibMilDisp *m_pMilDispModel, *m_pMilDispTarget;
+
+	MIL_ID m_MilBufCamMstModel, m_MilBufCamMstModelCrop;
+	CLibMilBuf *m_pMilBufCamMstModelCrop;
+	CLibMilDisp *m_pMilDispCamMstModelCrop;
+
+	CLibMilBuf *m_pMilBufBlobCamMstModelCropRzImg;
 
 #ifdef USE_IRAYPLE
 	CCamIRayple *m_pIRayple;
@@ -137,10 +166,22 @@ public:
 	CVision(int nIdx, MIL_ID MilSysId, HWND *hCtrl, CWnd* pParent=NULL); // hCtrl : Max(4)
 	CCriticalSection m_cs;
 
+	void ShowModel(CString sPath, BOOL bUseCamMstModel = TRUE);
+	void ShowTarget(CString sPath);
+	void SelDispModel(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
+	void SelDispTarget(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
+	void SelDispCamMstModelCrop(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
+	void FreeDispModel(HWND hDispCtrl, CRect rtDispCtrl,  int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
+	void FreeDispTarget(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
+	void FreeDispCamMstModelCrop(HWND hDispCtrl, CRect rtDispCtrl,  int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
+	void ClrDispModel();
+	void ClrDispTarget();
+
 // Attributes
 public:
 	CLibMil *m_pMil;
 	stPtMtRst PtMtRst;
+	stBlobRst BlobRst;
 
 // Operations
 public:
@@ -221,6 +262,15 @@ public:
 	//CLibMilDraw *m_pMilOvrCad[DEF_VIEW_IMG_NUMBER], *m_pMilOvrDef[DEF_VIEW_IMG_NUMBER];
 	//CLibMilDraw *m_pMilDelOvrCad[DEF_VIEW_IMG_NUMBER], *m_pMilDelOvrDef[DEF_VIEW_IMG_NUMBER];
 
+	double m_dCamMstPixelRes; // CamMasterPixel Resolution
+	int m_nCamMstCropSize;
+
+	BOOL Judge(stPtMtRst &stRst);
+	void LoadCamMstModelBuf();
+	void InitCamMstModelBuf();
+	BOOL Crop();
+	BOOL Blob();
+	BOOL ShowBlobModel();
 
 // Overrides
 	// ClassWizard generated virtual function overrides

@@ -54,6 +54,12 @@
     <ClInclude Include="vic7defs.h">
       <Filter>Vision</Filter>
     </ClInclude>
+    <ClInclude Include="MyData.h">
+      <Filter>Vision</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalFunc.h">
+      <Filter>Vision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PunchingMeasSys.cpp">
@@ -78,6 +84,12 @@
       <Filter>Vision</Filter>
     </ClCompile>
     <ClCompile Include="Vision.cpp">
+      <Filter>Vision</Filter>
+    </ClCompile>
+    <ClCompile Include="MyData.cpp">
+      <Filter>Vision</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalFunc.cpp">
       <Filter>Vision</Filter>
     </ClCompile>
   </ItemGroup>

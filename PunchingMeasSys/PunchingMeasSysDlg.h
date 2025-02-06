@@ -10,16 +10,29 @@
 // CPunchingMeasSysDlg 대화 상자
 class CPunchingMeasSysDlg : public CDialog
 {
+
+	BOOL FileBrowse(CString& sPath);
+
 // 생성입니다.
 public:
 	CPunchingMeasSysDlg(CWnd* pParent = NULL);	// 표준 생성자입니다.
+
+	CVision *m_pVision;
+	UCHAR *m_pCamMstModelImg;
+
+	void InitVision();
+	void ShowModel(CString sPath);
+	void ShowTarget(CString sPath);
+	BOOL Judge();
+	BOOL LoadCamMstModelImgFile(CString sPath);
+	void DispResultBlob();
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_PUNCHINGMEASSYS_DIALOG };
 #endif
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
 
 
@@ -33,4 +46,22 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedBtnModel();
+	afx_msg void OnBnClickedBtnTarget();
+	// 이미지의 한픽셀의 크기[단위는 mm]
+	double m_dPixelRes; // Camera Pixel Resolution
+	double m_dSetJudgeScore;
+	double m_dSetPmAngle;
+	double m_dSetPmScore;
+	int m_nSetPmPosX;
+	int m_nSetPmPosY;
+
+	// CamMaster Info
+	BOOL m_bUseCamMstModel;
+
+	afx_msg void OnBnClickedBtnJudge();
+	afx_msg void OnChangeEditSetJudgeScore();
+	afx_msg void OnDestroy();
+	afx_msg void OnBnClickedBtnBlob();
 };
