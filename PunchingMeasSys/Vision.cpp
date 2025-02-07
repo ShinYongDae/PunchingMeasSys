@@ -4855,12 +4855,33 @@ BOOL CVision::Judge(stPtMtRst &stRst)
 	int i = 0;
 
 	// Create Model
-	m_pMilBufModel->ChildBuffer2d(25, 25, 50, 50);
-	m_pMil->PatternMatchingAlloc(m_pMilBufModel->m_MilImageChild);
+	CLibMilBuf *MilPtModelImg = NULL;
+
+	if (((CPunchingMeasSysDlg*)m_pParent)->m_bUseCamMstModel)
+	{
+		long SzX = BlobRst.nBoxRight - BlobRst.nBoxLeft + 2;
+		long SzY = BlobRst.nBoxBottom - BlobRst.nBoxTop + 2;
+		long StX = BlobRst.nBoxLeft - 1;
+		long StY = BlobRst.nBoxTop - 1;
+		m_pMilBufModel->ChildBuffer2d(StX, StY, SzX, SzY);
+		MilPtModelImg = m_pMil->AllocBuf(SzX, SzY, 8L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
+		MbufCopy(m_pMilBufModel->m_MilImageChild, MilPtModelImg->m_MilImage);
+	}
+	else
+	{
+		m_pMilBufModel->ChildBuffer2d(25, 25, 50, 50);
+		MilPtModelImg = m_pMil->AllocBuf(50, 50, 8L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
+		MbufCopy(m_pMilBufModel->m_MilImageChild, MilPtModelImg->m_MilImage);
+	}
+
+	m_pMil->PatternMatchingAlloc(MilPtModelImg->m_MilImage);
 	
 	// Measure Position
 	if (!m_pMil->PatternMatchingAction(m_pMilBufTarget->m_MilImage))//, m_pMilDrawOverlay->m_MilBuffer, m_pMilDrawOverlay->m_MilGraphicContextID))
 	{
+		if (MilPtModelImg)
+			delete MilPtModelImg;
+
 		return FALSE;
 	}
 
@@ -4871,6 +4892,10 @@ BOOL CVision::Judge(stPtMtRst &stRst)
 
 	//  Measure End
 	m_pMil->PatternMatchingFree();
+
+	if (MilPtModelImg)
+		delete MilPtModelImg;
+
 	return TRUE;
 }
 
