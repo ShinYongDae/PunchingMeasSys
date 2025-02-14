@@ -47,6 +47,7 @@ CVision::CVision(int nIdx, MIL_ID MilSysId, HWND *hCtrl, CWnd* pParent /*=NULL*/
 
 	m_pMilBufCamMstModelCrop = NULL;
 	m_pMilDispCamMstModelCrop = NULL;
+	m_pMilBufBlobCamMstModelCropRzImg = NULL;
 
 #ifdef USE_IRAYPLE
 	m_pIRayple = NULL;
@@ -5252,6 +5253,12 @@ BOOL CVision::ShowBlobModel()
 	long lSzX = (long)((double)m_nCamMstCropSize * dRsRtoX);
 	long lSzY = (long)((double)m_nCamMstCropSize * dRsRtoY);
 	// m_pMilBufModel //MilPatImg = m_pMil->AllocBuf(ALIGN_IMG_DISP_SIZEX, ALIGN_IMG_DISP_SIZEY, 8L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
+
+	if (m_pMilBufBlobCamMstModelCropRzImg)
+	{
+		delete m_pMilBufBlobCamMstModelCropRzImg;
+		m_pMilBufBlobCamMstModelCropRzImg = NULL;
+	}
 
 	CLibMilBuf *MilBlobGrayImg = m_pMil->AllocBuf(m_nCamMstCropSize, m_nCamMstCropSize, 8L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
 	m_pMilBufBlobCamMstModelCropRzImg = m_pMil->AllocBuf(lSzX, lSzY, 8L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
