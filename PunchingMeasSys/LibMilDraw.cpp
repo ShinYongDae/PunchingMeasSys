@@ -27,7 +27,8 @@ CLibMilDraw::CLibMilDraw(MIL_ID SystemId, CLibMilDisp* MLibDisp)
 
 	MgraFont(m_MilGraphicContextID, m_lFontName);
 	MgraFontScale(m_MilGraphicContextID, m_dFontScaleX, m_dFontScaleY);
-	MgraControl(m_MilGraphicContextID, M_BACKGROUND_MODE, M_OPAQUE);
+	//MgraControl(m_MilGraphicContextID, M_BACKGROUND_MODE, M_OPAQUE);
+	MgraControl(m_MilGraphicContextID, M_BACKGROUND_MODE, M_TRANSPARENT);
 }
 
 CLibMilDraw::~CLibMilDraw()

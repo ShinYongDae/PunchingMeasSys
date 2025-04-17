@@ -5273,6 +5273,9 @@ void CVision::SelDispModel2(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMod
 		m_pMilBufDelOverlayModel2->SetDrawBackColor(m_pMilDispModel2->m_lOverlayColor);
 	}
 
+	MIL_INT KeyingColor;
+	MdispInquire(m_pMilDispModel2->m_MilDisplay, M_TRANSPARENT_COLOR, &KeyingColor);
+
 }
 
 void CVision::ClrDispModel2()
@@ -5286,11 +5289,13 @@ void CVision::ObjectSkeleton()
 	MIL_ID MilSystem = m_pMil->GetSystemID();
 
 	// Allocate the intermediate destination buffers.
+	MIL_ID MilDispImage = MbufAlloc2d(MilSystem, 1024, 1024, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
 	MIL_ID MilDistanceImage = MbufAlloc2d(MilSystem, 1024, 1024, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
 	MIL_ID MilSkeletonImage = MbufAlloc2d(MilSystem, 1024, 1024, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
 
 	// Segment the source image.
-	MimBinarize(m_pMilBufModel2->m_MilImage, MilSkeletonImage, M_FIXED + M_LESS, 25, M_NULL);
+	MimBinarize(m_pMilBufModel2->m_MilImage, MilSkeletonImage, M_FIXED + M_GREATER, 230, M_NULL);
+	//MimBinarize(m_pMilBufModel2->m_MilImage, MilSkeletonImage, M_FIXED + M_LESS, 25, M_NULL);
 
 	// Close small holes.
 	MimClose(MilSkeletonImage, MilSkeletonImage, 1, M_BINARY);
@@ -5304,16 +5309,22 @@ void CVision::ObjectSkeleton()
 
 	// Compute the distance transform of the object.
 	MimDistance(MilSkeletonImage, MilDistanceImage, M_CHAMFER_3_4);
+	MbufCopy(MilDistanceImage, m_pMilBufOverlayModel2->m_MilBuffer);
+	AfxMessageBox(_T("MilDistanceImage is displayed."));
 
 	// Perform the binary thinning to get the object skeleton.
 	MimThin(MilSkeletonImage, MilSkeletonImage, M_TO_SKELETON, M_BINARY3);
 
 	// Display the thinning result.
-	MbufCopy(MilSkeletonImage, m_pMilBufOverlayModel2->m_MilBuffer);
+	MimArith(MilSkeletonImage, m_pMilBufModel2->m_MilImage, MilDispImage, M_XOR);
+	//MimArith(MilSkeletonImage, m_pMilBufModel2->m_MilImage, MilDispImage, M_OR);
+	MbufCopy(MilDispImage, m_pMilBufOverlayModel2->m_MilBuffer);
 	AfxMessageBox(_T("A binary thinning is applied and the result skeleton is displayed."));
 
 	// Combine the skeleton with the distance image.
 	MimArith(MilSkeletonImage, MilDistanceImage, MilDistanceImage, M_AND);
+	MbufCopy(MilDistanceImage, m_pMilBufOverlayModel2->m_MilBuffer);
+	AfxMessageBox(_T("M_AND is displayed."));
 
 	// Allocate and generate the pseudo color LUT */
 	MIL_ID MilStatResult = MimAllocResult(MilSystem, 1, M_STAT_LIST, M_NULL);
@@ -5324,6 +5335,9 @@ void CVision::ObjectSkeleton()
 	MIL_ID MilPseudoColorLut;
 	AllocGenPseudoColorLUT(MilSystem, m_pMilDispModel2->m_MilDisplay, 1, MaxValue - 5, MilPseudoColorLut);
 
+	MbufCopy(MilDistanceImage, m_pMilBufOverlayModel2->m_MilBuffer);
+	AfxMessageBox(_T("MilDistanceImage is displayed."));
+
 	// Display the thinning result in pseudo color.
 	MimLutMap(MilDistanceImage, m_pMilBufOverlayModel2->m_MilBuffer, MilPseudoColorLut);
 
@@ -5332,6 +5346,7 @@ void CVision::ObjectSkeleton()
 	AfxMessageBox(sMsg);
 
 	// Release the allocated objects.
+	MbufFree(MilDispImage);
 	MbufFree(MilDistanceImage);
 	MbufFree(MilSkeletonImage);
 	MbufFree(MilPseudoColorLut);
@@ -5371,6 +5386,9 @@ void CVision::AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_IN
 	// Copy values to the LUT buffer.
 	MilPseudoColorLut = MbufAllocColor(MilSystem, 3, 256, 1, 8L + M_UNSIGNED, M_LUT, M_NULL);
 	MbufCopy(MilTmpBuffer, MilPseudoColorLut);
+
+	MbufCopy(MilTmpBuffer, m_pMilBufOverlayModel2->m_MilBuffer);
+	AfxMessageBox(_T("MilTmpBuffer is displayed."));
 
 	// Release temporary object.
 	MbufFree(MilTmpChild);
