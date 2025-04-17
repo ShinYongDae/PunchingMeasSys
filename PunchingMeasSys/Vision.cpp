@@ -49,6 +49,11 @@ CVision::CVision(int nIdx, MIL_ID MilSysId, HWND *hCtrl, CWnd* pParent /*=NULL*/
 	m_pMilDispCamMstModelCrop = NULL;
 	m_pMilBufBlobCamMstModelCropRzImg = NULL;
 
+	m_pMilBufModel2 = NULL;
+	m_pMilDispModel2 = NULL;
+	m_pMilBufOverlayModel2 = NULL;
+	m_pMilBufDelOverlayModel2 = NULL;
+
 #ifdef USE_IRAYPLE
 	m_pIRayple = NULL;
 #endif
@@ -134,6 +139,27 @@ CVision::CVision(int nIdx, MIL_ID MilSysId, HWND *hCtrl, CWnd* pParent /*=NULL*/
 
 CVision::~CVision()
 {
+	if (m_pMilBufModel2)
+	{
+		delete m_pMilBufModel2;
+		m_pMilBufModel2 = NULL;
+	}
+	if (m_pMilDispModel2)
+	{
+		delete m_pMilDispModel2;
+		m_pMilDispModel2 = NULL;
+	}
+	if (m_pMilBufOverlayModel2)
+	{
+		delete m_pMilBufOverlayModel2;
+		m_pMilBufOverlayModel2 = NULL;
+	}
+	if (m_pMilBufDelOverlayModel2)
+	{
+		delete m_pMilBufDelOverlayModel2;
+		m_pMilBufDelOverlayModel2 = NULL;
+	}
+
 	if (m_pMilBufBlobCamMstModelCropRzImg)
 	{
 		delete m_pMilBufBlobCamMstModelCropRzImg;
@@ -4703,6 +4729,20 @@ void CVision::FreeDispModel(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMod
 	// for Model..........
 
 	// Live Image Buffer set
+	if (m_pMilBufModel2)
+	{
+		delete m_pMilBufModel2;
+		m_pMilBufModel2 = NULL;
+	}
+
+	// Mil Display set
+	if (m_pMilDispModel2)
+	{
+		delete m_pMilDispModel2;
+		m_pMilDispModel2 = NULL;
+	}
+
+	// Live Image Buffer set
 	if (m_pMilBufModel)
 	{
 		delete m_pMilBufModel;
@@ -5097,145 +5137,6 @@ BOOL CVision::Blob()
 	return TRUE;
 }
 
-//BOOL CVision::Blob()
-//{
-//	MIL_ID MilSystem, MilBlobFeatureList, MilBlobResult;
-//	MIL_INT nTotalBlobs;	/* Total number of blobs.             */
-//	MIL_DOUBLE *CogX;		/* X coordinate of center of gravity. */
-//	MIL_DOUBLE *CogY;		/* Y coordinate of center of gravity. */
-//	MIL_DOUBLE *BoxMinX, *BoxMaxX, *BoxMinY, *BoxMaxY;
-//	MIL_DOUBLE *BoxArea;
-//	MIL_INT nBlobAreaMax = (m_nCamMstCropSize - MIN_BLOB_SIZE_X) * (m_nCamMstCropSize - MIN_BLOB_SIZE_Y);
-//
-//	MilSystem = m_pMil->GetSystemID();
-//
-//	int n, nBoxAreaMin=10000000;
-//	int nCenterX = m_nCamMstCropSize / 2;
-//	int nCenterY = m_nCamMstCropSize / 2;
-//
-//	/* Binarize image. */
-//	//MimBinarize(m_MilBufCamMstModelCrop, m_MilBufCamMstModelCrop, M_FIXED + M_GREATER_OR_EQUAL,
-//	//	IMAGE_THRESHOLD_VALUE, M_NULL);
-//
-//	/* Remove small particles and then remove small holes. */
-//	//MimOpen(m_MilBufCamMstModelCrop, m_MilBufCamMstModelCrop, MIN_BLOB_RADIUS, M_BINARY);
-//	//MimClose(m_MilBufCamMstModelCrop, m_MilBufCamMstModelCrop, MIN_BLOB_RADIUS, M_BINARY);
-//	m_pMil->Erode(m_pMilBufCamMstModelCrop->m_MilImage, m_pMilBufCamMstModelCrop->m_MilImage, 1, M_BINARY);
-//	m_pMil->Dilate(m_pMilBufCamMstModelCrop->m_MilImage, m_pMilBufCamMstModelCrop->m_MilImage, 1, M_BINARY);
-//
-//	/* Allocate a feature list. */
-//	MblobAllocFeatureList(MilSystem, &MilBlobFeatureList);
-//
-//	/* Enable the Area and Center Of Gravity feature calculation. */
-//	MblobSelectFeature(MilBlobFeatureList, M_AREA);
-//	MblobSelectFeature(MilBlobFeatureList, M_CENTER_OF_GRAVITY);
-//	/* Enable Bounding Box. */
-//	MblobSelectFeature(MilBlobFeatureList, M_BOX);
-//	//MblobSelectFeature(MilBlobFeatureList, M_BOX_X_MIN);
-//	//MblobSelectFeature(MilBlobFeatureList, M_BOX_X_MAX);
-//	//MblobSelectFeature(MilBlobFeatureList, M_BOX_Y_MIN);
-//	//MblobSelectFeature(MilBlobFeatureList, M_BOX_Y_MAX);
-//
-//	/* Allocate a blob result buffer. */
-//	MblobAllocResult(MilSystem, &MilBlobResult);
-//
-//	/* Calculate selected features for each blob. */
-//	MblobCalculate(m_MilBufCamMstModelCrop, M_NULL, MilBlobFeatureList, MilBlobResult);
-//
-//	/* Exclude blobs whose area is too small. */
-//	MblobSelect(MilBlobResult, M_EXCLUDE, M_AREA, M_LESS_OR_EQUAL, BLOB_AREA_MIN, M_NULL);
-//
-//	/* Exclude blobs whose area is too big. */
-//	MblobSelect(MilBlobResult, M_EXCLUDE, M_AREA, M_GREATER_OR_EQUAL, nBlobAreaMax, M_NULL);
-//
-//	/* Get the total number of selected blobs. */
-//	MblobGetNumber(MilBlobResult, &nTotalBlobs);
-//	//MosPrintf(MIL_TEXT("There are %ld objects "), nTotalBlobs);
-//
-//	BlobRst.nBlobTotal = nTotalBlobs;
-//
-//	/* Read and print the blob's center of gravity. */
-//	if ((BoxArea = (MIL_DOUBLE *)malloc(nTotalBlobs * sizeof(MIL_DOUBLE))))
-//	{
-//		if ((CogX = (MIL_DOUBLE *)malloc(nTotalBlobs * sizeof(MIL_DOUBLE))) && (CogY = (MIL_DOUBLE *)malloc(nTotalBlobs * sizeof(MIL_DOUBLE))))
-//		{
-//			if ((BoxMinX = (MIL_DOUBLE *)malloc(nTotalBlobs * sizeof(MIL_DOUBLE))) && (BoxMaxX = (MIL_DOUBLE *)malloc(nTotalBlobs * sizeof(MIL_DOUBLE))) &&
-//				(BoxMinY = (MIL_DOUBLE *)malloc(nTotalBlobs * sizeof(MIL_DOUBLE))) && (BoxMaxY = (MIL_DOUBLE *)malloc(nTotalBlobs * sizeof(MIL_DOUBLE))))
-//			{
-//				/* Get the results. */
-//				MblobGetResult(MilBlobResult, M_AREA, BoxArea);
-//
-//				MblobGetResult(MilBlobResult, M_CENTER_OF_GRAVITY_X, CogX);
-//				MblobGetResult(MilBlobResult, M_CENTER_OF_GRAVITY_Y, CogY);
-//
-//				MblobGetResult(MilBlobResult, M_BOX_X_MIN, BoxMinX);
-//				MblobGetResult(MilBlobResult, M_BOX_X_MAX, BoxMaxX);
-//				MblobGetResult(MilBlobResult, M_BOX_Y_MIN, BoxMinY);
-//				MblobGetResult(MilBlobResult, M_BOX_Y_MAX, BoxMaxY);
-//
-//				/* Print the center of gravity of each blob. */
-//				//MosPrintf(MIL_TEXT("and their centers of gravity are:\n"));
-//				for (n = 0; n < nTotalBlobs; n++)
-//				{
-//					//MosPrintf(MIL_TEXT("Blob #%ld: X=%5.1f, Y=%5.1f\n"), n, CogX[n], CogY[n]);
-//					if (nCenterX - BLOB_CENTER_OFFSET < CogX[n] && CogX[n] < nCenterX + BLOB_CENTER_OFFSET
-//						&& nCenterY - BLOB_CENTER_OFFSET < CogY[n] && CogY[n] < nCenterY + BLOB_CENTER_OFFSET)
-//					{
-//						if (int(BoxArea[n]) < nBoxAreaMin)
-//						{
-//							nBoxAreaMin = int(BoxArea[n]);
-//							BlobRst.nBoxArea = nBoxAreaMin;
-//							BlobRst.nBoxLeft = int(BoxMinX[n]);
-//							BlobRst.nBoxRight = int(BoxMaxX[n]);
-//							BlobRst.nBoxTop = int(BoxMinY[n]);
-//							BlobRst.nBoxBottom = int(BoxMaxY[n]);
-//						}
-//					}
-//				}
-//
-//				free(BoxMinX);
-//				free(BoxMaxX);
-//				free(BoxMinY);
-//				free(BoxMaxY);
-//			}
-//			else
-//			{
-//				free(CogX);
-//				free(CogY);
-//				//MosPrintf(MIL_TEXT("\nError: Not enough memory.\n"));
-//				MblobFree(MilBlobResult);
-//				MblobFree(MilBlobFeatureList);
-//				return FALSE;
-//			}
-//
-//			free(CogX);
-//			free(CogY);
-//			free(BoxArea);
-//		}
-//		else
-//		{
-//			free(BoxArea);
-//			//MosPrintf(MIL_TEXT("\nError: Not enough memory.\n"));
-//			MblobFree(MilBlobResult);
-//			MblobFree(MilBlobFeatureList);
-//			return FALSE;
-//		}
-//	}
-//	else
-//	{
-//		//MosPrintf(MIL_TEXT("\nError: Not enough memory.\n"));
-//		MblobFree(MilBlobResult);
-//		MblobFree(MilBlobFeatureList);
-//		return FALSE;
-//	}
-//
-//
-//	MblobFree(MilBlobResult);
-//	MblobFree(MilBlobFeatureList);
-//
-//	return TRUE;
-//}
-
 BOOL CVision::ShowBlobModel()
 {
 	// m_pMilBufModel->BufferLoad(cPath);
@@ -5297,5 +5198,183 @@ BOOL CVision::ShowBlobModel()
 
 	return TRUE;
 }
+
+
+void CVision::ShowModel2(CString sPath)
+{
+	ClrDispModel();
+
+	TCHAR cPath[MAX_PATH];
+	_stprintf(cPath, _T("%s"), sPath);
+
+	m_pMilBufModel2->BufferLoad(cPath);
+}
+
+void CVision::SelDispModel2(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMode)
+{
+	if (!m_pMil)
+		return;
+
+	// Model Image Buffer set
+	if (m_pMilBufModel2)
+	{
+		delete m_pMilBufModel2;
+		m_pMilBufModel2 = NULL;
+	}
+
+	if (!m_pMilBufModel2)
+		m_pMilBufModel2 = m_pMil->AllocBuf(1024, 1024, 8L + M_UNSIGNED, M_IMAGE + M_DISP + M_PROC);
+
+	// Mil Display set
+	if (m_pMilDispModel2)
+	{
+		delete m_pMilDispModel2;
+		m_pMilDispModel2 = NULL;
+	}
+
+	if (!m_pMilDispModel2)
+	{
+		m_pMilDispModel2 = m_pMil->AllocDisp();
+		m_pMil->DisplaySelect(m_pMilDispModel2, m_pMilBufModel2, hDispCtrl, rtDispCtrl.Width(), rtDispCtrl.Height(), DISPLAY_FIT_MODE_CENTERVIEW);
+	}
+
+
+	// Create Overlay
+	if (m_pMilDispModel2)
+	{
+		m_pMil->CreateOverlay(m_pMilDispModel2, M_COLOR_GREEN);
+		Sleep(100);
+	}
+
+	// Draw
+	if (m_pMilBufOverlayModel2)
+	{
+		delete m_pMilBufOverlayModel2;
+		m_pMilBufOverlayModel2 = NULL;
+	}
+
+	if (!m_pMilBufOverlayModel2)
+	{
+		m_pMilBufOverlayModel2 = m_pMil->AllocDraw(m_pMilDispModel2);
+		m_pMilBufOverlayModel2->SetDrawColor(M_COLOR_RED);
+		m_pMilBufOverlayModel2->SetDrawBackColor(m_pMilDispModel2->m_lOverlayColor);
+	}
+
+	if (m_pMilBufDelOverlayModel2)
+	{
+		delete m_pMilBufDelOverlayModel2;
+		m_pMilBufDelOverlayModel2 = NULL;
+	}
+
+	if (!m_pMilBufDelOverlayModel2)
+	{
+		m_pMilBufDelOverlayModel2 = m_pMil->AllocDraw(m_pMilDispModel2);
+		m_pMilBufDelOverlayModel2->SetDrawColor(m_pMilDispModel2->m_lOverlayColor);
+		m_pMilBufDelOverlayModel2->SetDrawBackColor(m_pMilDispModel2->m_lOverlayColor);
+	}
+
+}
+
+void CVision::ClrDispModel2()
+{
+	if (m_pMilBufModel2)
+		MbufClear(m_pMilBufModel2->m_MilImage, 0L);
+}
+
+void CVision::ObjectSkeleton()
+{
+	MIL_ID MilSystem = m_pMil->GetSystemID();
+
+	// Allocate the intermediate destination buffers.
+	MIL_ID MilDistanceImage = MbufAlloc2d(MilSystem, 1024, 1024, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+	MIL_ID MilSkeletonImage = MbufAlloc2d(MilSystem, 1024, 1024, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+
+	// Segment the source image.
+	MimBinarize(m_pMilBufModel2->m_MilImage, MilSkeletonImage, M_FIXED + M_LESS, 25, M_NULL);
+
+	// Close small holes.
+	MimClose(MilSkeletonImage, MilSkeletonImage, 1, M_BINARY);
+
+	// Display the segmentation result.
+	MbufCopy(MilSkeletonImage, m_pMilBufOverlayModel2->m_MilBuffer);
+
+	//// Clear Display the segmentation result.
+	//MbufCopy(MilSkeletonImage, m_pMilBufDelOverlayModel2->m_MilBuffer);
+	AfxMessageBox(_T("The source image is thresholded and displayed."));
+
+	// Compute the distance transform of the object.
+	MimDistance(MilSkeletonImage, MilDistanceImage, M_CHAMFER_3_4);
+
+	// Perform the binary thinning to get the object skeleton.
+	MimThin(MilSkeletonImage, MilSkeletonImage, M_TO_SKELETON, M_BINARY3);
+
+	// Display the thinning result.
+	MbufCopy(MilSkeletonImage, m_pMilBufOverlayModel2->m_MilBuffer);
+	AfxMessageBox(_T("A binary thinning is applied and the result skeleton is displayed."));
+
+	// Combine the skeleton with the distance image.
+	MimArith(MilSkeletonImage, MilDistanceImage, MilDistanceImage, M_AND);
+
+	// Allocate and generate the pseudo color LUT */
+	MIL_ID MilStatResult = MimAllocResult(MilSystem, 1, M_STAT_LIST, M_NULL);
+	MimStat(MilDistanceImage, MilStatResult, M_MAX, M_NULL, M_NULL, M_NULL);
+	MIL_INT MaxValue;
+	MimGetResult(MilStatResult, M_MAX + M_TYPE_MIL_INT, &MaxValue);
+
+	MIL_ID MilPseudoColorLut;
+	AllocGenPseudoColorLUT(MilSystem, m_pMilDispModel2->m_MilDisplay, 1, MaxValue - 5, MilPseudoColorLut);
+
+	// Display the thinning result in pseudo color.
+	MimLutMap(MilDistanceImage, m_pMilBufOverlayModel2->m_MilBuffer, MilPseudoColorLut);
+
+	CString sMsg;
+	sMsg.Format(_T("The maximum distance valueis %d pixels."), MaxValue);
+	AfxMessageBox(sMsg);
+
+	// Release the allocated objects.
+	MbufFree(MilDistanceImage);
+	MbufFree(MilSkeletonImage);
+	MbufFree(MilPseudoColorLut);
+	MimFree(MilStatResult);
+}
+
+void CVision::AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_INT StartIndex, MIL_INT EndIndex,	MIL_ID &MilPseudoColorLut)
+{
+	// Calculate the interpolation param for H.
+	MIL_DOUBLE Slope = 160.0 / (MIL_DOUBLE)(StartIndex - EndIndex);
+	MIL_DOUBLE Offset = -Slope * (MIL_DOUBLE)EndIndex;
+
+	// Generate the H LUT value.
+	MIL_UINT8 HLut[256];
+	for (MIL_INT ii = 0; ii < 256; ii++)
+	{
+		if (ii < StartIndex)
+			HLut[ii] = 160;
+		else if (ii > EndIndex)
+			HLut[ii] = 0;
+		else
+			HLut[ii] = static_cast<MIL_UINT8>(Slope * ii + Offset + 0.5);
+	}
+
+	// Convert the HSL values to RGB.
+	MIL_ID MilTmpBuffer = MbufAllocColor(MilSystem, 3, 256, 1, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+	MbufClear(MilTmpBuffer, M_RGB888(0, 230, 120));
+	MbufPutColor(MilTmpBuffer, M_SINGLE_BAND, 0, HLut);
+	MimConvert(MilTmpBuffer, MilTmpBuffer, M_HSL_TO_RGB);
+
+	// Map the '0' index to the keying color for overlay transparency.
+	MIL_INT KeyingColor;
+	MdispInquire(MilDisplay, M_TRANSPARENT_COLOR, &KeyingColor);
+	MIL_ID MilTmpChild = MbufChild2d(MilTmpBuffer, 0, 0, 1, 1, M_NULL);
+	MbufClear(MilTmpChild, (double)KeyingColor);
+
+	// Copy values to the LUT buffer.
+	MilPseudoColorLut = MbufAllocColor(MilSystem, 3, 256, 1, 8L + M_UNSIGNED, M_LUT, M_NULL);
+	MbufCopy(MilTmpBuffer, MilPseudoColorLut);
+
+	// Release temporary object.
+	MbufFree(MilTmpChild);
+	MbufFree(MilTmpBuffer);
+};
 
 #endif

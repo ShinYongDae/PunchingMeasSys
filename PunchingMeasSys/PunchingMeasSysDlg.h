@@ -27,6 +27,9 @@ public:
 	BOOL LoadCamMstModelImgFile(CString sPath);
 	void DispResultBlob();
 
+	void ShowModel2(CString sPath);
+	void ObjectSkeleton();
+
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_PUNCHINGMEASSYS_DIALOG };
@@ -64,4 +67,6 @@ public:
 	afx_msg void OnChangeEditSetJudgeScore();
 	afx_msg void OnDestroy();
 	afx_msg void OnBnClickedBtnBlob();
+	afx_msg void OnBnClickedBtnModel2();
+	afx_msg void OnBnClickedBtnThinning();
 };

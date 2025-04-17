@@ -100,8 +100,9 @@ class CVision : public CWnd
 	int m_nTest;
 	//double m_dEnc[MAX_AXIS], m_dBufEnc, m_dFdEnc;
 
-	CLibMilBuf *m_pMilBufModel, *m_pMilBufTarget;
-	CLibMilDisp *m_pMilDispModel, *m_pMilDispTarget;
+	CLibMilBuf *m_pMilBufModel, *m_pMilBufTarget, *m_pMilBufModel2;
+	CLibMilDisp *m_pMilDispModel, *m_pMilDispTarget, *m_pMilDispModel2;
+	CLibMilDraw *m_pMilBufOverlayModel2, *m_pMilBufDelOverlayModel2;
 
 	MIL_ID m_MilBufCamMstModel, m_MilBufCamMstModelCrop;
 	CLibMilBuf *m_pMilBufCamMstModelCrop;
@@ -176,6 +177,11 @@ public:
 	void FreeDispCamMstModelCrop(HWND hDispCtrl, CRect rtDispCtrl,  int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
 	void ClrDispModel();
 	void ClrDispTarget();
+
+	void SelDispModel2(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
+	void ShowModel2(CString sPath);
+	void ObjectSkeleton();
+	void AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_INT StartIndex, MIL_INT EndIndex, MIL_ID &MilPseudoColorLut);
 
 // Attributes
 public:
@@ -271,6 +277,8 @@ public:
 	BOOL Crop();
 	BOOL Blob();
 	BOOL ShowBlobModel();
+
+	void ClrDispModel2();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
