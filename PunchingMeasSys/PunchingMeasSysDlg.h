@@ -69,4 +69,5 @@ public:
 	afx_msg void OnBnClickedBtnBlob();
 	afx_msg void OnBnClickedBtnModel2();
 	afx_msg void OnBnClickedBtnThinning();
+	afx_msg void OnBnClickedBtnTopHat();
 };

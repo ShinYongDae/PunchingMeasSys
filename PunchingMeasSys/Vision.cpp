@@ -41,9 +41,12 @@ CVision::CVision(int nIdx, MIL_ID MilSysId, HWND *hCtrl, CWnd* pParent /*=NULL*/
 	m_hCtrl[3] = hCtrl[3];
 
 	m_pMilBufModel = NULL;
-	m_pMilBufTarget = NULL;
 	m_pMilDispModel = NULL;
+
+	m_pMilBufTarget = NULL;
 	m_pMilDispTarget = NULL;
+	m_pMilBufOverlayTarget = NULL;
+	m_pMilBufDelOverlayTarget = NULL;
 
 	m_pMilBufCamMstModelCrop = NULL;
 	m_pMilDispCamMstModelCrop = NULL;
@@ -53,6 +56,7 @@ CVision::CVision(int nIdx, MIL_ID MilSysId, HWND *hCtrl, CWnd* pParent /*=NULL*/
 	m_pMilDispModel2 = NULL;
 	m_pMilBufOverlayModel2 = NULL;
 	m_pMilBufDelOverlayModel2 = NULL;
+
 
 #ifdef USE_IRAYPLE
 	m_pIRayple = NULL;
@@ -209,6 +213,16 @@ CVision::~CVision()
 	{
 		delete m_pMilDispTarget;
 		m_pMilDispTarget = NULL;
+	}
+	if (m_pMilBufOverlayTarget)
+	{
+		delete m_pMilBufOverlayTarget;
+		m_pMilBufOverlayTarget = NULL;
+	}
+	if (m_pMilBufDelOverlayTarget)
+	{
+		delete m_pMilBufDelOverlayTarget;
+		m_pMilBufDelOverlayTarget = NULL;
 	}
 
 #ifdef USE_IRAYPLE
@@ -4810,41 +4824,52 @@ void CVision::SelDispTarget(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMod
 		m_pMil->DisplaySelect(m_pMilDispTarget, m_pMilBufTarget, hDispCtrl, rtDispCtrl.Width(), rtDispCtrl.Height(), DISPLAY_FIT_MODE_CENTERVIEW);
 	}
 
-	//// Create Overlay
-	//if (m_pMilDispCad[nIdx])
-	//{
-	//	m_pMil->CreateOverlay(m_pMilDispCad[nIdx], M_COLOR_GREEN);
-	//	Sleep(100);
-	//}
-	//// Draw
-	//if (m_pMilOvrCad[nIdx])
-	//{
-	//	delete m_pMilOvrCad[nIdx];
-	//	m_pMilOvrCad[nIdx] = NULL;
-	//}
-	//if (!m_pMilOvrCad[nIdx])
-	//{
-	//	m_pMilOvrCad[nIdx] = m_pMil->AllocDraw(m_pMilDispCad[nIdx]);
-	//	m_pMilOvrCad[nIdx]->SetDrawColor(M_COLOR_RED);
-	//	m_pMilOvrCad[nIdx]->SetDrawBackColor(m_pMilDispCad[nIdx]->m_lOverlayColor);
-	//}
-	//if (m_pMilDelOvrCad[nIdx])
-	//{
-	//	delete m_pMilDelOvrCad[nIdx];
-	//	m_pMilDelOvrCad[nIdx] = NULL;
-	//}
-	//if (!m_pMilDelOvrCad[nIdx])
-	//{
-	//	m_pMilDelOvrCad[nIdx] = m_pMil->AllocDraw(m_pMilDispCad[nIdx]);
-	//	m_pMilDelOvrCad[nIdx]->SetDrawColor(m_pMilDispCad[nIdx]->m_lOverlayColor);
-	//	m_pMilDelOvrCad[nIdx]->SetDrawBackColor(m_pMilDispCad[nIdx]->m_lOverlayColor);
-	//}
+	
+	// Create Overlay
+	if (m_pMilDispTarget)
+	{
+		m_pMil->CreateOverlay(m_pMilDispTarget, M_COLOR_GREEN);
+		Sleep(100);
+	}
+
+	// Draw
+	if (m_pMilBufOverlayTarget)
+	{
+		delete m_pMilBufOverlayTarget;
+		m_pMilBufOverlayTarget = NULL;
+	}
+
+	if (!m_pMilBufOverlayTarget)
+	{
+		m_pMilBufOverlayTarget = m_pMil->AllocDraw(m_pMilDispTarget);
+		m_pMilBufOverlayTarget->SetDrawColor(M_COLOR_RED);
+		m_pMilBufOverlayTarget->SetDrawBackColor(m_pMilDispTarget->m_lOverlayColor);
+	}
+
+	if (m_pMilBufDelOverlayTarget)
+	{
+		delete m_pMilBufDelOverlayTarget;
+		m_pMilBufDelOverlayTarget = NULL;
+	}
+
+	if (!m_pMilBufDelOverlayTarget)
+	{
+		m_pMilBufDelOverlayTarget = m_pMil->AllocDraw(m_pMilDispTarget);
+		m_pMilBufDelOverlayTarget->SetDrawColor(m_pMilDispTarget->m_lOverlayColor);
+		m_pMilBufDelOverlayTarget->SetDrawBackColor(m_pMilDispTarget->m_lOverlayColor);
+	}
+
+	MIL_INT KeyingColor;
+	MdispInquire(m_pMilDispTarget->m_MilDisplay, M_TRANSPARENT_COLOR, &KeyingColor);
 }
 
 void CVision::ClrDispTarget()
 {
 	if (m_pMilBufTarget)
 		MbufClear(m_pMilBufTarget->m_MilImage, 0L);
+
+	if (m_pMilBufTarget)
+		m_pMilDispTarget->ClearOverlay();
 }
 
 
@@ -5394,5 +5419,70 @@ void CVision::AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_IN
 	MbufFree(MilTmpChild);
 	MbufFree(MilTmpBuffer);
 };
+
+void CVision::TopHatFiltering()
+{
+	CString sMsg;
+	MIL_ID MilSystem = m_pMil->GetSystemID();
+	// Allocate a display image.
+	//MIL_ID MilDispProcImage, // Display and destination buffer.
+	//	MilOverlayImage;     // Overlay buffer.
+	//AllocDisplayImage(MilSystem, MilSrcImage, MilDisplay, MilDispProcImage, MilOverlayImage);
+
+	// Allocate a vertical structuring element to minimize geometric aberration.
+	MIL_ID MilStructElement = MbufAlloc2d(MilSystem, 1, 8, 32, M_STRUCT_ELEMENT, M_NULL);
+	MbufClear(MilStructElement, 0);
+
+	// Apply the top-hat filtering.
+	//MimMorphic(m_pMilBufTarget->m_MilImage, MilDispProcImage, MilStructElement, M_TOP_HAT, 1, M_GRAYSCALE);
+	MimMorphic(m_pMilBufTarget->m_MilImage, m_pMilBufOverlayTarget->m_MilBuffer, MilStructElement, M_TOP_HAT, 1, M_GRAYSCALE);
+	sMsg.Format(_T("The result of the top-hat filtering is displayed."));
+	AfxMessageBox(sMsg);
+
+	// Segment the image.
+	//MimBinarize(MilDispProcImage, MilDispProcImage, M_PERCENTILE_VALUE + M_GREATER, 95, M_NULL);
+	MimBinarize(m_pMilBufOverlayTarget->m_MilBuffer, m_pMilBufOverlayTarget->m_MilBuffer, M_PERCENTILE_VALUE + M_GREATER, 95, M_NULL);
+	sMsg.Format(_T("The 5%% brightest pixels are thresholded and displayed."));
+	AfxMessageBox(sMsg);
+
+	// Remove small binary noise.
+	//MimOpen(MilDispProcImage, MilDispProcImage, 1, M_BINARY);
+	MimOpen(m_pMilBufOverlayTarget->m_MilBuffer, m_pMilBufOverlayTarget->m_MilBuffer, 1, M_BINARY);
+	sMsg.Format(_T("A morphological opening is applied to remove small noise."));
+	AfxMessageBox(sMsg);
+
+	// Combine the top-hat filtering image with the original image.
+	MimArith(m_pMilBufOverlayTarget->m_MilBuffer, m_pMilBufTarget->m_MilImage, m_pMilBufOverlayTarget->m_MilBuffer, M_XOR);
+
+	// Release the allocated objects
+	MbufFree(MilStructElement);
+	//MbufFree(MilDispProcImage);
+}
+
+void CVision::AllocDisplayImage(MIL_ID MilSystem, MIL_ID MilSrcImage, MIL_ID MilDisplay, MIL_ID &MilDispProcImage, MIL_ID &MilOverlayImage)
+{
+	// Retrieve the source image size.
+	MIL_INT SrcSizeX, SrcSizeY;
+	MbufInquire(MilSrcImage, M_SIZE_X, &SrcSizeX);
+	MbufInquire(MilSrcImage, M_SIZE_Y, &SrcSizeY);
+
+	// Allocate the display image.
+	MbufAlloc2d(MilSystem,
+		SrcSizeX,
+		SrcSizeY,
+		8L + M_UNSIGNED,
+		M_IMAGE + M_PROC + M_DISP,
+		&MilDispProcImage);
+
+	MbufCopy(MilSrcImage, MilDispProcImage);
+
+	// Display the image buffer.
+	MdispSelect(MilDisplay, MilDispProcImage);
+
+	/* Prepare for overlay annotations. */
+	MdispControl(MilDisplay, M_OVERLAY, M_ENABLE);
+	MdispInquire(MilDisplay, M_OVERLAY_ID, &MilOverlayImage);
+	MdispControl(MilDisplay, M_OVERLAY_CLEAR, M_DEFAULT);
+}
 
 #endif

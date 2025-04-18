@@ -103,6 +103,7 @@ class CVision : public CWnd
 	CLibMilBuf *m_pMilBufModel, *m_pMilBufTarget, *m_pMilBufModel2;
 	CLibMilDisp *m_pMilDispModel, *m_pMilDispTarget, *m_pMilDispModel2;
 	CLibMilDraw *m_pMilBufOverlayModel2, *m_pMilBufDelOverlayModel2;
+	CLibMilDraw *m_pMilBufOverlayTarget, *m_pMilBufDelOverlayTarget;
 
 	MIL_ID m_MilBufCamMstModel, m_MilBufCamMstModelCrop;
 	CLibMilBuf *m_pMilBufCamMstModelCrop;
@@ -182,6 +183,8 @@ public:
 	void ShowModel2(CString sPath);
 	void ObjectSkeleton();
 	void AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_INT StartIndex, MIL_INT EndIndex, MIL_ID &MilPseudoColorLut);
+	void TopHatFiltering();
+	void AllocDisplayImage(MIL_ID MilSystem, MIL_ID MilSrcImage, MIL_ID MilDisplay, MIL_ID &MilDispProcImage, MIL_ID &MilOverlayImage);
 
 // Attributes
 public:

@@ -97,6 +97,7 @@ BEGIN_MESSAGE_MAP(CPunchingMeasSysDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_BLOB, &CPunchingMeasSysDlg::OnBnClickedBtnBlob)
 	ON_BN_CLICKED(IDC_BTN_MODEL2, &CPunchingMeasSysDlg::OnBnClickedBtnModel2)
 	ON_BN_CLICKED(IDC_BTN_THINNING, &CPunchingMeasSysDlg::OnBnClickedBtnThinning)
+	ON_BN_CLICKED(IDC_BTN_TOP_HAT, &CPunchingMeasSysDlg::OnBnClickedBtnTopHat)
 END_MESSAGE_MAP()
 
 
@@ -133,6 +134,8 @@ BOOL CPunchingMeasSysDlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	InitVision();
+
+	GetDlgItem(IDC_STC_VISION)->ShowWindow(SW_HIDE);
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -496,4 +499,11 @@ void CPunchingMeasSysDlg::ObjectSkeleton()
 {
 	if (m_pVision)
 		m_pVision->ObjectSkeleton();
+}
+
+void CPunchingMeasSysDlg::OnBnClickedBtnTopHat()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (m_pVision)
+		m_pVision->TopHatFiltering();
 }
