@@ -98,6 +98,9 @@ BEGIN_MESSAGE_MAP(CPunchingMeasSysDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_MODEL2, &CPunchingMeasSysDlg::OnBnClickedBtnModel2)
 	ON_BN_CLICKED(IDC_BTN_THINNING, &CPunchingMeasSysDlg::OnBnClickedBtnThinning)
 	ON_BN_CLICKED(IDC_BTN_TOP_HAT, &CPunchingMeasSysDlg::OnBnClickedBtnTopHat)
+	ON_BN_CLICKED(IDC_BTN_SEGMENTATION, &CPunchingMeasSysDlg::OnBnClickedBtnSegmentation)
+	ON_BN_CLICKED(IDC_BTN_RECONSTRUCTION, &CPunchingMeasSysDlg::OnBnClickedBtnReconstruction)
+	ON_BN_CLICKED(IDC_BTN_THEAD, &CPunchingMeasSysDlg::OnBnClickedBtnThead)
 END_MESSAGE_MAP()
 
 
@@ -506,4 +509,28 @@ void CPunchingMeasSysDlg::OnBnClickedBtnTopHat()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (m_pVision)
 		m_pVision->TopHatFiltering();
+}
+
+
+void CPunchingMeasSysDlg::OnBnClickedBtnSegmentation()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (m_pVision)
+		m_pVision->ObjectSegmentation();
+}
+
+
+void CPunchingMeasSysDlg::OnBnClickedBtnReconstruction()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (m_pVision)
+		m_pVision->MorphologicalReconstruction();
+}
+
+
+void CPunchingMeasSysDlg::OnBnClickedBtnThead()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (m_pVision)
+		m_pVision->MThread();
 }

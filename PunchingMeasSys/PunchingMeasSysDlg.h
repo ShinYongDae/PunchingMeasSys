@@ -70,4 +70,7 @@ public:
 	afx_msg void OnBnClickedBtnModel2();
 	afx_msg void OnBnClickedBtnThinning();
 	afx_msg void OnBnClickedBtnTopHat();
+	afx_msg void OnBnClickedBtnSegmentation();
+	afx_msg void OnBnClickedBtnReconstruction();
+	afx_msg void OnBnClickedBtnThead();
 };

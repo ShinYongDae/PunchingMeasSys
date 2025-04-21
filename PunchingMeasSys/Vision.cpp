@@ -24,6 +24,12 @@ static char THIS_FILE[] = __FILE__;
 
 unsigned char BitConvLUT2[256] = {0x00, 0x80, 0x40, 0xc0, 0x20, 0xa0, 0x60, 0xe0, 0x10, 0x90, 0x50, 0xd0, 0x30, 0xb0, 0x70, 0xf0, 0x8, 0x88, 0x48, 0xc8, 0x28, 0xa8, 0x68, 0xe8, 0x18, 0x98, 0x58, 0xd8, 0x38, 0xb8, 0x78, 0xf8, 0x4, 0x84, 0x44, 0xc4, 0x24, 0xa4, 0x64, 0xe4, 0x14, 0x94, 0x54, 0xd4, 0x34, 0xb4, 0x74, 0xf4, 0xc, 0x8c, 0x4c, 0xcc, 0x2c, 0xac, 0x6c, 0xec, 0x1c, 0x9c, 0x5c, 0xdc, 0x3c, 0xbc, 0x7c, 0xfc, 0x2, 0x82, 0x42, 0xc2, 0x22, 0xa2, 0x62, 0xe2, 0x12, 0x92, 0x52, 0xd2, 0x32, 0xb2, 0x72, 0xf2, 0xa, 0x8a, 0x4a, 0xca, 0x2a, 0xaa, 0x6a, 0xea, 0x1a, 0x9a, 0x5a, 0xda, 0x3a, 0xba, 0x7a, 0xfa, 0x6, 0x86, 0x46, 0xc6, 0x26, 0xa6, 0x66, 0xe6, 0x16, 0x96, 0x56, 0xd6, 0x36, 0xb6, 0x76, 0xf6, 0xe, 0x8e, 0x4e, 0xce, 0x2e, 0xae, 0x6e, 0xee, 0x1e, 0x9e, 0x5e, 0xde, 0x3e, 0xbe, 0x7e, 0xfe, 0x1, 0x81, 0x41, 0xc1, 0x21, 0xa1, 0x61, 0xe1, 0x11, 0x91, 0x51, 0xd1, 0x31, 0xb1, 0x71, 0xf1, 0x9, 0x89, 0x49, 0xc9, 0x29, 0xa9, 0x69, 0xe9, 0x19, 0x99, 0x59, 0xd9, 0x39, 0xb9, 0x79, 0xf9, 0x5, 0x85, 0x45, 0xc5, 0x25, 0xa5, 0x65, 0xe5, 0x15, 0x95, 0x55, 0xd5, 0x35, 0xb5, 0x75, 0xf5, 0xd, 0x8d, 0x4d, 0xcd, 0x2d, 0xad, 0x6d, 0xed, 0x1d, 0x9d, 0x5d, 0xdd, 0x3d, 0xbd, 0x7d, 0xfd, 0x3, 0x83, 0x43, 0xc3, 0x23, 0xa3, 0x63, 0xe3, 0x13, 0x93, 0x53, 0xd3, 0x33, 0xb3, 0x73, 0xf3, 0xb, 0x8b, 0x4b, 0xcb, 0x2b, 0xab, 0x6b, 0xeb, 0x1b, 0x9b, 0x5b, 0xdb, 0x3b, 0xbb, 0x7b, 0xfb, 0x7, 0x87, 0x47, 0xc7, 0x27, 0xa7, 0x67, 0xe7, 0x17, 0x97, 0x57, 0xd7, 0x37, 0xb7, 0x77, 0xf7, 0xf, 0x8f, 0x4f, 0xcf, 0x2f, 0xaf, 0x6f, 0xef, 0x1f, 0x9f, 0x5f, 0xdf, 0x3f, 0xbf, 0x7f, 0xff};
 
+/* Function prototypes. */
+MIL_UINT32 MFTYPE TopThread(void *TPar);
+MIL_UINT32 MFTYPE BotLeftThread(void *TPar);
+MIL_UINT32 MFTYPE BotRightThread(void *TPar);
+void BalanceThreadScheduling();
+
 /////////////////////////////////////////////////////////////////////////////
 // CVision
 
@@ -5358,7 +5364,7 @@ void CVision::ObjectSkeleton()
 	MimGetResult(MilStatResult, M_MAX + M_TYPE_MIL_INT, &MaxValue);
 
 	MIL_ID MilPseudoColorLut;
-	AllocGenPseudoColorLUT(MilSystem, m_pMilDispModel2->m_MilDisplay, 1, MaxValue - 5, MilPseudoColorLut);
+	AllocGenPseudoColorLUT(MilSystem, m_pMilDispModel2->m_MilDisplay, 1, MaxValue - 5, MilPseudoColorLut, m_pMilBufOverlayModel2->m_MilBuffer);
 
 	MbufCopy(MilDistanceImage, m_pMilBufOverlayModel2->m_MilBuffer);
 	AfxMessageBox(_T("MilDistanceImage is displayed."));
@@ -5378,7 +5384,7 @@ void CVision::ObjectSkeleton()
 	MimFree(MilStatResult);
 }
 
-void CVision::AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_INT StartIndex, MIL_INT EndIndex,	MIL_ID &MilPseudoColorLut)
+void CVision::AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_INT StartIndex, MIL_INT EndIndex,	MIL_ID &MilPseudoColorLut, MIL_ID MilOverlay)
 {
 	// Calculate the interpolation param for H.
 	MIL_DOUBLE Slope = 160.0 / (MIL_DOUBLE)(StartIndex - EndIndex);
@@ -5402,6 +5408,9 @@ void CVision::AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_IN
 	MbufPutColor(MilTmpBuffer, M_SINGLE_BAND, 0, HLut);
 	MimConvert(MilTmpBuffer, MilTmpBuffer, M_HSL_TO_RGB);
 
+	MbufCopy(MilTmpBuffer, MilOverlay);
+	AfxMessageBox(_T("Convert the HSL values to RGB."));
+
 	// Map the '0' index to the keying color for overlay transparency.
 	MIL_INT KeyingColor;
 	MdispInquire(MilDisplay, M_TRANSPARENT_COLOR, &KeyingColor);
@@ -5412,8 +5421,9 @@ void CVision::AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_IN
 	MilPseudoColorLut = MbufAllocColor(MilSystem, 3, 256, 1, 8L + M_UNSIGNED, M_LUT, M_NULL);
 	MbufCopy(MilTmpBuffer, MilPseudoColorLut);
 
-	MbufCopy(MilTmpBuffer, m_pMilBufOverlayModel2->m_MilBuffer);
-	AfxMessageBox(_T("MilTmpBuffer is displayed."));
+	//MbufCopy(MilTmpBuffer, m_pMilBufOverlayModel2->m_MilBuffer);
+	MbufCopy(MilTmpBuffer, MilOverlay);
+	AfxMessageBox(_T("Copy values to the LUT buffer."));
 
 	// Release temporary object.
 	MbufFree(MilTmpChild);
@@ -5483,6 +5493,537 @@ void CVision::AllocDisplayImage(MIL_ID MilSystem, MIL_ID MilSrcImage, MIL_ID Mil
 	MdispControl(MilDisplay, M_OVERLAY, M_ENABLE);
 	MdispInquire(MilDisplay, M_OVERLAY_ID, &MilOverlayImage);
 	MdispControl(MilDisplay, M_OVERLAY_CLEAR, M_DEFAULT);
+}
+
+void CVision::ObjectSegmentation()
+{
+	CString sMsg;
+	MIL_ID MilSystem = m_pMil->GetSystemID();
+	MIL_ID MilDisplay = m_pMilDispTarget->m_MilDisplay;
+	MIL_ID MilSrcImage = m_pMilBufTarget->m_MilImage;
+
+	// Allocate a display image.
+	MIL_ID MilDispProcImage = m_pMilBufTarget->m_MilImage; // Display and destination buffer.
+	MIL_ID MilOverlayImage = m_pMilBufOverlayTarget->m_MilBuffer;     // Overlay buffer.
+	//AllocDisplayImage(MilSystem, MilSrcImage, MilDisplay, MilDispProcImage, MilOverlayImage);
+
+	// Allocate destination buffers.
+	MIL_INT SizeX, SizeY;
+	MbufInquire(MilSrcImage, M_SIZE_X, &SizeX);
+	MbufInquire(MilSrcImage, M_SIZE_Y, &SizeY);
+	MIL_ID MilDstImage1 = MbufAlloc2d(MilSystem, SizeX, SizeY, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+	MIL_ID MilDstImage2 = MbufAlloc2d(MilSystem, SizeX, SizeY, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+
+	// Binarize the source image.
+	MimBinarize(MilSrcImage, MilSrcImage, M_BIMODAL + M_GREATER, M_NULL, M_NULL);
+
+	// Segment the horizontal components using a horizontal structuring element.
+	MIL_ID MilStructElement = MbufAlloc2d(MilSystem, 10, 1, 32, M_STRUCT_ELEMENT, M_NULL);
+	MbufControlNeighborhood(MilStructElement, M_OVERSCAN, M_MIRROR);
+	MbufClear(MilStructElement, 1);
+	MimMorphic(MilSrcImage, MilDstImage1, MilStructElement, M_OPEN, 1, M_BINARY);
+	MbufFree(MilStructElement);
+
+	MbufCopy(MilDstImage1, MilOverlayImage);
+	sMsg.Format(_T("A horizontal opening is used to remove the vertical structures."));
+	AfxMessageBox(sMsg);
+
+	// Segment the vertical components using a vertical structuring element.
+	MilStructElement = MbufAlloc2d(MilSystem, 1, 40, 32, M_STRUCT_ELEMENT, M_NULL);
+	MbufControlNeighborhood(MilStructElement, M_OVERSCAN, M_MIRROR);
+	MbufClear(MilStructElement, 1);
+	MimMorphic(MilSrcImage, MilDstImage2, MilStructElement, M_OPEN, 1, M_BINARY);
+	MimDilate(MilDstImage2, MilDstImage2, 1, M_BINARY);
+	MbufFree(MilStructElement);
+
+	MbufCopy(MilDstImage2, MilOverlayImage);
+	sMsg.Format(_T("A vertical opening is used to isolate the vertical structures."));
+	AfxMessageBox(sMsg);
+
+	// Combine results.
+	MimShift(MilDstImage1, MilDstImage1, -2);
+	MimShift(MilDstImage2, MilDstImage2, -1);
+	MimArith(MilDstImage1, MilDstImage2, MilDstImage1, M_OR);
+	MbufCopy(MilDstImage1, MilDstImage2);
+	MbufCopyCond(MilSrcImage, MilDstImage1, MilDstImage2, M_EQUAL, 0);
+
+	// Display the segmentation result using pseudo colors.
+	MIL_ID MilPseudoColorLut;
+	AllocGenPseudoColorLUT(MilSystem, MilDisplay, 255 >> 2, 255, MilPseudoColorLut, m_pMilBufOverlayTarget->m_MilBuffer);
+	MimLutMap(MilDstImage1, MilOverlayImage, MilPseudoColorLut);
+	sMsg.Format(_T("Results are combined and displayed using pseudo colors.\nThe twisted pin's sections appear with emphasis in red."));
+	AfxMessageBox(sMsg);
+
+	// Release the allocated objects.
+	MbufFree(MilDstImage1);
+	MbufFree(MilDstImage2);
+	MbufFree(MilPseudoColorLut);
+}
+
+void CVision::MorphologicalReconstruction()
+{
+	CString sMsg;
+	MIL_ID MilSystem = m_pMil->GetSystemID();
+	MIL_ID MilDisplay = m_pMilDispTarget->m_MilDisplay;
+	MIL_ID MilSrcImage = m_pMilBufTarget->m_MilImage;
+	// Allocate a display image.
+	MIL_ID MilDispProcImage = m_pMilBufTarget->m_MilImage; // Display and destination buffer.
+	MIL_ID MilOverlayImage = m_pMilBufOverlayTarget->m_MilBuffer;     // Overlay buffer.
+	//AllocDisplayImage(MilSystem, MilSrcImage, MilDisplay, MilDispProcImage, MilOverlayImage);
+
+	// Allocate the seed and the destination buffers.
+	MIL_INT SizeX, SizeY;
+	MbufInquire(MilSrcImage, M_SIZE_X, &SizeX);
+	MbufInquire(MilSrcImage, M_SIZE_Y, &SizeY);
+	MIL_ID MilSeedImage = MbufAlloc2d(MilSystem, SizeX, SizeY, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+	MIL_ID MilDstImage = MbufAlloc2d(MilSystem, SizeX, SizeY, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+
+	// Generate a seed buffer for the reconstruction.
+	MimDilate(MilSrcImage, MilSeedImage, 5, M_GRAYSCALE);
+
+	MbufCopy(MilSeedImage, MilOverlayImage);
+	sMsg.Format(_T("The reconstruction's seed image is displayed."));
+	AfxMessageBox(sMsg);
+
+	// Perform the reconstruction.
+	MorphoReconstruction(MilSystem, MilSrcImage, MilSeedImage, MilDstImage, 100);
+
+	// Display the result.
+	MbufCopy(MilDstImage, MilOverlayImage);
+	sMsg.Format(_T("The reconstruction is displayed."));
+	AfxMessageBox(sMsg);
+
+	// Release the allocated objects.
+	MbufFree(MilSeedImage);
+	MbufFree(MilDstImage);
+}
+
+void CVision::MorphologicalReconstruction(const MIL_TEXT_CHAR *SrcFilename, MIL_ID MilSystem, MIL_ID MilDisplay)
+{
+	CString sMsg;
+
+	// Restore the image.
+	MIL_ID MilSrcImage = MbufRestore(SrcFilename, MilSystem, M_NULL);
+
+	// Allocate a display image.
+	MIL_ID MilDispProcImage, // Display and destination buffer.
+		MilOverlayImage;     // Overlay buffer.
+	AllocDisplayImage(MilSystem, MilSrcImage, MilDisplay, MilDispProcImage, MilOverlayImage);
+
+	sMsg.Format(_T("In this example, a combination of morphological operations and image \n arithmetics is used to perform a morphological reconstruction operation."));
+	AfxMessageBox(sMsg);
+
+	// Allocate the seed and the destination buffers.
+	MIL_INT SizeX, SizeY;
+	MbufInquire(MilSrcImage, M_SIZE_X, &SizeX);
+	MbufInquire(MilSrcImage, M_SIZE_Y, &SizeY);
+	MIL_ID MilSeedImage = MbufAlloc2d(MilSystem, SizeX, SizeY, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+	MIL_ID MilDstImage = MbufAlloc2d(MilSystem, SizeX, SizeY, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+
+	// Generate a seed buffer for the reconstruction.
+	MimDilate(MilSrcImage, MilSeedImage, 5, M_GRAYSCALE);
+
+	MbufCopy(MilSeedImage, MilDispProcImage);
+
+	sMsg.Format(_T("The reconstruction's seed image is displayed."));
+	AfxMessageBox(sMsg);
+
+	// Perform the reconstruction.
+	MorphoReconstruction(MilSystem, MilSrcImage, MilSeedImage, MilDstImage, 100);
+
+	// Display the result.
+	MbufCopy(MilDstImage, MilDispProcImage);
+
+	sMsg.Format(_T("The reconstruction is displayed."));
+	AfxMessageBox(sMsg);
+
+	// Release the allocated objects.
+	MbufFree(MilSrcImage);
+	MbufFree(MilSeedImage);
+	MbufFree(MilDstImage);
+	MbufFree(MilDispProcImage);
+}
+
+void CVision::MorphoReconstruction(MIL_ID MilSystem, MIL_ID MilSrcImage, MIL_ID MilSeedImage, MIL_ID MilDstImage, MIL_INT MaxIter)
+{
+	CString sMsg;
+
+	// Allocate a Mim result object.
+	MIL_ID MilCountResult = MimAllocResult(MilSystem, 1, M_COUNT_LIST, M_NULL);
+
+	// Retrieve source image properties.
+	MIL_INT SizeX, SizeY;
+	MbufInquire(MilSrcImage, M_SIZE_X, &SizeX);
+	MbufInquire(MilSrcImage, M_SIZE_Y, &SizeY);
+
+	// Allocate temporary buffers.
+	MIL_ID MilCondImage = MbufAlloc2d(MilSystem, SizeX, SizeY, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+	MIL_ID MilPrevDstImage = MbufAlloc2d(MilSystem, SizeX, SizeY, 8L + M_UNSIGNED, M_IMAGE + M_PROC, M_NULL);
+
+	// Init conditions.
+	MbufCopy(MilSeedImage, MilDstImage);
+	MbufCopy(MilSeedImage, MilPrevDstImage);
+
+	// Perform the morpological reconstruction.
+	MimArith(MilDstImage, MilSrcImage, MilCondImage, M_SUB + M_SATURATION);
+	// Display the result.
+	MbufCopy(MilCondImage, m_pMilBufOverlayTarget->m_MilBuffer);
+	sMsg.Format(_T("The MorphoReconstruction:M_SUB + M_SATURATION is displayed."));
+	AfxMessageBox(sMsg);
+
+	MbufCopyCond(MilSrcImage, MilPrevDstImage, MilCondImage, M_EQUAL, 0);
+	MimErode(MilPrevDstImage, MilDstImage, 1, M_GRAYSCALE);
+
+	// Display the result.
+	MbufCopy(MilDstImage, m_pMilBufOverlayTarget->m_MilBuffer);
+	sMsg.Format(_T("The MorphoReconstruction:MimErode is displayed."));
+	AfxMessageBox(sMsg);
+
+	MIL_INT CountDiff = 1;
+	for (MIL_INT ii = 0; ii < MaxIter && (CountDiff > 0); ii++)
+	{
+		MimArith(MilDstImage, MilSrcImage, MilCondImage, M_SUB + M_SATURATION);
+		MbufCopy(MilCondImage, m_pMilBufOverlayTarget->m_MilBuffer);
+		sMsg.Format(_T("The MorphoReconstruction:M_SUB + M_SATURATION is displayed."));
+		//AfxMessageBox(sMsg);
+
+		MbufCopyCond(MilSrcImage, MilDstImage, MilCondImage, M_EQUAL, 0);
+		MimCountDifference(MilDstImage, MilPrevDstImage, MilCountResult);
+
+		MbufCopy(MilDstImage, m_pMilBufOverlayTarget->m_MilBuffer);
+		sMsg.Format(_T("The MorphoReconstruction:%d is displayed."), ii);
+		//AfxMessageBox(sMsg);
+
+		MIL_INT CountDiff;
+		MimGetResult(MilCountResult, M_VALUE + M_TYPE_MIL_INT, &CountDiff);
+		if (CountDiff > 0)
+		{
+			MbufCopy(MilDstImage, MilPrevDstImage);
+			MimErode(MilPrevDstImage, MilDstImage, 1, M_GRAYSCALE);
+		}
+	}
+	MbufFree(MilCondImage);
+	MbufFree(MilPrevDstImage);
+	MimFree(MilCountResult);
+};
+
+void CVision::MThread()
+{
+	CString sMsg;
+
+	MIL_ID MilSystem = m_pMil->GetSystemID();
+	MIL_ID MilDisplay = m_pMilDispModel2->m_MilDisplay;
+	MIL_ID MilOrgImage = m_pMilBufModel2->m_MilImage;
+
+	// Allocate a display image.
+	MIL_ID MilOverlayImage = m_pMilBufOverlayModel2->m_MilBuffer;     // Overlay buffer.
+
+	/* Allocate and display the main image buffer. */
+	MIL_ID MilImage = MilOverlayImage; // Display and destination buffer.
+	//MbufAlloc2d(MilSystem, IMAGE_WIDTH * 2, IMAGE_HEIGHT * 2, 8 + M_UNSIGNED, M_IMAGE + M_PROC + M_DISP, &MilImage);
+	//MbufClear(MilImage, 0);
+
+	// Display MilImage.
+	MbufCopy(MilImage, MilOverlayImage);
+
+
+	THREAD_PARAM	TParTopLeft,			/* Parameters passed to top left thread.      */
+					TParBotLeft,			/* Parameters passed to bottom left thread.   */
+					TParTopRight,			/* Parameters passed to top right thread.     */
+					TParBotRight;			/* Parameters passed to bottom right thread.  */
+	MIL_DOUBLE		Time, FramesPerSecond;	/* Timer variables.                       */
+	MIL_INT			LicenseModules;			/* List of available MIL modules              */
+
+	/* Allocate a destination child buffer for each thread. */
+	MbufChild2d(MilImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT,
+		&TParTopLeft.SrcImage);
+	MbufChild2d(MilImage, 0, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT,
+		&TParBotLeft.DstImage);
+	MbufChild2d(MilImage, IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_HEIGHT,
+		&TParTopRight.SrcImage);
+	MbufChild2d(MilImage, IMAGE_WIDTH, IMAGE_HEIGHT,
+		IMAGE_WIDTH, IMAGE_HEIGHT, &TParBotRight.DstImage);
+
+	/* Allocate synchronization events. */
+	MthrAlloc(MilSystem, M_EVENT, M_DEFAULT, M_NULL, M_NULL, &TParTopLeft.DoneEvent);
+	MthrAlloc(MilSystem, M_EVENT, M_DEFAULT, M_NULL, M_NULL, &TParBotLeft.DoneEvent);
+	MthrAlloc(MilSystem, M_EVENT, M_DEFAULT, M_NULL, M_NULL, &TParTopRight.DoneEvent);
+	MthrAlloc(MilSystem, M_EVENT, M_DEFAULT, M_NULL, M_NULL, &TParBotRight.DoneEvent);
+
+	MIL_ID MilRemoteApplication = NULL;  /* Remote application identifier.             */
+
+	/* Inquire MIL licenses. */
+	MsysInquire(MilSystem, M_OWNER_APPLICATION, &MilRemoteApplication);
+	MappInquire(MilRemoteApplication, M_LICENSE_MODULES, &LicenseModules);
+
+	/* Initialize remaining thread parameters. */
+	TParTopLeft.System = MilSystem;
+	TParTopLeft.OrgImage = MilOrgImage;
+	TParTopLeft.DstImage = TParTopLeft.SrcImage;
+	TParTopLeft.ReadyEvent = TParBotLeft.DoneEvent;
+	TParTopLeft.NumberOfIteration = 0;
+	TParTopLeft.Radius = 0;
+	TParTopLeft.Exit = 0;
+	TParTopLeft.LicenseModules = LicenseModules;
+	TParTopLeft.SlaveThreadParam = &TParBotLeft;
+
+	TParBotLeft.System = MilSystem;
+	TParBotLeft.OrgImage = 0;
+	TParBotLeft.SrcImage = TParTopLeft.DstImage;
+	TParBotLeft.ReadyEvent = TParTopLeft.DoneEvent;
+	TParBotLeft.NumberOfIteration = 0;
+	TParBotLeft.Radius = 0;
+	TParBotLeft.Exit = 0;
+	TParBotLeft.LicenseModules = LicenseModules;
+	TParBotLeft.SlaveThreadParam = 0;
+
+	TParTopRight.System = MilSystem;
+	TParTopRight.OrgImage = MilOrgImage;
+	TParTopRight.DstImage = TParTopRight.SrcImage;
+	TParTopRight.ReadyEvent = TParBotRight.DoneEvent;
+	TParTopRight.NumberOfIteration = 0;
+	TParTopRight.Radius = 0;
+	TParTopRight.Exit = 0;
+	TParTopRight.LicenseModules = LicenseModules;
+	TParTopRight.SlaveThreadParam = &TParBotRight;
+
+	TParBotRight.System = MilSystem;
+	TParBotRight.OrgImage = 0;
+	TParBotRight.SrcImage = TParTopRight.DstImage;
+	TParBotRight.ReadyEvent = TParTopRight.DoneEvent;
+	TParBotRight.NumberOfIteration = 0;
+	TParBotRight.Radius = 0;
+	TParBotRight.Exit = 0;
+	TParBotRight.LicenseModules = LicenseModules;
+	TParBotRight.SlaveThreadParam = 0;
+
+
+	/* Start the 4 threads. */
+	MthrAlloc(MilSystem, M_THREAD, M_DEFAULT, &TopThread, &TParTopLeft, &TParTopLeft.Id);
+	MthrAlloc(MilSystem, M_THREAD, M_DEFAULT, &BotLeftThread, &TParBotLeft, &TParBotLeft.Id);
+	MthrAlloc(MilSystem, M_THREAD, M_DEFAULT, &TopThread, &TParTopRight, &TParTopRight.Id);
+	MthrAlloc(MilSystem, M_THREAD, M_DEFAULT, &BotRightThread, &TParBotRight, &TParBotRight.Id);
+
+	/* Start the timer. */
+	MappTimer(M_DEFAULT, M_TIMER_RESET + M_SYNCHRONOUS, M_NULL);
+
+	/* Set events to start operation of top left and top right threads. */
+	MthrControl(TParTopLeft.ReadyEvent, M_EVENT_SET, M_SIGNALED);
+	MthrControl(TParTopRight.ReadyEvent, M_EVENT_SET, M_SIGNALED);
+
+	/* Report that the threads are started and wait for a key press to stop them. */
+	sMsg.Format(_T("4 threads running..."));
+	AfxMessageBox(sMsg);
+
+	/* Signal the threads to exit. */
+	TParTopLeft.Exit = 1;
+	TParTopRight.Exit = 1;
+
+	/* Wait for all threads to terminate. */
+	MthrWait(TParTopLeft.Id, M_THREAD_END_WAIT, M_NULL);
+	MthrWait(TParBotLeft.Id, M_THREAD_END_WAIT, M_NULL);
+	MthrWait(TParTopRight.Id, M_THREAD_END_WAIT, M_NULL);
+	MthrWait(TParBotRight.Id, M_THREAD_END_WAIT, M_NULL);
+
+	/* Stop the timer and calculate the number of frames per second processed. */
+	MappTimer(M_DEFAULT, M_TIMER_READ + M_SYNCHRONOUS, &Time);
+	FramesPerSecond = (TParTopLeft.NumberOfIteration + TParBotLeft.NumberOfIteration + TParTopRight.NumberOfIteration + TParBotRight.NumberOfIteration) / Time;
+
+	/* Print statistics. */
+	sMsg.Format(
+		_T("Top left iterations done:     %4ld.\nBottom left iterations done:  %4ld.\nTop right iterations done:    %4ld.\nBottom right iterations done: %4ld.\n\nProcessing speed for the 4 threads: %.0f Images/Sec."),
+		TParTopLeft.NumberOfIteration, TParBotLeft.NumberOfIteration, TParTopRight.NumberOfIteration, TParBotRight.NumberOfIteration, FramesPerSecond);
+	AfxMessageBox(sMsg);
+
+	/* Free threads. */
+	MthrFree(TParTopLeft.Id);
+	MthrFree(TParBotLeft.Id);
+	MthrFree(TParTopRight.Id);
+	MthrFree(TParBotRight.Id);
+
+	/* Free events. */
+	MthrFree(TParTopLeft.DoneEvent);
+	MthrFree(TParBotLeft.DoneEvent);
+	MthrFree(TParTopRight.DoneEvent);
+	MthrFree(TParBotRight.DoneEvent);
+
+	/* Free buffers. */
+	MbufFree(TParTopLeft.SrcImage);
+	MbufFree(TParTopRight.SrcImage);
+	MbufFree(TParBotLeft.DstImage);
+	MbufFree(TParBotRight.DstImage);
+	//MbufFree(MilImage);
+}
+
+
+/* Top left and top right threads' function (Add an offset): */
+/* --------------------------------------------------------- */
+MIL_UINT32 MFTYPE TopThread(void *ThreadParameters)
+{
+	THREAD_PARAM  *TPar = (THREAD_PARAM *)ThreadParameters;
+	MIL_TEXT_CHAR Text[STRING_LENGHT_MAX];
+
+	while (!TPar->Exit)
+	{
+		/* Wait for bottom ready event before proceeding. */
+		MthrWait(TPar->ReadyEvent, M_EVENT_WAIT, M_NULL);
+
+		/* For better visual effect, reset SrcImage to the original image regularly. */
+		if ((TPar->NumberOfIteration % 192) == 0)
+			MbufCopy(TPar->OrgImage, TPar->SrcImage);
+
+#if (!M_MIL_LITE)
+		if (TPar->LicenseModules & M_LICENSE_IM)
+		{
+			/* Add a constant to the image. */
+			MimArith(TPar->SrcImage, 1L, TPar->DstImage, M_ADD_CONST + M_SATURATION);
+		}
+		else
+#endif
+		{
+			/* Under Mil lite draw a variable size rectangle in the image. */
+			TPar->Radius = TPar->SlaveThreadParam->Radius =
+				(TPar->NumberOfIteration % DRAW_RADIUS_NUMBER) * DRAW_RADIUS_STEP;
+			MgraColor(M_DEFAULT, 0xff);
+			MgraRectFill(M_DEFAULT, TPar->DstImage,
+				DRAW_CENTER_POSX - TPar->Radius, DRAW_CENTER_POSY - TPar->Radius,
+				DRAW_CENTER_POSX + TPar->Radius, DRAW_CENTER_POSY + TPar->Radius);
+		}
+
+		/* Increment iteration count and draw text. */
+		TPar->NumberOfIteration++;
+		MgraColor(M_DEFAULT, 0xFF);
+		MosSprintf(Text, STRING_LENGHT_MAX, MIL_TEXT("%ld"), TPar->NumberOfIteration);
+		MgraText(M_DEFAULT, TPar->DstImage, STRING_POS_X, STRING_POS_Y, Text);
+
+		/* Signal to the bottom thread that the first part of processing is completed. */
+		MthrControl(TPar->DoneEvent, M_EVENT_SET, M_SIGNALED);
+
+		/* For a smoother display effect, optional yield to the other threads. */
+		BalanceThreadScheduling();
+	}
+
+	/* Require the bottom thread to exit. */
+	TPar->SlaveThreadParam->Exit = 1;
+
+	/* Signal the bottom thread end to wake up. */
+	MthrControl(TPar->DoneEvent, M_EVENT_SET, M_SIGNALED);
+
+	MthrWait(TPar->System, M_THREAD_WAIT, M_NULL);  // before exiting the thread, make sure all the commands are executed
+	return(1L);
+}
+
+
+/* Bottom-left thread function (Rotate): */
+/* ------------------------------------- */
+MIL_UINT32 MFTYPE BotLeftThread(void *ThreadParameters)
+{
+	THREAD_PARAM  *TPar = (THREAD_PARAM *)ThreadParameters;
+	MIL_TEXT_CHAR Text[STRING_LENGHT_MAX];
+
+	while (!TPar->Exit)
+	{
+		/* Wait for the event in top-left function to be ready before proceeding. */
+		MthrWait(TPar->ReadyEvent, M_EVENT_WAIT, M_NULL);
+
+#if (!M_MIL_LITE)
+		/* If processing available, add a constant to the image. */
+		if (TPar->LicenseModules & M_LICENSE_IM)
+		{
+			MimRotate(TPar->SrcImage, TPar->DstImage,
+				(MIL_DOUBLE)((TPar->NumberOfIteration * 5) % 360),
+				M_DEFAULT, M_DEFAULT, M_DEFAULT, M_DEFAULT,
+				M_NEAREST_NEIGHBOR + M_OVERSCAN_CLEAR);
+		}
+		/* else copy the top image and draw a filled circle. */
+		else
+#endif
+		{
+			MbufCopy(TPar->SrcImage, TPar->DstImage);
+			MgraColor(M_DEFAULT, 0x80);
+			MgraArcFill(M_DEFAULT, TPar->DstImage, DRAW_CENTER_POSX, DRAW_CENTER_POSY,
+				TPar->Radius, TPar->Radius, 0, 360);
+		}
+
+		/* Print iteration count and draw a circle. */
+		TPar->NumberOfIteration++;
+		MgraColor(M_DEFAULT, 0xFF);
+		MosSprintf(Text, STRING_LENGHT_MAX, MIL_TEXT("%ld"), TPar->NumberOfIteration);
+		MgraText(M_DEFAULT, TPar->DstImage, STRING_POS_X, STRING_POS_Y, Text);
+
+		/* Signal to the top thread that the last part of the processing is completed. */
+		MthrControl(TPar->DoneEvent, M_EVENT_SET, M_SIGNALED);
+
+		/* For a smoother display effect, optional yield to the other threads. */
+		BalanceThreadScheduling();
+	}
+
+	MthrWait(TPar->System, M_THREAD_WAIT, M_NULL);  // before exiting the thread, make sure all the commands are executed
+	return(1L);
+}
+
+/* Bottom-right thread function (Edge Detect): */
+/* ------------------------------------------- */
+MIL_UINT32 MFTYPE BotRightThread(void *ThreadParameters)
+{
+	THREAD_PARAM  *TPar = (THREAD_PARAM *)ThreadParameters;
+	MIL_TEXT_CHAR Text[STRING_LENGHT_MAX];
+
+	while (!TPar->Exit)
+	{
+		/* Wait for the event in top-right function to be ready before proceeding. */
+		MthrWait(TPar->ReadyEvent, M_EVENT_WAIT, M_NULL);
+
+#if (!M_MIL_LITE)
+		/* If processing available, add a constant to the image. */
+		if (TPar->LicenseModules & M_LICENSE_IM)
+		{
+			MimConvolve(TPar->SrcImage, TPar->DstImage, M_EDGE_DETECT);
+		}
+		/* else copy the top image and draw a filled circle. */
+		else
+#endif
+		{
+			MbufCopy(TPar->SrcImage, TPar->DstImage);
+			MgraColor(M_DEFAULT, 0x40);
+			MgraArcFill(M_DEFAULT, TPar->DstImage, DRAW_CENTER_POSX, DRAW_CENTER_POSY,
+				TPar->Radius / 2, TPar->Radius / 2, 0, 360);
+		}
+
+		/* Increment iteration count and draw text. */
+		TPar->NumberOfIteration++;
+		MgraColor(M_DEFAULT, 0xFF);
+		MosSprintf(Text, STRING_LENGHT_MAX, MIL_TEXT("%ld"), TPar->NumberOfIteration);
+		MgraText(M_DEFAULT, TPar->DstImage, STRING_POS_X, STRING_POS_Y, Text);
+
+		/* Signal to the top thread that the last part of the processing is completed. */
+		MthrControl(TPar->DoneEvent, M_EVENT_SET, M_SIGNALED);
+
+		/* For a smoother display effect, optional yield to the other threads. */
+		BalanceThreadScheduling();
+	}
+
+	MthrWait(TPar->System, M_THREAD_WAIT, M_NULL);  // before exiting the thread, make sure all the commands are executed
+	return(1L);
+}
+
+/* Thread Scheduling Adjustment Handling */
+/* ------------------------------------- */
+/*                                                                                       */
+/* This function is used to give a smoother display effect. It balances the number of    */
+/* iterations of each thread by yielding its time slice frequently.                      */
+/*                                                                                       */
+/* NOTE: In some situations, Windows adjusts the priority or quantum value of threads.   */
+/*       The intent of these adjustments is to improve system throughput and             */
+/*       responsiveness. However, like any scheduling algorithms these adjustments are   */
+/*       not perfect, and they might not be beneficial to all applications. The          */
+/*       following function is introduced to minimize the impact of thread scheduling    */
+/*       adjustment as performed by Windows. Refer to the "Inside Windows NT             */
+/*       (Second Edition, Microsoft Press, 1998, ISBN 1-57231-677-2)" manual for more    */
+/*       details on thread scheduling under Windows.                                     */
+void BalanceThreadScheduling()
+{
+	MosSleep(0);
 }
 
 #endif

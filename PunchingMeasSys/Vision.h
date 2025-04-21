@@ -72,6 +72,18 @@
 #define MIN_BLOB_SIZE_X       2L			
 #define MIN_BLOB_SIZE_Y       2L			
 
+// for MThread()
+//#define IMAGE_WIDTH        1024
+//#define IMAGE_HEIGHT       1024
+#define IMAGE_WIDTH        256L
+#define IMAGE_HEIGHT       240L
+#define STRING_LENGHT_MAX  40
+#define STRING_POS_X       10
+#define STRING_POS_Y       220
+#define DRAW_RADIUS_NUMBER 5
+#define DRAW_RADIUS_STEP   10
+#define DRAW_CENTER_POSX   196
+#define DRAW_CENTER_POSY   180
 
 typedef struct stPtMtRst
 {
@@ -86,6 +98,22 @@ typedef struct stBlobRst
 	int nBoxLeft, nBoxRight, nBoxTop, nBoxBottom;
 } BLOB_RST;
 
+/* Thread parameters structure. */
+typedef struct ThreadParam
+{
+	MIL_ID Id;
+	MIL_ID System;
+	MIL_ID OrgImage;
+	MIL_ID SrcImage;
+	MIL_ID DstImage;
+	MIL_ID ReadyEvent;
+	MIL_ID DoneEvent;
+	MIL_INT NumberOfIteration;
+	MIL_INT Radius;
+	MIL_INT Exit;
+	MIL_INT LicenseModules;
+	struct ThreadParam *SlaveThreadParam;
+} THREAD_PARAM;
 
 /////////////////////////////////////////////////////////////////////////////
 // CVision window
@@ -182,9 +210,20 @@ public:
 	void SelDispModel2(HWND hDispCtrl, CRect rtDispCtrl, int nDisplayFitMode = DISPLAY_FIT_MODE_CENTERVIEW);
 	void ShowModel2(CString sPath);
 	void ObjectSkeleton();
-	void AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_INT StartIndex, MIL_INT EndIndex, MIL_ID &MilPseudoColorLut);
+	void AllocGenPseudoColorLUT(MIL_ID MilSystem, MIL_ID MilDisplay, MIL_INT StartIndex, MIL_INT EndIndex, MIL_ID &MilPseudoColorLut, MIL_ID MilOverlay);
 	void TopHatFiltering();
 	void AllocDisplayImage(MIL_ID MilSystem, MIL_ID MilSrcImage, MIL_ID MilDisplay, MIL_ID &MilDispProcImage, MIL_ID &MilOverlayImage);
+	void ObjectSegmentation();
+	void MorphologicalReconstruction();
+	void MorphologicalReconstruction(const MIL_TEXT_CHAR *SrcFilename, MIL_ID MilSystem, MIL_ID MilDisplay);
+	void MorphoReconstruction(MIL_ID MilSystem, MIL_ID MilSrcImage, MIL_ID MilSeedImage, MIL_ID MilDstImage, MIL_INT MaxIter);
+
+	void MThread();
+	///* Function prototypes. */
+	//MIL_UINT32 MFTYPE TopThread(void *TPar);
+	//MIL_UINT32 MFTYPE BotLeftThread(void *TPar);
+	//MIL_UINT32 MFTYPE BotRightThread(void *TPar);
+	//void BalanceThreadScheduling();
 
 // Attributes
 public:
