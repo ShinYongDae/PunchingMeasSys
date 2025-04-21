@@ -73,4 +73,5 @@ public:
 	afx_msg void OnBnClickedBtnSegmentation();
 	afx_msg void OnBnClickedBtnReconstruction();
 	afx_msg void OnBnClickedBtnThead();
+	afx_msg void OnBnClickedBtnMeasure();
 };

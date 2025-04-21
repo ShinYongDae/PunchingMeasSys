@@ -219,11 +219,7 @@ public:
 	void MorphoReconstruction(MIL_ID MilSystem, MIL_ID MilSrcImage, MIL_ID MilSeedImage, MIL_ID MilDstImage, MIL_INT MaxIter);
 
 	void MThread();
-	///* Function prototypes. */
-	//MIL_UINT32 MFTYPE TopThread(void *TPar);
-	//MIL_UINT32 MFTYPE BotLeftThread(void *TPar);
-	//MIL_UINT32 MFTYPE BotRightThread(void *TPar);
-	//void BalanceThreadScheduling();
+	void SingleMeasurement();
 
 // Attributes
 public:

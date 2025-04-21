@@ -5707,6 +5707,7 @@ void CVision::MorphoReconstruction(MIL_ID MilSystem, MIL_ID MilSrcImage, MIL_ID 
 	MimFree(MilCountResult);
 };
 
+// Bird.mim
 void CVision::MThread()
 {
 	CString sMsg;
@@ -6026,4 +6027,132 @@ void BalanceThreadScheduling()
 	MosSleep(0);
 }
 
+
+/* Processing region specification. */
+
+// SingleModel.mim
+#define MEAS_BOX_WIDTH         50
+#define MEAS_BOX_HEIGHT        50
+#define MEAS_BOX_POS_X         202
+#define MEAS_BOX_POS_Y         222
+#define STRIPE_WIDTH           45L
+#define STRIPE_WIDTH_VARIATION 30L
+
+// SingleModel.mim
+//#define MEAS_BOX_WIDTH         40
+//#define MEAS_BOX_HEIGHT        20
+//#define MEAS_BOX_POS_X         220
+//#define MEAS_BOX_POS_Y         205
+//#define STRIPE_WIDTH           45L
+//#define STRIPE_WIDTH_VARIATION 30L
+
+// lead.mim
+//#define MEAS_BOX_WIDTH         128
+//#define MEAS_BOX_HEIGHT        100
+//#define MEAS_BOX_POS_X         166
+//#define MEAS_BOX_POS_Y         130
+//#define STRIPE_WIDTH           45L
+//#define STRIPE_WIDTH_VARIATION 10L
+
+/* Target stripe typical specifications. */
+#define STRIPE_POLARITY_LEFT   M_POSITIVE
+#define STRIPE_POLARITY_RIGHT  M_NEGATIVE
+
+void CVision::SingleMeasurement()
+{
+	CString sMsg;
+
+	MIL_ID MilSystem = m_pMil->GetSystemID();
+	MIL_ID MilDisplay = m_pMilDispModel2->m_MilDisplay;
+	MIL_ID MilOrgImage = m_pMilBufModel2->m_MilImage;
+
+	// Allocate a display image.
+	MIL_ID MilOverlayImage = m_pMilBufOverlayModel2->m_MilBuffer;     // Overlay buffer.
+
+
+	MIL_ID		MilImage,                     /* Image buffer identifier. */
+				MilGraphicList,               /* Graphic list identifier. */
+				StripeMarker;                 /* Stripe marker identifier.*/
+	MIL_DOUBLE	StripeCenterX,                /* Stripe X center position.*/
+				StripeCenterY,                /* Stripe Y center position.*/
+				StripeWidth,                  /* Stripe width.            */
+				StripeAngle;                  /* Stripe angle.            */
+	MIL_DOUBLE	CrossColor = M_COLOR_YELLOW,  /* Cross drawing color.     */
+				BoxColor = M_COLOR_RED;     /* Box drawing color.       */
+
+	/* Restore and display the source image. */
+	MilImage = MilOrgImage;
+	//MbufRestore(MEAS_IMAGE_FILE, MilSystem, &MilImage);
+	//MdispSelect(MilDisplay, MilImage);
+
+	/* Allocate a graphic list to hold the subpixel annotations to draw. */
+	MgraAllocList(MilSystem, M_DEFAULT, &MilGraphicList);
+
+	/* Associate the graphic list to the display. */
+	MdispControl(MilDisplay, M_ASSOCIATED_GRAPHIC_LIST_ID, MilGraphicList);
+
+	/* Allocate a stripe marker. */
+	MmeasAllocMarker(MilSystem, M_STRIPE, M_DEFAULT, &StripeMarker);
+
+	/* Specify the stripe characteristics. */
+	MmeasSetMarker(StripeMarker, M_POLARITY, STRIPE_POLARITY_LEFT, STRIPE_POLARITY_RIGHT);
+
+	/* Set score function to find the expected width */
+	MmeasSetScore(StripeMarker,						// MIL_ID		MarkerId
+		M_STRIPE_WIDTH_SCORE,						// MIL_INT64	Characteristic
+		STRIPE_WIDTH - STRIPE_WIDTH_VARIATION,		// MIL_DOUBLE	Min
+		STRIPE_WIDTH - STRIPE_WIDTH_VARIATION,		// MIL_DOUBLE	Low
+		STRIPE_WIDTH + STRIPE_WIDTH_VARIATION,		// MIL_DOUBLE	High
+		STRIPE_WIDTH + STRIPE_WIDTH_VARIATION,		// MIL_DOUBLE	Max
+		M_DEFAULT,									// MIL_DOUBLE	ScoreOffset
+		M_DEFAULT,									// MIL_INT64	InputUnits
+		M_DEFAULT);									// MIL_INT64	ControlFlag
+
+	MmeasSetMarker(StripeMarker, M_BOX_ANGLE_MODE, M_ENABLE, M_NULL);
+
+	/* Specify the search region size and position. */
+	MmeasSetMarker(StripeMarker, M_BOX_ORIGIN, MEAS_BOX_POS_X, MEAS_BOX_POS_Y);
+	MmeasSetMarker(StripeMarker, M_BOX_SIZE, MEAS_BOX_WIDTH, MEAS_BOX_HEIGHT);
+
+	/* Draw the contour of the measurement region. */
+	MgraColor(M_DEFAULT, BoxColor);
+	MmeasDraw(M_DEFAULT, StripeMarker, MilGraphicList, M_DRAW_SEARCH_REGION,
+		M_DEFAULT, M_MARKER);
+
+	/* Pause to show the original image. */
+	sMsg.Format(_T("Position, width and angle of the stripe in the highlighted box\nwill be calculated and the center and edges will be marked."));
+	AfxMessageBox(sMsg);
+
+	/* Clear the annotations. */
+	MgraClear(M_DEFAULT, MilGraphicList);
+
+	/* Find the stripe and measure its width and angle. */
+	MmeasFindMarker(M_DEFAULT, MilImage, StripeMarker, M_DEFAULT);
+
+	/* Get the stripe position, width and angle. */
+	MmeasGetResult(StripeMarker, M_POSITION, &StripeCenterX, &StripeCenterY);
+	MmeasGetResult(StripeMarker, M_STRIPE_WIDTH, &StripeWidth, M_NULL);
+	MmeasGetResult(StripeMarker, M_ANGLE, &StripeAngle, M_NULL);
+
+	/* Draw the contour of the found measurement region. */
+	MgraColor(M_DEFAULT, BoxColor);
+	MmeasDraw(M_DEFAULT, StripeMarker, MilGraphicList, M_DRAW_SEARCH_REGION, M_DEFAULT, M_RESULT);
+
+	/* Draw a cross on the center, left edge and right edge of the found stripe. */
+	MgraColor(M_DEFAULT, CrossColor);
+	MmeasDraw(M_DEFAULT, StripeMarker, MilGraphicList, M_DRAW_POSITION, M_DEFAULT, M_RESULT);
+	MmeasDraw(M_DEFAULT, StripeMarker, MilGraphicList, M_DRAW_POSITION + M_EDGE_FIRST + M_EDGE_SECOND, M_DEFAULT, M_RESULT);
+
+	/* Print the result. */
+	sMsg.Format(_T("The stripe in the image is at position %.2f,%.2f and\nis %.2f pixels wide with an angle of %.2f degrees."), StripeCenterX, StripeCenterY, StripeWidth, StripeAngle);
+	AfxMessageBox(sMsg);
+
+	/* Remove the graphic list association to the display. */
+	MdispControl(MilDisplay, M_ASSOCIATED_GRAPHIC_LIST_ID, M_NULL);
+
+	/* Free all allocations. */
+	MgraFree(MilGraphicList);
+	MmeasFree(StripeMarker);
+	//MbufFree(MilImage);
+}
 #endif
